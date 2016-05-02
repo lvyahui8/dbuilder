@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<?php echo $__env->make('layouts.admin.head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<body class="page-body <?php /* page-fade*/ ?>" data-url="http://neon.dev">
+<div class="page-container">
+    <?php echo $__env->make('layouts.admin.sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <div class="main-content">
+        <?php echo $__env->make('layouts.admin.top', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <hr>
+        <?php echo $content; ?>
+
+        <?php echo $__env->make('layouts.admin.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    </div>
+</div>
+<?php echo $__env->make('layouts.admin.modals', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.admin.foot', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+</body>
+</html>

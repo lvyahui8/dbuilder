@@ -1,0 +1,9 @@
+<?php echo $ctrl->getStyleHtml(); ?>
+
+<?php echo $__env->yieldContent('styles',''); ?>
+<?php echo HTML::script('js/bootstrap.min.js'); ?>
+
+<?php echo $ctrl->getScriptHtml(); ?>
+
+<?php echo $__env->yieldContent('scripts',''); ?>
+<?php echo HTML::script('js/common.js'); ?>

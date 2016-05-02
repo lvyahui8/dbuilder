@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-sm-8">
+        <?php foreach($posts as $post):?>
+        <div class="panel panel-primary focus-animation">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <a href="<?php echo URL::to('blog/view/'.$post->id); ?>"><h4><?php echo $post->title; ?></h4></a>
+                                <p><?php echo $post->short; ?></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <span><?php echo $post->view_ct; ?> 次阅读</span>
+                                <span></span>
+                            </div>
+                            <div class="col-sm-4 ">
+                                <span class="pull-right"><?php echo $post->created_at; ?></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endforeach;?>
+        <div class="pull-right">
+            <?php echo $posts->appends(Input::all())->links(); ?>
+
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="panel-title">栏目</div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="list-group">
+                            <?php foreach($categorys as $category):?>
+                            <a href="<?php echo URL::to('blog/list?category_id='.$category->id); ?>" class="list-group-item"><span class="badge"><?php echo $category->post_ct; ?></span><?php echo $category->title; ?></a>
+                            <?php endforeach;?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="panel-title">热门博文</div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="list-group">
+                            <?php foreach($hotPosts as $post):?>
+                            <a href="<?php echo URL::to('blog/view/'.$post->id); ?>" class="list-group-item">
+                                <span><?php echo $post->title; ?></span><span class="pull-right"><?php echo $post->view_ct; ?>次</span>
+                            </a>
+                            <?php endforeach;?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

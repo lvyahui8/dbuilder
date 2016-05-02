@@ -1,0 +1,52 @@
+<?php
+//    $ctrl->registScript('js/jquery-syntax/jquery.syntax.min.js');
+
+//        $ctrl->registStyle('js/highlight/styles/default.css');
+//        $ctrl->registScript('js/highlight/highlight.pack.js');
+$ctrl->registStyle('js/syntaxhighlighter/styles/shCoreRDark.css');
+$ctrl->registScript('js/syntaxhighlighter/scripts/shCore.js');
+$ctrl->registScript('js/syntaxhighlighter/scripts/shAutoloader.js');
+
+?>
+<div class="row">
+    <div class="col-sm-8">
+        <?php foreach($codes as $code):?>
+        <div class="panel panel-primary focus-animation">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a href="<?php echo URL::to('code/view/'.$code->id); ?>"><h4><?php echo $code->title; ?></h4></a>
+                        <p><?php echo $code->short; ?></p>
+                        <div class="code">
+                            <pre class="brush: <?php echo $code->lang; ?>;"><?php echo substr($code->body,0,100); ?></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <span><?php echo $code->view_ct; ?> 次阅读</span>
+                        <span></span>
+                    </div>
+                    <div class="col-sm-4 ">
+                        <span class="pull-right"><?php echo $code->created_at; ?></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endforeach;?>
+    </div>
+    <div class="col-sm-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="panel-title">最热微码</div>
+            </div>
+            <div class="panel-body">
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+<?php $__env->startSection('footerScript'); ?>
+<?php $__env->stopSection(); ?>

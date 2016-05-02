@@ -1,0 +1,7 @@
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <h5><?php echo $comment->user_id ? $comment->username : '匿名用户'; ?>：</h5>
+        <p><?php echo $comment->content; ?></p>
+        <span><?php echo $comment->created_at; ?></span>
+    </div>
+</div>

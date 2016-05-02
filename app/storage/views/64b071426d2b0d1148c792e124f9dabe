@@ -1,0 +1,23 @@
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <div class="media">
+            <div class="media-left">
+                <img src="<?php echo asset('images/avatarv2.gif'); ?>" alt="" class="img-circle">
+            </div>
+            <div class="media-body">
+                <h3>一个有情怀，有梦想，有追求的程序员</h3>
+                热衷web开发，偏web后台开发。实践经验丰富，目前未毕业，在腾讯做运营开发。
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <h4>关于这个破网站</h4>
+        <div class="panel">
+            <div class="panel-body">
+                <div id="comments-container" data-ajax-url="<?php echo URL::to('comment/list?proj_type=site'); ?>"></div>
+            </div>
+        </div>
+    </div>
+</div>

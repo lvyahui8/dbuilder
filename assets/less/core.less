@@ -1,0 +1,46 @@
+@import "vars";
+*{
+  box-sizing: border-box;
+}
+body{
+  font-size: 12px;
+  font-family: "consolas","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  text-shadow: .02em .02em .02em #999;
+}
+a{
+  color: @link-color;
+  font-size: 12px;
+  text-decoration: none;
+}
+a:hover{
+  color: @link-hover-color;
+  text-decoration: none;
+}
+.df-bg{
+  background: url("../images/b28.gif") repeat;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0; /*初始状态 透明度为0*/
+  }
+  50% {
+    opacity: 0; /*中间状态 透明度为0*/
+  }
+  100% {
+    opacity: 1; /*结尾状态 透明度为1*/
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1; /*初始状态 透明度为0*/
+  }
+  50% {
+    opacity: 0; /*中间状态 透明度为0*/
+  }
+  100% {
+    opacity: 0; /*结尾状态 透明度为1*/
+  }
+}
+

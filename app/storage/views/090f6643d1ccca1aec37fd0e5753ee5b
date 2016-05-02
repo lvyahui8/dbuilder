@@ -1,0 +1,52 @@
+<?php
+$stdName = $ctrl->getStdName();
+$routeMethod = $ctrl->routeMethod();
+$subIndex = $routeMethod === 'getIndex';
+$navMap = array(
+        'site'  =>  array(
+                'url'   =>  URL::to(''),
+                'text'  =>  '首页'
+        ),
+        'demo'  =>  array(
+        ),
+        'resume' =>  array(
+                'text'  =>  '简历'
+        ),
+        'blog'  =>  array(
+                'text'  =>  '博客',
+                'url'   =>  URL::to('blog/list'),
+        ),
+        'project'=> array(
+                'text'  =>  '项目',
+        ),
+        'code'  =>  array(
+                'text'  =>  '微码'
+        ),
+        'test'  =>  array(
+
+        ),
+);
+?>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <?php echo $__env->make('layouts.head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+</head>
+<body>
+<div class="container-fluid"><?php echo $content; ?></div>
+<?php echo $__env->make('layouts.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<script>
+    $('a').click(function(){
+        var url = $(this).attr('href')
+        if(url && url != '#'){
+            window.parent.location.hash = '#' + url;
+        }
+        return false;
+    });
+    //    document.getElementsByTagName('a').onclick = function(){
+    //        window.parent.location.hash = '#' + this.href;
+    //    };
+</script>
+<?php echo $__env->yieldContent('footerScript',''); ?>
+</body>
+</html>

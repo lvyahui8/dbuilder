@@ -1,0 +1,85 @@
+<?php
+//$ctrl->registStyle('js/umeditor1_2_2-utf8-php/themes/default/css/umeditor.min.css');
+//$ctrl->registScript('js/umeditor1_2_2-utf8-php/umeditor.config.js');
+//$ctrl->registScript('js/umeditor1_2_2-utf8-php/umeditor.min.js');
+//$ctrl->registScript('js/umeditor1_2_2-utf8-php/lang/zh-cn/zh-cn.js');
+//$ctrl->registScript('js/ue-utf8-php/ueditor.config.js');
+//$ctrl->registScript('js/ue-utf8-php/ueditor.all.min.js');
+//$ctrl->registScript('js/ue-utf8-php/lang/zh-cn/zh-cn.js');
+$formOption = $config['form_options'];
+$layout = $formOption['layout'];
+$labelCols = $layout['label_cols'];
+$inputCols = $layout['input_cols'];
+$labelCss = "col-sm-$labelCols";
+$inputCss = "col-sm-$inputCols";
+$loadUE = false;
+?>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?php if($model->id): ?>  编辑<code>#<?php echo $model->id; ?></code><?php else: ?> 新建  <?php endif; ?></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-<?php echo $layout['cols']; ?> col-sm-offset-<?php echo (12-$layout['cols'])/2; ?>">
+                <form class="form-horizontal" action="<?php echo URL::to('admin/'.$stdName.'/edit'); ?>" method="post">
+                    <input type="hidden" name="id" value="<?php echo $model->id; ?>">
+                    <?php foreach($config['fields'] as $field => $settings):?>
+                    <?php
+                    $type = $settings['form']['type'];
+                    ?>
+                    <div class="form-group">
+                        <label for="<?php echo $field; ?>" class="<?php echo $labelCss; ?>"><?php echo $settings['label']; ?></label>
+                        <div class="<?php echo $inputCss; ?>">
+                            <?php if($type === 'textarea'):?>
+                            <textarea name="<?php echo $field; ?>" id="<?php echo $field; ?>" rows="10"
+                                      class="form-control"><?php echo $model->$field; ?></textarea>
+                            <?php elseif($type === 'select'):?>
+                            <select name="<?php echo $field; ?>" id="<?php echo $field; ?>" class="form-control">
+                                <?php $options = $settings['options']();foreach($options as $opt_val => $opt_txt):?>
+                                <option value="<?php echo $opt_val; ?>"><?php echo $opt_txt; ?></option>
+                                <?php endforeach;?>
+                            </select>
+                            <?php elseif($type === 'wysiwyg'):?>
+                            <?php
+                            $loadUE = true;
+                            ?>
+                            <script type="text/plain" name="<?php echo $field; ?>" id="wysiwyg-edit"
+                                    style="width:100%;height:240px;"><?php echo $model->$field; ?></script>
+                            <?php else:?>
+                            <input type="text" class="form-control" name="<?php echo $field; ?>" id="<?php echo $field; ?>"
+                                   value="<?php echo $model->$field; ?>">
+                            <?php endif;?>
+                        </div>
+                    </div>
+                    <?php endforeach;?>
+                    <div class="form-group">
+                        <div class="<?php echo $inputCss; ?> col-sm-offset-<?php echo $labelCols; ?>">
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<?php if($loadUE):?>
+<?php $__env->startSection('styles'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('scripts'); ?>
+    <?php echo HTML::script('plugins/ue-utf8-php/ueditor.config.js'); ?>
+
+    <?php echo HTML::script('plugins/ue-utf8-php/ueditor.all.min.js'); ?>
+
+    <?php echo HTML::script('plugins/ue-utf8-php/lang/zh-cn/zh-cn.js'); ?>
+
+<?php $__env->stopSection(); ?>
+<?php endif;?>
+<?php $__env->startSection('footScript'); ?>
+    <script>
+        var ue = null,
+                ueId = 'wysiwyg-edit';
+        if (document.getElementById(ueId)) {
+            ue = UE.getEditor(ueId);
+        }
+    </script>
+<?php $__env->stopSection(); ?>

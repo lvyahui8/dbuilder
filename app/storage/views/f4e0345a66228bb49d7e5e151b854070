@@ -1,0 +1,13 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Administrator
+ * Date: 2015/12/7
+ * Time: 23:38
+ */
+
+?>
+
+<div class="">
+    <a href="<?php echo URL::to('demo/hacker'); ?>">黑客帝国刷屏</a>
+</div>

@@ -1,0 +1,22 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Neon Admin Panel" />
+<meta name="author" content="" />
+<title>若尘博客</title>
+<?php /*<?php echo HTML::style('css/bootstrap.css'); ?>*/ ?>
+<?php /*<?php echo HTML::style('css/bootstrap-theme.css'); ?>*/ ?>
+<?php echo HTML::style('css/commons.css'); ?>
+
+
+<?php echo HTML::script('js/jquery-1.11.0.min.js'); ?>
+
+<!--[if lt IE 9]><?php echo HTML::script('js/ie8-responsive-file-warning.js'); ?><![endif]-->
+
+<!--[if lt IE 9]>
+<?php echo HTML::script('js/html5shiv.js'); ?>
+
+<?php echo HTML::script('js/respond.min.js'); ?>
+
+<![endif]-->

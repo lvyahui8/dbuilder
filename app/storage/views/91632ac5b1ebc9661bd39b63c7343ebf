@@ -1,0 +1,26 @@
+
+<?php /*本页面特殊需要的CSS*/ ?>
+<?php echo $__env->yieldContent('styles',''); ?>
+
+<?php /*公共JS*/ ?>
+<?php echo HTML::script(asset('assets/js/gsap/main-gsap.js')); ?>
+
+<?php echo HTML::script(asset('assets/js/jquery-ui/js/jquery-ui-1.10.3.minimal.min.js')); ?>
+
+<?php echo HTML::script(asset('assets/js/bootstrap.js')); ?>
+
+<?php echo HTML::script(asset('assets/js/joinable.js')); ?>
+
+<?php echo HTML::script(asset('assets/js/resizeable.js')); ?>
+
+<?php echo HTML::script(asset('assets/js/joinable.js')); ?>
+
+<?php echo HTML::script(asset('assets/js/neon-api.js')); ?>
+
+<?php echo HTML::script('assets/js/neon-custom.js'); ?>
+
+<?php /*本页面特殊需要的js*/ ?>
+<?php echo $__env->yieldContent('scripts',''); ?>
+<?php echo HTML::script('assets/js/commons.js'); ?>
+
+<?php echo $__env->yieldContent('footScript',''); ?>

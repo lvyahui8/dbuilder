@@ -1,0 +1,52 @@
+<?php
+$ctrl->registStyle('js/syntaxhighlighter/styles/shCoreRDark.css');
+$ctrl->registScript('js/syntaxhighlighter/scripts/shCore.js');
+$ctrl->registScript('js/syntaxhighlighter/scripts/shAutoloader.js');
+?>
+<div class="row">
+    <div class="col-sm-8">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <h3><?php echo $post->title; ?></h3>
+                <p><?php echo $post->created_at; ?> <?php echo $post->view_ct; ?> 次浏览</p>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <blockquote>
+                            <p>
+                                <?php echo $post->short; ?>
+
+                            </p>
+                        </blockquote>
+                    </div>
+                </div>
+                <?php echo $post->content; ?>
+
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="pull-left">
+                            <a <?php if($prevPost): ?> href="<?php echo URL::to('blog/view/'.$prevPost->id); ?>" <?php else: ?> class="disabled" <?php endif; ?>>上一篇:<?php echo $prevPost != null ? $prevPost->title : '没有了'; ?></a>
+                        </div>
+                        <div class="pull-right">
+
+                            <a <?php if($nextPost): ?> href="<?php echo URL::to('blog/view/'.$nextPost->id); ?>" <?php else: ?> class="disabled" <?php endif; ?>>下一篇:<?php echo $nextPost != null ? $nextPost->title : '没有了'; ?></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <h4>评论</h4>
+                <div class="panel">
+                    <div class="panel-body">
+                        <div id="comments-container" data-ajax-url="<?php echo URL::to('comment/list?proj_type=post&proj_id='.$post->id); ?>"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

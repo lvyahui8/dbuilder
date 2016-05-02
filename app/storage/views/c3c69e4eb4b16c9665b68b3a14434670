@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <?php echo $__env->make('layouts.admin.head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+</head>
+<body>
+<?php
+
+$subIndex = $routeMethod === 'getIndex';
+$navMap = array(
+        'site'  =>  array(
+                'url'   =>  URL::to(''),
+                'text'  =>  '首页'
+        ),
+        'blog'  =>  array(
+                'text'  =>  '博客',
+        ),
+        'code'  =>  array(
+                'text'  =>  '微码'
+        ),
+        'comment'  =>  array(
+                'text'  =>  '评论'
+        ),
+);
+?>
+<div class="wrap">
+    <?php echo $__env->make('layouts.admin.menu', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <div class="container">
+        <?php if($stdName !== 'site'):?>
+        <ol class="breadcrumb">
+            <li><a href="<?=URL::to('')?>">首页</a></li>
+            <li>
+                <a href="<?=isset($navMap[$stdName]['url']) ? $navMap[$stdName]['url'] : URL::to('admin/'.$stdName.'/list')?>"
+                   class="<?=$subIndex ? 'active' : null?>">
+                    <?=isset($navMap[$stdName]['text']) ?$navMap[$stdName]['text'] : strtoupper($stdName)?>
+                </a>
+            </li>
+            <?php if(!$subIndex):?>
+            <li class="active"><?=strtoupper($routeMethod)?></li>
+            <?php endif;?>
+        </ol>
+        <br>
+        <?php endif;?>
+        <div class="row">
+            <div class="col-sm-12">
+                <?php echo $content; ?>
+
+            </div>
+        </div>
+    </div>
+    <br>
+    <?php echo $__env->make('layouts.admin.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+</div>
+<?php echo $__env->yieldContent('footerScript',''); ?>
+</body>
+</html>
