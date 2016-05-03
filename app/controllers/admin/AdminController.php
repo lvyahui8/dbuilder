@@ -102,6 +102,7 @@ class AdminController extends \BaseController
             $query = $this->model->newQuery();
             $this->handleListQuery($query);
             $selects = array($this->model->getTable().'.*');
+
             foreach($this->savedConfig['relations'] as $field=>&$params){
                 $query->join($params['table'],$params['table'].'.'.$params['foreign_key'],'=',$this->model->getTable().'.'.$field);
                 if(!isset($params['as'])){
@@ -110,7 +111,10 @@ class AdminController extends \BaseController
                 $selects[] = $params['table'].'.'.$params['show'] . ' as '.$params['as'];
             }
             $query->select($selects);
-            $this->handleListQuery($query);
+            $orderBy = Input::get('list_order_by');
+            if( $orderBy){
+                $query->orderBy($this->model->getTable().'.'.$orderBy,Input::get('list_sort_asc') ? 'asc' : 'desc');
+            }
             $page = Input::has('_page') ? Input::get('_page') : 10;
             $models = $query->paginate($page);
         }

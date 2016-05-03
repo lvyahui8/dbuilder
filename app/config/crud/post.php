@@ -21,7 +21,8 @@ return array(
 
             'list'     => array(
                 'search'    =>  array(
-                )
+                ),
+                'sort'  =>  false,
             ),
             'relation' => array(
                 'table'       => 'category',

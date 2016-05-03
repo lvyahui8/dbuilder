@@ -15,7 +15,7 @@ return array(
      */
     'fields'    =>  array(
         'field_name' =>  array(
-            /* 现在在列表表格的表头的内容，和form控件旁边的内容*/
+            /* 显示在列表表格的表头的内容，和form控件旁边的内容*/
             'label' =>  '字段中文名',
             /* 字段缺省值 */
             'value' =>  false,
