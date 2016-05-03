@@ -18,10 +18,12 @@ $list_options = $config['list_options'];
             </div>
         </div>
         <br>
-        <table class="table table-bordered">
+        <table class="table table-condensed table-bordered table-hover table-striped">
             <thead>
             <tr>
-                <th><input type="checkbox" name=""></th>
+                <th><div class="checkbox checkbox-replace">
+                        <input type="checkbox">
+                    </div>  </th>
                 <?php foreach($config['fields'] as $filed=>$settings):?>
                 <?php if($settings['list']['show']):?>
                 <th><?=is_array($settings) && isset($settings['label']) ? $settings['label'] : strtoupper($filed)?></th>
@@ -33,21 +35,25 @@ $list_options = $config['list_options'];
             <tbody>
             <?php foreach($models as  $model):?>
             <tr>
-                <td><input type="checkbox" name=""></td>
+                <td width="18px">
+                    <div class="checkbox checkbox-replace">
+                        <input type="checkbox" >
+                    </div>
+                </td>
                 <?php foreach($config['fields'] as $filed=>$settings):?>
                 <?php if($settings['list']['show']):?>
                 <?php
                 $value = $model->$filed;
                     /* 字段在列表中需要翻译 */
-                if (array_key_exists($filed, $config['translate'])) {
-                    $value = $model->$config['translate'][$filed]['as'];
+                if (array_key_exists($filed, $config['relations'])) {
+                    $value = $model->$config['relations'][$filed]['as'];
                 }
                 ?>
                 <td>{{$value}}</td>
                 <?php endif;?>
                 <?php endforeach;?>
                 <td>
-                    <div class="btn-group btn-group-sm" role="group">
+                    <div class="btn-group btn-group-xs" role="group">
                         @if($list_options['update'])
                             <a href="{{URL::to('admin/'.$stdName.'/edit/'.$model->id)}}" class="btn btn-primary">编辑</a>
                         @endif

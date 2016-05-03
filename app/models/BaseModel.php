@@ -12,7 +12,7 @@ class BaseModel extends Eloquent
     protected $guarded = array('id');
 
     public static function getTranslates($translate){
-        $rows = DB::table($translate['table'])->select(array($translate['compare'],$translate['to']))->get();
+        $rows = DB::table($translate['table'])->select(array($translate['foreign_key'],$translate['show']))->get();
         return $rows;
     }
 }

@@ -47,13 +47,13 @@ $loadSBox = false;
                                     @endif
                                 @else
                                     <?php
-                                    $fieldTranslate = $config['translate'][$field];
+                                    $fieldTranslate = $config['relations'][$field];
                                     $options = BaseModel::getTranslates($fieldTranslate);
                                     foreach($options as $option):
                                     ?>
-                                    <option value="<?=$option->$fieldTranslate['compare']?>"
-                                            @if($option->$fieldTranslate['compare'] == $model->$field) selected @endif
-                                    ><?=$option->$fieldTranslate['to']?>
+                                    <option value="<?=$option->$fieldTranslate['foreign_key']?>"
+                                            @if($option->$fieldTranslate['foreign_key'] == $model->$field) selected @endif
+                                    ><?=$option->$fieldTranslate['show']?>
                                     </option>
                                     <?php endforeach;?>
                                 @endif

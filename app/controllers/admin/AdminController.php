@@ -60,6 +60,7 @@ class AdminController extends \BaseController
 
         $config = $this->config();
         $defaultConfig = Config::get('crud/admin');
+        $relations = array();
         /* 将默认参数传递给module config */
         foreach($config['fields']   as $field => &$fieldConfig){
             if(isset($fieldConfig['value'])){
@@ -73,6 +74,9 @@ class AdminController extends \BaseController
                 $defaultConfig['fields']['field_name']['list'],
                 isset($fieldConfig['list']) ? $fieldConfig['list'] : array()
             );
+            if(isset($fieldConfig['relation'])){
+                $relations[$field] = $fieldConfig['relation'];
+            }
         }
 
         $config['list_options'] = array_merge(
@@ -85,6 +89,9 @@ class AdminController extends \BaseController
             isset($config['form_options']) ? $config['form_options'] : array()
         );
 
+        /* 将字段的relation汇聚出来，是为了后面的代码方便，同时减少循环 */
+        $config['relations'] = $relations;
+
         $this->savedConfig = $config;
     }
 
@@ -94,12 +101,12 @@ class AdminController extends \BaseController
         if($this->model){
             $query = $this->model->newQuery();
             $selects = array($this->model->getTable().'.*');
-            foreach($this->savedConfig['translate'] as $field=>&$params){
-                $query->join($params['table'],$params['table'].'.'.$params['compare'],'=',$this->model->getTable().'.'.$field);
+            foreach($this->savedConfig['relations'] as $field=>&$params){
+                $query->join($params['table'],$params['table'].'.'.$params['foreign_key'],'=',$this->model->getTable().'.'.$field);
                 if(!isset($params['as'])){
-                    $params['as'] = $params['table'].'_'.$params['to'];
+                    $params['as'] = $params['table'].'_'.$params['show'];
                 }
-                $selects[] = $params['table'].'.'.$params['to'] . ' as '.$params['as'];
+                $selects[] = $params['table'].'.'.$params['show'] . ' as '.$params['as'];
             }
             $query->select($selects);
             $this->handleListQuery($query);
@@ -117,8 +124,8 @@ class AdminController extends \BaseController
         }
         $resp = Redirect::action(get_class($this).'@getEdit', array('id'=>Input::get('id')))->withInput();
         $relations  = array();
-        $items = $this->savedConfig['items'];
-        foreach($items as $field => $item){
+        $fields = $this->savedConfig['fields'];
+        foreach($fields as $field => $fieldConfig){
             $value  = Input::get($field);
             if($item['save'] && $item['type'] !== 'relation'){
                 $this->model->$field = $value;
