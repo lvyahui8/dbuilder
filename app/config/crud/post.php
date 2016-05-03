@@ -26,7 +26,9 @@ return array(
         ),
         'short' =>  array(
             'label' =>  '摘要',
-            'type'  =>  'textarea',
+            'form'  =>  array(
+                'type'  =>  'textarea',
+            ),
         ),
         'content'   =>  array(
             'label' =>  '正文',

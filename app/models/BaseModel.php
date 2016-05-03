@@ -10,4 +10,9 @@ class BaseModel extends Eloquent
 {
     protected $table = '';
     protected $guarded = array('id');
+
+    public static function getTranslates($translate){
+        $rows = DB::table($translate['table'])->select(array($translate['compare'],$translate['to']))->get();
+        return $rows;
+    }
 }

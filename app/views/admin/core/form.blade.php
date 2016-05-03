@@ -13,8 +13,9 @@ $inputCols = $layout['input_cols'];
 $labelCss = "col-sm-$labelCols";
 $inputCss = "col-sm-$inputCols";
 $loadUE = false;
+$loadSBox = false;
 ?>
-<div class="panel panel-default">
+<div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">@if($model->id)  编辑<code>#{{$model->id}}</code>@else 新建  @endif</h3>
     </div>
@@ -28,16 +29,34 @@ $loadUE = false;
                     $type = $settings['form']['type'];
                     ?>
                     <div class="form-group">
-                        <label for="{{$field}}" class="{{$labelCss}}">{{$settings['label']}}</label>
+                        <label for="{{$field}}" class="{{$labelCss}} control-label">{{$settings['label']}}</label>
                         <div class="{{$inputCss}}">
                             <?php if($type === 'textarea'):?>
                             <textarea name="{{$field}}" id="{{$field}}" rows="10"
                                       class="form-control">{{$model->$field}}</textarea>
                             <?php elseif($type === 'select'):?>
-                            <select name="{{$field}}" id="{{$field}}" class="form-control">
-                                <?php $options = $settings['options']();foreach($options as $opt_val => $opt_txt):?>
-                                <option value="{{$opt_val}}">{{$opt_txt}}</option>
-                                <?php endforeach;?>
+                            <?php $loadSBox = true;?>
+                            <select name="{{$field}}" id="{{$field}}" class="selectboxit">
+                                @if ($settings['form']['options'])
+                                    @if(is_array($settings['form']['options']))
+                                        @foreach($settings['form']['options'] as $value => $text)
+                                            <option value="{{$value}}"
+                                                    @if($value == $model->$field) selected @endif>{{$text}}</option>
+                                        @endforeach
+                                    @else
+                                    @endif
+                                @else
+                                    <?php
+                                    $fieldTranslate = $config['translate'][$field];
+                                    $options = BaseModel::getTranslates($fieldTranslate);
+                                    foreach($options as $option):
+                                    ?>
+                                    <option value="<?=$option->$fieldTranslate['compare']?>"
+                                            @if($option->$fieldTranslate['compare'] == $model->$field) selected @endif
+                                    ><?=$option->$fieldTranslate['to']?>
+                                    </option>
+                                    <?php endforeach;?>
+                                @endif
                             </select>
                             <?php elseif($type === 'wysiwyg'):?>
                             <?php
@@ -62,15 +81,23 @@ $loadUE = false;
         </div>
     </div>
 </div>
-<?php if($loadUE):?>
+
 @section('styles')
+    @if($loadSBox)
+        {{HTML::style('assets/js/selectboxit/jquery.selectBoxIt.css')}}
+    @endif
 @stop
 @section('scripts')
+    <?php if($loadUE):?>
     {{HTML::script('plugins/ue-utf8-php/ueditor.config.js')}}
     {{HTML::script('plugins/ue-utf8-php/ueditor.all.min.js')}}
     {{HTML::script('plugins/ue-utf8-php/lang/zh-cn/zh-cn.js')}}
+    <?php endif;?>
+    @if($loadSBox)
+        {{HTML::script('assets/js/selectboxit/jquery.selectBoxIt.min.js')}}
+    @endif
 @stop
-<?php endif;?>
+
 @section('footScript')
     <script>
         var ue = null,
