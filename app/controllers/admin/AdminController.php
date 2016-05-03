@@ -100,6 +100,7 @@ class AdminController extends \BaseController
         $models = array();
         if($this->model){
             $query = $this->model->newQuery();
+            $this->handleListQuery($query);
             $selects = array($this->model->getTable().'.*');
             foreach($this->savedConfig['relations'] as $field=>&$params){
                 $query->join($params['table'],$params['table'].'.'.$params['foreign_key'],'=',$this->model->getTable().'.'.$field);
@@ -163,22 +164,24 @@ class AdminController extends \BaseController
 
     protected function handleListQuery(&$query)
     {
-        if(isset($this->savedConfig['list_options']) && isset($this->savedConfig['list_options']['filters'])){
-            $filters = array_intersect_key($this->savedConfig['list_options']['filters'],Input::all());
-            foreach($filters as $field=>$option){
+        $searchFields = array_intersect_key($this->savedConfig['fields'],Input::all());
+        foreach($searchFields as $field=> $fieldConfig){
+            if(isset($fieldConfig['list']['search'])){
                 $value = Input::get($field);
+                $option = $fieldConfig['list']['search'];
                 if($value !== ''){
                     if(isset($option['operator'])){
                         if($option['operator'] === 'like'){
                             $value = '%'.$value.'%';
                         }
-                        $query = $query->where($field,$option['operator'],$value);
+                        $query = $query->where($this->model->getTable().'.'.$field,$option['operator'],$value);
                     }else{
-                        $query = $query->where($field,$value);
+                        $query = $query->where($this->model->getTable().'.'.$field,$value);
                     }
                 }
             }
         }
+
     }
 
     protected function beforeDelete($id)

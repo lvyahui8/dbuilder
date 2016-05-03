@@ -8,16 +8,21 @@
 
 return array(
     'fields' => array(
+        'id'    =>  array(
+
+        ),
         'category_id' => array(
             'label' => '栏目',
-
             'form' => array(
                 'type'    => 'select',
                 /* options 不指定，那么options将按tranlate中字段的外键关系加载 */
                 'options' => null,
             ),
 
-            'list'     => array(),
+            'list'     => array(
+                'search'    =>  array(
+                )
+            ),
             'relation' => array(
                 'table'       => 'category',
                 'foreign_key' => 'id',
@@ -29,6 +34,11 @@ return array(
 
         'title'       => array(
             'label' => '标题',
+            'list'  =>  array(
+                'search'    =>  array(
+                    'operator'  =>  'like'
+                )
+            )
         ),
 
         'short'       => array(
@@ -36,6 +46,9 @@ return array(
             'form'  => array(
                 'type' => 'textarea',
             ),
+            'list'  =>  array(
+                'search'    =>  false
+            )
         ),
 
         'content'     => array(

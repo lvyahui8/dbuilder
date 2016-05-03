@@ -26,10 +26,11 @@ $loadSBox = false;
                     <input type="hidden" name="{{$model->getKeyName()}}" value="{{$model->getKey()}}">
                     <?php foreach($config['fields'] as $field => $settings):?>
                     <?php
+                        if($field === $model->getKeyName()) continue;
                     $type = $settings['form']['type'];
                     ?>
                     <div class="form-group">
-                        <label for="{{$field}}" class="{{$labelCss}} control-label">{{$settings['label']}}</label>
+                        <label for="{{$field}}" class="{{$labelCss}} control-label">{{isset($settings['label']) ? $settings['label'] : strtoupper($field)}}</label>
                         <div class="{{$inputCss}}">
                             <?php if($type === 'textarea'):?>
                             <textarea name="{{$field}}" id="{{$field}}" rows="10"

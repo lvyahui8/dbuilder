@@ -1,5 +1,6 @@
 <?php
 $list_options = $config['list_options'];
+$loadSBox = false;
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -21,9 +22,11 @@ $list_options = $config['list_options'];
         <table class="table table-condensed table-bordered table-hover table-striped">
             <thead>
             <tr>
-                <th><div class="checkbox checkbox-replace">
+                <th>
+                    <div class="checkbox checkbox-replace">
                         <input type="checkbox">
-                    </div>  </th>
+                    </div>
+                </th>
                 <?php foreach($config['fields'] as $filed=>$settings):?>
                 <?php if($settings['list']['show']):?>
                 <th><?=is_array($settings) && isset($settings['label']) ? $settings['label'] : strtoupper($filed)?></th>
@@ -33,18 +36,49 @@ $list_options = $config['list_options'];
             </tr>
             </thead>
             <tbody>
+            <tr>
+                <form class="" action="" method="get">
+                    <td></td>
+                    @foreach($config['fields'] as $field=>$fieldConfig)
+                        @if($fieldConfig['list']['show'])
+                            @if(isset($fieldConfig['list']['search']) && $fieldConfig['list']['search'] !== false)
+                                <td>
+                                    @if($fieldConfig['form']['type'] == 'select')
+                                        <?php $loadSBox = true;?>
+                                        {{View::make('components.relation_select',array(
+                                        'fieldConfig'=>$fieldConfig,
+                                        'field' =>  $field,
+                                        ))}}
+                                    @else
+                                        <input type="text" name="{{$field}}" id="{{$field}}" value="{{Input::get($field)}}" class="form-control input-sm">
+                                    @endif
+                                </td>
+                            @else
+                                <td></td>
+                            @endif
+                        @endif
+
+                    @endforeach
+                    <td>
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="submit" class="btn btn-primary">搜索</button>
+                            <button type="reset" onclick="resetForm(this)" class="btn btn-warning">重置</button>
+                        </div>
+                    </td>
+                </form>
+            </tr>
             <?php foreach($models as  $model):?>
             <tr>
                 <td width="18px">
                     <div class="checkbox checkbox-replace">
-                        <input type="checkbox" >
+                        <input type="checkbox">
                     </div>
                 </td>
                 <?php foreach($config['fields'] as $filed=>$settings):?>
                 <?php if($settings['list']['show']):?>
                 <?php
                 $value = $model->$filed;
-                    /* 字段在列表中需要翻译 */
+                /* 字段在列表中需要翻译 */
                 if (array_key_exists($filed, $config['relations'])) {
                     $value = $model->$config['relations'][$filed]['as'];
                 }
@@ -71,3 +105,15 @@ $list_options = $config['list_options'];
         </div>
     </div>
 </div>
+
+
+@section('styles')
+    @if($loadSBox)
+        {{HTML::style('assets/js/selectboxit/jquery.selectBoxIt.css')}}
+    @endif
+@stop
+@section('scripts')
+    @if($loadSBox)
+        {{HTML::script('assets/js/selectboxit/jquery.selectBoxIt.min.js')}}
+    @endif
+@stop
