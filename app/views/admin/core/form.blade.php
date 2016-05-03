@@ -23,7 +23,7 @@ $loadSBox = false;
         <div class="row">
             <div class="col-sm-{{$layout['cols']}} col-sm-offset-{{(12-$layout['cols'])/2}}">
                 <form class="form-horizontal" action="{{URL::to('admin/'.$stdName.'/edit')}}" method="post">
-                    <input type="hidden" name="id" value="{{$model->id}}">
+                    <input type="hidden" name="{{$model->getKeyName()}}" value="{{$model->getKey()}}">
                     <?php foreach($config['fields'] as $field => $settings):?>
                     <?php
                     $type = $settings['form']['type'];

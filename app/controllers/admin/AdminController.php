@@ -117,33 +117,30 @@ class AdminController extends \BaseController
     }
 
 
-    public function postEdit($id = null){
-        if ($id || Input::has('id'))
-        {
-            $this->model = $this->model->find(Input::has('id') ? Input::get('id') : $id);
-        }
-        $resp = Redirect::action(get_class($this).'@getEdit', array('id'=>Input::get('id')))->withInput();
-        $relations  = array();
-        $fields = $this->savedConfig['fields'];
-        foreach($fields as $field => $fieldConfig){
-            $value  = Input::get($field);
-            if($item['save'] && $item['type'] !== 'relation'){
-                $this->model->$field = $value;
-            }else if($item['save']){
-                if(is_array($value)){
-                    foreach($value as $v){
-                        $relations[$field][] = $this->model->$field()->getRelated()->find($v);
-                    }
-                }else{
-                    $relations[$field][] =
-                        $this->model->$field()->getRelated()->find($value);
-                }
-            }
+    public function postEdit($primaryKeyValue = null){
+//        $resp = Redirect::action(get_class($this).'@getEdit', array('id'=>Input::get('id')))->withInput();
+//        $relations  = array();
+
+        $primaryKeyName = $this->model->getKeyName();
+        if($primaryKeyValue == null){
+            $primaryKeyValue = Input::get($primaryKeyName);
         }
 
-        if($this->beforeSave($this->model,$relations) && $this->model->save()){
-            $resp = Redirect::action(get_class($this).'@getList')->withMessage('save success!');
+        $fields = $this->savedConfig['fields'];
+        $datas = array();
+        foreach($fields as $field => $fieldConfig){
+            $datas[$field] = Input::get($field);
         }
+
+        if($primaryKeyValue){
+            $this->model->where($primaryKeyName,$primaryKeyValue)->update($datas);
+        }else{
+            $this->model->fill($datas);
+            $this->model->save();
+        }
+
+        $resp = Redirect::action(get_class($this).'@getList')->withMessage('save success!');
+
         return $resp;
     }
 
