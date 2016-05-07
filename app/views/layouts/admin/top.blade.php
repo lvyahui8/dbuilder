@@ -9,8 +9,8 @@
             <li class="profile-info dropdown"><!-- add class "pull-right" if you want to place this from right -->
 
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="assets/images/thumb-1@2x.png" alt="" class="img-circle" width="44"/>
-                    John Henderson
+                    <img src="{{asset('assets/images/rc.jpg')}}" alt="" class="img-circle" width="44"/>
+                    Super Admin
                 </a>
 
                 <ul class="dropdown-menu">
@@ -22,28 +22,28 @@
                     <li>
                         <a href="extra-timeline.html">
                             <i class="entypo-user"></i>
-                            Edit Profile
+                            操作日志
                         </a>
                     </li>
 
                     <li>
-                        <a href="mailbox.html">
+                        <a href="{{URL::to('admin/module/list')}}">
                             <i class="entypo-mail"></i>
-                            Inbox
+                            Module管理
                         </a>
                     </li>
 
                     <li>
                         <a href="extra-calendar.html">
                             <i class="entypo-calendar"></i>
-                            Calendar
+                            数据源管理
                         </a>
                     </li>
 
                     <li>
-                        <a href="#">
-                            <i class="entypo-clipboard"></i>
-                            Tasks
+                        <a href="extra-calendar.html">
+                            <i class="entypo-calendar"></i>
+                            菜单管理
                         </a>
                     </li>
                 </ul>
@@ -51,7 +51,7 @@
 
         </ul>
 
-        <ul class="user-info pull-left pull-right-xs pull-none-xsm">
+        <ul class="user-info pull-left pull-right-xs pull-none-xsm hidden">
 
             <!-- Raw Notifications -->
             <li class="notifications dropdown">
@@ -82,62 +82,6 @@
 
                                             <span class="line small">
                                                 30 seconds ago
-                                            </span>
-                                </a>
-                            </li>
-
-                            <li class="unread notification-secondary">
-                                <a href="#">
-                                    <i class="entypo-heart pull-right"></i>
-
-                                            <span class="line">
-                                                <strong>Someone special liked this</strong>
-                                            </span>
-
-                                            <span class="line small">
-                                                2 minutes ago
-                                            </span>
-                                </a>
-                            </li>
-
-                            <li class="notification-primary">
-                                <a href="#">
-                                    <i class="entypo-user pull-right"></i>
-
-                                            <span class="line">
-                                                <strong>Privacy settings have been changed</strong>
-                                            </span>
-
-                                            <span class="line small">
-                                                3 hours ago
-                                            </span>
-                                </a>
-                            </li>
-
-                            <li class="notification-danger">
-                                <a href="#">
-                                    <i class="entypo-cancel-circled pull-right"></i>
-
-                                            <span class="line">
-                                                John cancelled the event
-                                            </span>
-
-                                            <span class="line small">
-                                                9 hours ago
-                                            </span>
-                                </a>
-                            </li>
-
-                            <li class="notification-info">
-                                <a href="#">
-                                    <i class="entypo-info pull-right"></i>
-
-                                            <span class="line">
-                                                The server is status is stable
-                                            </span>
-
-                                            <span class="line small">
-                                                yesterday at 10:30am
                                             </span>
                                 </a>
                             </li>
@@ -188,7 +132,7 @@
                             <li class="active">
                                 <a href="#">
                                             <span class="image pull-right">
-                                                <img src="assets/images/thumb-1.png" alt="" class="img-circle"/>
+                                                <img src="{{asset('assets/images/dj.jpg')}}" alt="" class="img-circle"/>
                                             </span>
 
                                             <span class="line">
@@ -205,7 +149,7 @@
                             <li class="active">
                                 <a href="#">
                                             <span class="image pull-right">
-                                                <img src="assets/images/thumb-1.png" alt="" class="img-circle"/>
+                                                <img src="{{asset('assets/images/dj.jpg')}}" alt="" class="img-circle"/>
                                             </span>
 
                                             <span class="line">
@@ -215,40 +159,6 @@
 
                                             <span class="line desc small">
                                                 Oh he decisively impression attachment friendship so if everything.
-                                            </span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#">
-                                            <span class="image pull-right">
-                                                <img src="assets/images/thumb-1.png" alt="" class="img-circle"/>
-                                            </span>
-
-                                            <span class="line">
-                                                Hayden Cartwright
-                                                - a week ago
-                                            </span>
-
-                                            <span class="line desc small">
-                                                Whose her enjoy chief new young. Felicity if ye required likewise so doubtful.
-                                            </span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#">
-                                            <span class="image pull-right">
-                                                <img src="assets/images/thumb-1.png" alt="" class="img-circle"/>
-                                            </span>
-
-                                            <span class="line">
-                                                Sandra Eberhardt
-                                                - 16 days ago
-                                            </span>
-
-                                            <span class="line desc small">
-                                                On so attention necessary at by provision otherwise existence direction.
                                             </span>
                                 </a>
                             </li>
@@ -306,62 +216,6 @@
                                             </span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
-                                            <span class="task">
-                                                <span class="desc">HTML Slicing</span>
-                                                <span class="percent">91%</span>
-                                            </span>
-
-                                            <span class="progress">
-                                                <span style="width: 91%;" class="progress-bar progress-bar-success">
-                                                    <span class="sr-only">91% Complete</span>
-                                                </span>
-                                            </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                            <span class="task">
-                                                <span class="desc">Database Repair</span>
-                                                <span class="percent">12%</span>
-                                            </span>
-
-                                            <span class="progress progress-striped">
-                                                <span style="width: 12%;" class="progress-bar progress-bar-warning">
-                                                    <span class="sr-only">12% Complete</span>
-                                                </span>
-                                            </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                            <span class="task">
-                                                <span class="desc">Backup Create Progress</span>
-                                                <span class="percent">54%</span>
-                                            </span>
-
-                                            <span class="progress progress-striped">
-                                                <span style="width: 54%;" class="progress-bar progress-bar-info">
-                                                    <span class="sr-only">54% Complete</span>
-                                                </span>
-                                            </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                            <span class="task">
-                                                <span class="desc">Upgrade Progress</span>
-                                                <span class="percent">17%</span>
-                                            </span>
-
-                                            <span class="progress progress-striped">
-                                                <span style="width: 17%;" class="progress-bar progress-bar-important">
-                                                    <span class="sr-only">17% Complete</span>
-                                                </span>
-                                            </span>
-                                </a>
-                            </li>
                         </ul>
                     </li>
 
@@ -385,40 +239,23 @@
             <!-- Language Selector -->
             <li class="dropdown language-selector">
 
-                Language: &nbsp;
+                语言: &nbsp;
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-close-others="true">
-                    <img src="assets/images/flag-uk.png"/>
+                    <img src="{{asset('assets/images/china.png')}}"/>
                 </a>
 
                 <ul class="dropdown-menu pull-right">
+
                     <li>
                         <a href="#">
-                            <img src="assets/images/flag-de.png"/>
-                            <span>Deutsch</span>
+                            <img src="{{asset('assets/images/english.png')}}"/>
+                            <span>English</span>
                         </a>
                     </li>
                     <li class="active">
                         <a href="#">
-                            <img src="assets/images/flag-uk.png"/>
-                            <span>English</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="assets/images/flag-fr.png"/>
-                            <span>François</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="assets/images/flag-al.png"/>
-                            <span>Shqip</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="assets/images/flag-es.png"/>
-                            <span>Español</span>
+                            <img src="{{asset('assets/images/china.png')}}" />
+                            <span>中文</span>
                         </a>
                     </li>
                 </ul>
@@ -430,8 +267,8 @@
 
             <li>
                 <a href="#" data-toggle="chat" data-collapse-sidebar="1">
-                    <i class="entypo-chat"></i>
-                    Chat
+                    <i class="entypo-help"></i>
+                    帮助
 
                     <span class="badge badge-success chat-notifications-badge is-hidden">0</span>
                 </a>
@@ -441,7 +278,7 @@
 
             <li>
                 <a href="extra-login.html">
-                    Log Out <i class="entypo-logout right"></i>
+                    退出 <i class="entypo-logout right"></i>
                 </a>
             </li>
         </ul>

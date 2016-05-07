@@ -7,6 +7,7 @@
     <div class="main-content">
         @include('layouts.admin.top')
         <hr>
+        @include('layouts.admin.breadcrumb')
         {{$content}}
         @include('layouts.admin.footer')
     </div>

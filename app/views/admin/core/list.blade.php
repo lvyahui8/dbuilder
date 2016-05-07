@@ -5,7 +5,7 @@
             font-weight: bold;
         }
     </style>
-@stop
+@append
 <?php
 $list_options = $config['list_options'];
 $loadSBox = false;
@@ -62,10 +62,14 @@ $loadSBox = false;
                                 <td>
                                     @if($fieldConfig['form']['type'] == 'select')
                                         <?php $loadSBox = true;?>
-                                        {{View::make('components.relation_select',array(
-                                        'fieldConfig'=>$fieldConfig,
-                                        'field' =>  $field,
-                                        ))}}
+                                        @if(isset($fieldConfig['relation']))
+                                            {{View::make('components.relation_select',array(
+                                            'fieldConfig'=>$fieldConfig,
+                                            'field' =>  $field,
+                                            ))}}
+                                        @else
+
+                                        @endif
                                     @else
                                         <input type="text" name="{{$field}}" id="{{$field}}"
                                                value="{{Input::get($field)}}" class="form-control input-sm">

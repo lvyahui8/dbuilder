@@ -126,4 +126,12 @@ class SiteController extends BaseController
     public function error404(){
         $this->makeView();
     }
+
+    public function getDatasource(){
+        $comments = DB::connection('datasource.1')->table('comments')->get();
+        foreach($comments as $comment){
+            echo $comment->content."\n";
+        }
+        exit;
+    }
 }

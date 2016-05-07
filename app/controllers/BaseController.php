@@ -16,6 +16,7 @@ class BaseController extends Controller
 
     protected $stdName = null;
 
+    protected $routeParams = false;
     /**
      * Setup the layout used by the controller.
      *
@@ -64,10 +65,11 @@ class BaseController extends Controller
 
     public function makeView($data = array(),$view = null){
         if(!$view){
-            $controllerName = strtolower(str_replace("\\",".",$this->getStdName()));
-            $methodName = $this->routeMethod();
+            $routeParams = $this->getRouteParams();
+            $controllerName = $routeParams['c'];
+            $methodName = $routeParams['m'];
             if(preg_match('/^get(.*)$/',$methodName,$matches)){
-                $methodName = lcfirst($matches[1]);
+                $methodName = snake_case(lcfirst($matches[1]));
             }
             $view = $controllerName.'.'.$methodName;
         }
@@ -78,28 +80,35 @@ class BaseController extends Controller
             return View::make($view,$data);
         }else{
             $this->layout->nest('content',$view,$data);
-            return false;
         }
     }
 
-    public function routeController(){
-        return $this->routeAction()['controller'];
+
+    public function getRouteParams(){
+        if(!$this->routeParams){
+            list($class,$method) = explode('@',Route::current()->getActionName());
+            $class = str_replace("\\",".",substr($class,0,strrpos($class,'Controller')));
+            $names = explode(".",$class);
+            foreach ($names as & $name) {
+                $name = snake_case($name);
+            }
+            $class = implode('.',$names);
+            $this->routeParams = array(
+                'c'    =>  $class,
+                'm'        =>  $method
+            );
+        }
+
+        return $this->routeParams;
     }
 
-    public function routeMethod(){
-        return $this->routeAction()['method'];
-    }
-
-    public function routeAction(){
-        list($class,$method) = explode('@',Route::current()->getActionName());
-        return array(
-            'controller'    =>  $class,
-            'method'        =>  $method
-        );
+    public function getRouteParam($key){
+        $routePatams = $this->getRouteParams();
+        return $routePatams[$key];
     }
 
     public function getIndex(){
-        return Redirect::action($this->routeController().'@getList');
+        return Redirect::action(get_class($this).'@getList');
     }
 
     protected function paginateModels(){

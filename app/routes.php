@@ -11,6 +11,7 @@
 |
 */
 
+require_once 'module_routes.php';
 
 Route::get('site/404','SiteController@error404');
 
@@ -18,6 +19,10 @@ Route::controller('site','SiteController');
 Route::controller('user','UserController');
 
 Route::group(array('prefix'=>'admin'),function(){
-    Route::controller('post','admin\PostController');
+    Route::controller('module','admin\ModuleController');
+    Route::controller('data-source','admin\DataSourceController');
+    foreach(){
+
+    }
 });
 

@@ -18,9 +18,10 @@ class AdminController extends \BaseController
     {
         parent::__construct();
         View::share('stdName',$this->getStdName());
-        View::share('routeMethod',$this->routeMethod());
-        $this->assignModel($this->model);
-
+        View::share('routeParams',$this->getRouteParams());
+        if($this->model){
+            $this->assignModel($this->model);
+        }
         View::share('config',$this->savedConfig);
     }
 
@@ -43,7 +44,13 @@ class AdminController extends \BaseController
             'model'   =>  $this->model,
             $this->modelName=>$this->model,
         );
-        $this->makeView($data,'admin.core.form');
+        $this->beforeEdit($data);
+
+        $view = $this->getRouteParam('c').'._form';
+        if(!View::exists($view)){
+            $view = 'admin.core.form';
+        }
+        $this->makeView($data,$view);
     }
 
     protected function config(){
@@ -143,7 +150,7 @@ class AdminController extends \BaseController
             $this->model->fill($datas);
             $this->model->save();
         }
-
+        $this->afterSave($this->model);
         $resp = Redirect::action(get_class($this).'@getList')->withMessage('save success!');
 
         return $resp;
@@ -189,6 +196,15 @@ class AdminController extends \BaseController
     }
 
     protected function beforeDelete($id)
+    {
+
+    }
+
+    protected function beforeEdit(&$data)
+    {
+    }
+
+    protected function afterSave($model)
     {
 
     }
