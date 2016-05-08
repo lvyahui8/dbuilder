@@ -1,0 +1,1 @@
+<a class="btn btn-xs btn-default" href="{{URL::to('admin/'.SiteHelpers::linkCase($model->name).'/list')}}">查看</a>

@@ -29,12 +29,15 @@ class BaseModel extends Eloquent
         return $t;
     }
 
-    static function getTableField( $table )
+    static function getTableColumns( $table,$connection  = false)
     {
-        $columns = array();
-        foreach(DB::select("SHOW COLUMNS FROM $table") as $column)
-            $columns[$column->Field] = $column->Field;
-        return $columns;
+//        $columns = array();
+        $sql  = "SHOW COLUMNS FROM $table";
+        $rawColumns = $connection ? DB::connection($connection)->select($sql)
+            : DB::select($sql);
+//        foreach($rawColumns as $column)
+//            $columns[$column->Field] = $column->Field;
+        return $rawColumns;
     }
 
     function getColoumnInfo( $result )
@@ -79,19 +82,6 @@ class BaseModel extends Eloquent
         $mysqli->close();
         return $data;
 
-    }
-
-    static function getColumnTable( $table )
-    {
-        $columns = array();
-        foreach(DB::select("SHOW COLUMNS FROM $table") as $column)
-        {
-            //print_r($column);
-            $columns[$column->Field] = '';
-        }
-
-
-        return $columns;
     }
 
     static function findPrimarykey( $table, $db = null)

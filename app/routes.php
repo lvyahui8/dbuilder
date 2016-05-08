@@ -11,18 +11,19 @@
 |
 */
 
-require_once 'module_routes.php';
+$moduleRoutes = require'module_routes.php';
 
 Route::get('site/404','SiteController@error404');
 
 Route::controller('site','SiteController');
 Route::controller('user','UserController');
+Route::controller('develop','DevelopController');
 
-Route::group(array('prefix'=>'admin'),function(){
+Route::group(array('prefix'=>'admin'),function() use($moduleRoutes){
     Route::controller('module','admin\ModuleController');
     Route::controller('data-source','admin\DataSourceController');
-    foreach(){
-
+    foreach($moduleRoutes as $url => $class){
+        Route::controller($url,$class);
     }
 });
 

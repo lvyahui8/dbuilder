@@ -30,7 +30,8 @@ class DataSourceController extends AdminController
         return Response::json(array(
             'success'   =>  true,
             'data'      =>  array(
-                'tables'    =>  $tables
+                'tables'    =>  $tables,
+                'selected'  =>  Input::get('table')
             )
         ));
     }

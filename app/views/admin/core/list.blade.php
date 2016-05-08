@@ -118,6 +118,9 @@ $loadSBox = false;
                                 <a href="{{URL::to('admin/'.$stdName.'/delete/'.$model->id)}}"
                                    class="btn btn-danger">删除</a>
                             @endif
+                            @if(View::exists('admin.'.snake_case($stdName).'.list_item_links'))
+                                @include('admin.'.snake_case($stdName).'.list_item_links',array('model'=>$model))
+                            @endif
                         </div>
                     </td>
                 </tr>

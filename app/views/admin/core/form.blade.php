@@ -1,11 +1,4 @@
 <?php
-//$ctrl->registStyle('js/umeditor1_2_2-utf8-php/themes/default/css/umeditor.min.css');
-//$ctrl->registScript('js/umeditor1_2_2-utf8-php/umeditor.config.js');
-//$ctrl->registScript('js/umeditor1_2_2-utf8-php/umeditor.min.js');
-//$ctrl->registScript('js/umeditor1_2_2-utf8-php/lang/zh-cn/zh-cn.js');
-//$ctrl->registScript('js/ue-utf8-php/ueditor.config.js');
-//$ctrl->registScript('js/ue-utf8-php/ueditor.all.min.js');
-//$ctrl->registScript('js/ue-utf8-php/lang/zh-cn/zh-cn.js');
 $formOption = $config['form_options'];
 $layout = $formOption['layout'];
 $labelCols = $layout['label_cols'];
@@ -26,7 +19,7 @@ $loadSBox = false;
                     <input type="hidden" name="{{$model->getKeyName()}}" value="{{$model->getKey()}}">
                     <?php foreach($config['fields'] as $field => $settings):?>
                     <?php
-                    if ($field === $model->getKeyName()) continue;
+                    if ($field === $model->getKeyName() || !$settings['form']['show']) continue;
                     $type = $settings['form']['type'];
                     ?>
                     <div class="form-group">

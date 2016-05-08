@@ -21,6 +21,8 @@ return array(
             'value' =>  false,
             /* 针对表单的设置 */
             'form'  =>  array(
+                'show'  =>  true,
+                'hidden'    =>  false,
                 /*
                  * 字段对应表单的控件类型，默认text，
                  * 还支持常用的控件类型

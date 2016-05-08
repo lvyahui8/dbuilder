@@ -14,6 +14,10 @@ class SiteHelpers
         ),Config::get('datasource'));
     }
 
+    public static function getDataSource($rawName){
+        return $rawName === 'core'  ?   'mysql' : $rawName;
+    }
+
     public static function blend($str,$data) {
         $src = $rep = array();
 
@@ -32,5 +36,14 @@ class SiteHelpers
 
         return $res;
 
+    }
+
+    public static function saveArrayToFile($file,$array){
+        $content = '<?php return '.var_export($array,true).';';
+        file_put_contents($file,$content);
+    }
+
+    public static function linkCase($str){
+        return strtolower(preg_replace('/((?<=[a-z])(?=[A-Z]))/', '-', $str));
     }
 }

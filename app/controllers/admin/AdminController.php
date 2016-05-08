@@ -27,11 +27,14 @@ class AdminController extends \BaseController
 
     public function getList(){
         $models = $this->paginateModels();
-
+        $view = $this->getRouteParam('c').'._list';
+        if(!View::exists($view)){
+            $view = 'admin.core.list';
+        }
         $this->makeView(array(
             'models'  =>  $models,
             $this->getStdName().'s' =>  $models,
-        ),'admin.core.list');
+        ),$view);
     }
 
     public function getEdit($id = null)
@@ -81,7 +84,7 @@ class AdminController extends \BaseController
                 $defaultConfig['fields']['field_name']['list'],
                 isset($fieldConfig['list']) ? $fieldConfig['list'] : array()
             );
-            if(isset($fieldConfig['relation'])){
+            if(isset($fieldConfig['relation']) && !empty($fieldConfig['relation'])){
                 $relations[$field] = $fieldConfig['relation'];
             }
         }

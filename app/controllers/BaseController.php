@@ -80,6 +80,7 @@ class BaseController extends Controller
             return View::make($view,$data);
         }else{
             $this->layout->nest('content',$view,$data);
+            return false;
         }
     }
 

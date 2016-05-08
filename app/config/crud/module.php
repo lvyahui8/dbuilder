@@ -46,6 +46,7 @@ return array(
         'db_table_key'  =>  array(
             'label' =>  'Module主表主键',
             'form'  =>  array(
+                'show'  =>  false,
                 'value' =>  'id'
             )
         )
@@ -58,6 +59,7 @@ return array(
             'input_cols' => 8,
         ),
     ),
-    'list_options' => array(),
+    'list_options' => array(
+    ),
 
 );
