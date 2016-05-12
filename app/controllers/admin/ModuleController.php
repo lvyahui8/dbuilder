@@ -10,6 +10,7 @@ namespace admin;
 
 define('MODULE_ROUTES', json_encode(include(app_path() . '/module_routes.php')));
 
+use Illuminate\Support\Facades\Redirect;
 use SiteHelpers;
 use BaseModel;
 use Module;
@@ -32,10 +33,10 @@ class ModuleController extends AdminController
         $codes = array(
             'moduleName'      => $module->name,
             'moduleTitle'     => $module->title,
-            'tablePrimaryKey' => BaseModel::findPrimarykey($module->db_table, $module->db_source === 'core' ? 'mysql' : $module->db_source),
+            'tablePrimaryKey' => BaseModel::findPrimarykey($module->db_table,  $module->db_source),
             'moduleNote'      => $module->note,
             'date'            => date('Y-m-d'),
-            'dbSource'        => SiteHelpers::getDataSource($module->db_source),
+            'dbSource'        => $module->db_source,
             'dbTable'         => $module->db_table,
         );
         $this->removeFiles($codes['moduleName']);
@@ -49,7 +50,7 @@ class ModuleController extends AdminController
 
         /* 生成默认module Configuration*/
         $moduleConfs = $this->buildConfiguration($module->db_table,$module->db_source);
-        SiteHelpers::saveArrayToFile(app_path('config/crud').snake_case($codes['moduleName']).'.php',$moduleConfs);
+        SiteHelpers::saveArrayToFile(app_path('config/crud/').snake_case($codes['moduleName']).'.php',$moduleConfs);
         /* 更新路由 */
         $moduleRoutes = json_decode(MODULE_ROUTES, true); //require(app_path().'/module_routes.php');
         if (is_array($moduleRoutes)) {
@@ -83,7 +84,7 @@ class ModuleController extends AdminController
 
     private function buildConfiguration($table,$connection)
     {
-        $rawColumns = BaseModel::getTableColumns($table,SiteHelpers::getDataSource($connection));
+        $rawColumns = BaseModel::getTableColumns($table,$connection);
         $fields = ConfigUtils::build($rawColumns);
         return array(
             'fields'    =>  $fields
@@ -107,5 +108,23 @@ class ModuleController extends AdminController
         if($resp){
             return $resp;
         }
+    }
+
+
+    public function postSaveFieldsConf(){
+        $resp = Redirect::action(get_class($this).'@getEdit',Input::get('id'));
+        $postFields = Input::get('fields');
+        $moduleName = Input::get('module_key');
+        $confKey = SiteHelpers::reducCase($moduleName);
+        $savedConfig = ConfigUtils::get($confKey);
+        foreach($savedConfig['fields'] as  $fieldName => &$savefield){
+            $postField = $postFields[$fieldName];
+            $savefield['label'] = $postField['label'];
+            $savefield['form']['show']  =   isset($postField['form']['show']);
+            $savefield['form']['hidden']  =   isset($postField['form']['hidden']);
+            $savefield['list']['show']  =   isset($postField['list']['show']);
+        }
+        ConfigUtils::saveGModuleConf($confKey,$savedConfig);
+        return $resp;
     }
 }

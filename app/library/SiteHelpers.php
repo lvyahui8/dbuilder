@@ -9,9 +9,19 @@
 class SiteHelpers
 {
     public static function loadDataSources(){
-        return  array_merge(array(
-            'core'  =>  Config::get('database.connections.mysql')
-        ),Config::get('datasource'));
+//        return  array_merge(array(
+//            'core'  =>  Config::get('database.connections.core')
+//        ),Config::get('datasource'));
+        return Config::get('datasource');
+    }
+
+    public static function supportDrivers(){
+        return array(
+            'mysql' =>  'MySQL',
+            'pgsql' =>  'PostGreSQL',
+            'sqlsrv'=>  'SQL Server',
+            'sqlite'=>  'Sqlite',
+        );
     }
 
     public static function getDataSource($rawName){
@@ -45,5 +55,10 @@ class SiteHelpers
 
     public static function reducCase($str){
         return strtolower(preg_replace('/((?<=[a-z])(?=[A-Z]))/', '-', $str));
+    }
+
+    public static function saveDataSources($dataSources)
+    {
+        self::saveArrayToFile(app_path('config/datasource.php'),$dataSources);
     }
 }

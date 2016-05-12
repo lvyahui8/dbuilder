@@ -1,6 +1,6 @@
 @extends('admin.core.form')
 
-
+@if($model->id)
 @section('form.bottom')
     <div class="row">
 
@@ -22,7 +22,53 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="fields">
-
+                    <form action="{{URL::to('admin/module/save-fields-conf/')}}" method="post">
+                        <input type="hidden" name="id" value="{{$model->id}}">
+                        <input type="hidden" name="module_key" value="{{$model->name}}">
+                        <table class="table table-bordered responsive">
+                            <thead>
+                            <tr>
+                                <th>字段</th>
+                                <th>Label</th>
+                                <th>包含在表单</th>
+                                <th>隐藏在表单</th>
+                                <th>包含在列表</th>
+                                <th>更多配置</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($moduleConf['fields'] as $field => $fieldConf)
+                                <tr>
+                                    <td>{{$field}}</td>
+                                    <td><input type="text" class="form-control input-sm" name="fields[{{$field}}][label]" value="{{$fieldConf['label']}}"/></td>
+                                    <td>
+                                        <div class="checkbox checkbox-replace">
+                                            <label>
+                                                <input type="checkbox" name="fields[{{$field}}][form][show]" @if($fieldConf['form']['show']) checked @endif >
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox checkbox-replace">
+                                            <label>
+                                                <input type="checkbox" name="fields[{{$field}}][form][hidden]"  @if($fieldConf['form']['hidden']) checked @endif >
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox checkbox-replace">
+                                            <label>
+                                                <input type="checkbox" name="fields[{{$field}}][list][show]"  @if($fieldConf['list']['show']) checked @endif >
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </form>
                 </div>
                 <div class="tab-pane" id="perm">
 
@@ -31,47 +77,30 @@
         </div>
     </div>
 @stop
-
+@endif
 
 @section('footScript')
     <script>
         $(document).ready(function () {
             var $tableSelect = $('select#db_table'),
-                    $dbSelect = $('select#db_source'),
-                    $fieldsContainer = $('div#fields'),
-                    firstLoad = false;
+                    $dbSelect = $('select#db_source');
 
             var loadDataSources = function (sourceName) {
-                        $.get("{{URL::to('admin/data-source/tables?data_source=')}}" + sourceName + '&table={{$model->db_table}}', function (resp) {
-                            if (resp.success) {
-                                var $options = [];
-                                for (table in resp.data.tables) {
-                                    $options.push("<option value='" + table + "'"+(resp.data.selected == table ? 'selected' : '')+">" + table + "</option>");
-                                }
-                                $tableSelect.empty().append($options.join('')).data("selectBox-selectBoxIt").refresh();
-                                if(!firstLoad) $tableSelect.trigger('change');
-                                else firstLoad = false;
-                            }
-                        }, 'json');
-                    },
-                    loadFieldsConfig = function(params){
-                        $.get('{{URL::to('admin/module/fields-config')}}',params,function(resp){
-                            $fieldsContainer.html(resp);
-                        },'html');
-                    };
+                $.get("{{URL::to('admin/data-source/tables?data_source=')}}" + sourceName + '&table={{$model->db_table}}', function (resp) {
+                    if (resp.success) {
+                        var $options = [];
+                        for (table in resp.data.tables) {
+                            $options.push("<option value='" + table + "'"+(resp.data.selected == table ? 'selected' : '')+">" + table + "</option>");
+                        }
+                        $tableSelect.empty().append($options.join('')).data("selectBox-selectBoxIt").refresh();
+                    }
+                }, 'json');
+            };
             $dbSelect.change(function (e) {
                 loadDataSources($(this).val());
             });
-            $tableSelect.change(function(e){
-               loadFieldsConfig({"table":$tableSelect.val(),"connection":$dbSelect.val()})
-            });
+
             loadDataSources($dbSelect.val());
-            @if($model->id)
-                firstLoad = true;
-                loadFieldsConfig({"module_name":'{{$model->name}}'});
-            @else
-                //loadFieldsConfig({"table":$tableSelect.val(),"connection":$dbSelect.val()});
-            @endif
         })
     </script>
 @stop

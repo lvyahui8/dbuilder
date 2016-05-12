@@ -69,7 +69,7 @@ class ConfigUtils
 //            }
 
             $fields[$column->Field]['form'] = $form;
-            $fields[$column->Field]['lsit'] = $list;
+            $fields[$column->Field]['list'] = $list;
             $fields[$column->Field]['relation'] = $relation;
         }
         return $fields;
@@ -129,5 +129,14 @@ class ConfigUtils
                 'operator'  =>  '>',
             ),
         );
+    }
+
+
+    public static function saveGModuleConf($confKey,$config){
+        $confFile = app_path('config/crud/').$confKey.'.php';
+        if(file_exists($confFile)){
+            unlink($confFile);
+        }
+        SiteHelpers::saveArrayToFile($confFile,$config);
     }
 }
