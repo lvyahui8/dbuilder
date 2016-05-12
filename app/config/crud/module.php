@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * GModule管理模块的配置文件，手工编写的，不可删除。
  * User: lvyahui
  * Date: 2016/5/8
  * Time: 21:27

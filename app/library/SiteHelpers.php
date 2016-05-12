@@ -24,6 +24,20 @@ class SiteHelpers
         );
     }
 
+    public static function supportFormControls(){
+        return array(
+            'text'  =>  '文本框（text）',
+            'textarea'  =>  '多行文本框（textarea）',
+            'wyswyg'    =>  '富文本（wyswyg）',
+            'select'    =>  '下拉框（select）',
+            'radio'     =>  '单选框（radio）',
+            'checkbox'  =>  '复选框（checkbox）',
+            'file'      =>  '文件（file）',
+            'hidden'    =>  '隐藏（hidden）',
+            'custom'    =>  '自定义（custom）',
+        );
+    }
+
     public static function getDataSource($rawName){
         return $rawName === 'core'  ?   'mysql' : $rawName;
     }

@@ -31,7 +31,6 @@
                                 <th>字段</th>
                                 <th>Label</th>
                                 <th>包含在表单</th>
-                                <th>隐藏在表单</th>
                                 <th>包含在列表</th>
                                 <th>更多配置</th>
                             </tr>
@@ -42,27 +41,22 @@
                                     <td>{{$field}}</td>
                                     <td><input type="text" class="form-control input-sm" name="fields[{{$field}}][label]" value="{{$fieldConf['label']}}"/></td>
                                     <td>
-                                        <div class="checkbox checkbox-replace">
+                                        <div class="checkbox checkbox-replace  color-primary">
                                             <label>
                                                 <input type="checkbox" name="fields[{{$field}}][form][show]" @if($fieldConf['form']['show']) checked @endif >
                                             </label>
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="checkbox checkbox-replace">
-                                            <label>
-                                                <input type="checkbox" name="fields[{{$field}}][form][hidden]"  @if($fieldConf['form']['hidden']) checked @endif >
-                                            </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="checkbox checkbox-replace">
+                                        <div class="checkbox checkbox-replace  color-primary">
                                             <label>
                                                 <input type="checkbox" name="fields[{{$field}}][list][show]"  @if($fieldConf['list']['show']) checked @endif >
                                             </label>
                                         </div>
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        <a class="btn btn-primary btn-sm ajax-form-modal" data-content-url="{{URL::to('admin/module/field-config?module_key='.$model->name.'&field='.$field)}}">编辑</a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -78,12 +72,15 @@
     </div>
 @stop
 @endif
-
+@section('scripts')
+    {{HTML::script('assets/js/jquery.form.min.js')}}
+@stop
 @section('footScript')
     <script>
         $(document).ready(function () {
             var $tableSelect = $('select#db_table'),
-                    $dbSelect = $('select#db_source');
+                    $dbSelect = $('select#db_source'),
+                    $modal = $('div.modal#ajax-modal');
 
             var loadDataSources = function (sourceName) {
                 $.get("{{URL::to('admin/data-source/tables?data_source=')}}" + sourceName + '&table={{$model->db_table}}', function (resp) {
@@ -101,6 +98,18 @@
             });
 
             loadDataSources($dbSelect.val());
+
+            $modal.delegate('form button[type="submit"]','click',function(){
+                var $form = $modal.find('form');
+                $form.ajaxSubmit({
+                    success :   function(resp){
+                        if(resp.success){
+                            $modal.modal('hide');
+                        }
+                    }
+                });
+                return false;
+            });
         })
     </script>
 @stop

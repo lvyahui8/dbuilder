@@ -16,6 +16,8 @@ use BaseModel;
 use Module;
 use ConfigUtils;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Response;
 
 class ModuleController extends AdminController
 {
@@ -92,7 +94,7 @@ class ModuleController extends AdminController
     }
 
     public function getFieldsConfig(){
-        $filedsConfig = array();
+        $filedsConfig = null;
         if(Input::has('module_name')){
             $filedsConfig = ConfigUtils::get(Input::get('module_name'))['fields'];
         }else{
@@ -121,10 +123,31 @@ class ModuleController extends AdminController
             $postField = $postFields[$fieldName];
             $savefield['label'] = $postField['label'];
             $savefield['form']['show']  =   isset($postField['form']['show']);
-            $savefield['form']['hidden']  =   isset($postField['form']['hidden']);
             $savefield['list']['show']  =   isset($postField['list']['show']);
         }
         ConfigUtils::saveGModuleConf($confKey,$savedConfig);
         return $resp;
+    }
+
+    public function getFieldConfig(){
+        $moduleKey = Input::get('module_key');
+        $field = Input::get('field');
+
+        $fieldConfig = Config::get('crud/'.snake_case($moduleKey).'.fields.'.$field);
+
+        $resp = $this->makeView(array(
+            'field' =>  $field,
+            'fieldConfig'   =>  $fieldConfig,
+            'moduleKey' =>  $moduleKey,
+        ));
+        if($resp) return $resp;
+    }
+
+    public function postFieldConfig(){
+        $data = array(
+            'success'   =>  true,
+        );
+        
+        return Response::json($data);
     }
 }
