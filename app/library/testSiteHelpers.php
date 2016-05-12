@@ -6,5 +6,5 @@
  * Time: 9:39
  */
 require_once 'SiteHelpers.php';
-$res = SiteHelpers::linkCase("OrderItEm");
+$res = SiteHelpers::reducCase("OrderItEm");
 echo $res;

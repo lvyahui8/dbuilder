@@ -43,7 +43,7 @@ class SiteHelpers
         file_put_contents($file,$content);
     }
 
-    public static function linkCase($str){
+    public static function reducCase($str){
         return strtolower(preg_replace('/((?<=[a-z])(?=[A-Z]))/', '-', $str));
     }
 }

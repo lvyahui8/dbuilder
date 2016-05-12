@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
+use SiteHelpers;
 
 class AdminController extends \BaseController
 {
@@ -18,6 +19,7 @@ class AdminController extends \BaseController
     {
         parent::__construct();
         View::share('stdName',$this->getStdName());
+        View::share('reducName',SiteHelpers::reducCase($this->getStdName()));
         View::share('routeParams',$this->getRouteParams());
         if($this->model){
             $this->assignModel($this->model);

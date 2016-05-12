@@ -12,10 +12,10 @@
     @foreach($fieldsConfig as $field => $fieldConf)
         <tr>
             <td>{{$field}}</td>
-            <td><input type="text" class="form-control input-sm" value="{{$fieldConf['label']}}"/></td>
+            <td><input type="text" class="form-control input-sm" name="fields[{{$field}}][label]" value="{{$fieldConf['label']}}"/></td>
             <td> <div class="checkbox">
                     <label>
-                        <input type="checkbox" @if($fieldConf['form']['show']) checked @endif >
+                        <input type="checkbox" name="fields[{{$field}}][form][show]" @if($fieldConf['form']['show']) checked @endif >
                     </label>
                 </div> </td>
             <td> <div class="checkbox">

@@ -30,7 +30,7 @@ $loadSBox = false;
         <form class="list-form" action="" method="get">
             <input type="hidden" name="list_sort_asc" value="{{Input::get('list_sort_asc') !== null ? Input::get('list_sort_asc') : 1}}">
             <input type="hidden" name="list_order_by" value="">
-            <table class="table table-condensed table-bordered table-hover table-striped">
+            <table class="table table-bordered responsive table-hover table-striped">
                 <thead>
                 <tr>
                     <th>
@@ -109,7 +109,7 @@ $loadSBox = false;
                     <?php endif;?>
                     <?php endforeach;?>
                     <td>
-                        <div class="btn-group btn-group-xs" role="group">
+                        <div class="btn-group btn-group-sm" role="group">
                             @if($list_options['update'])
                                 <a href="{{URL::to('admin/'.$stdName.'/edit/'.$model->id)}}"
                                    class="btn btn-primary">编辑</a>

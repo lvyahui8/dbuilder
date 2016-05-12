@@ -53,7 +53,7 @@ class ModuleController extends AdminController
         /* 更新路由 */
         $moduleRoutes = json_decode(MODULE_ROUTES, true); //require(app_path().'/module_routes.php');
         if (is_array($moduleRoutes)) {
-            $moduleRoutes[SiteHelpers::linkCase($codes['moduleName'])] = 'admin\\'."{$codes['moduleName']}Controller" ;
+            $moduleRoutes[SiteHelpers::reducCase($codes['moduleName'])] = 'admin\\'."{$codes['moduleName']}Controller" ;
             SiteHelpers::saveArrayToFile(app_path() . '/module_routes.php', $moduleRoutes);
         }
     }

@@ -34,7 +34,7 @@
                     </li>
 
                     <li>
-                        <a href="extra-calendar.html">
+                        <a href="{{URL::to('admin/data-source/list')}}">
                             <i class="entypo-calendar"></i>
                             数据源管理
                         </a>
@@ -48,11 +48,9 @@
                     </li>
                 </ul>
             </li>
-
         </ul>
 
         <ul class="user-info pull-left pull-right-xs pull-none-xsm hidden">
-
             <!-- Raw Notifications -->
             <li class="notifications dropdown">
 
