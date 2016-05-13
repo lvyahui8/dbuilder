@@ -7,6 +7,8 @@
  */
 
 return array(
+    'data_source'   =>  'core',
+    'table'         =>  'd_module',
     'fields' => array(
         'id'        => array(),
         'name'      => array(

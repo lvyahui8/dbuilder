@@ -6,14 +6,14 @@
 
             <!-- logo -->
             <div class="logo">
-                <a href="index.html">
-                    <img src="assets/images/logo@2x.png" width="120" alt="" />
+                <a href="{{URL::to('admin')}}">
+                    <img src="{{asset('assets/images/dbuilder.gif'/*assets/images/logo@2x.png*/)}}" width="120" alt="" />
                 </a>
             </div>
 
             <!-- logo collapse icon -->
             <div class="sidebar-collapse">
-                <a href="#" class="sidebar-collapse-icon"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
+                <a href="#" class="sidebar-collapse-icon with-animation"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
                     <i class="entypo-menu"></i>
                 </a>
             </div>
@@ -29,9 +29,18 @@
         </header>
 
 
-        <ul id="main-menu" class="main-menu">
+        <ul id="main-menu" class="main-menu multiple-expanded">
             <!-- add class "multiple-expanded" to allow multiple submenus to open -->
             <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
+            @foreach(Cache::get('modules') as $module)
+                    <li>
+                        <a href="{{URL::to('admin/'.SiteHelpers::reducCase($module->name).'/list')}}">
+                            <i class="entypo-adjust"></i>
+                            <span>{{$module->title}}</span>
+                        </a>
+                    </li>
+            @endforeach
+                    <!--
             <li class="active opened active">
                 <a href="index.html">
                     <i class="entypo-gauge"></i>
@@ -131,6 +140,7 @@
                     </li>
                 </ul>
             </li>
+			-->
         </ul>
 
     </div>

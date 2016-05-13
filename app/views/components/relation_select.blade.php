@@ -9,7 +9,7 @@ if (!isset($value)) {
 ?>
 <select name="{{$field}}" id="{{$field}}" class="selectboxit">
     <option value="" class="default-value">请选择</option>
-    @if ($fieldConfig['form']['options'])
+    @if (isset($fieldConfig['form']['options']))
         @if(is_array($settings['form']['options']))
             @foreach($settings['form']['options'] as $v => $text)
                 <option value="{{$v}}"

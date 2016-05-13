@@ -1,69 +1,281 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: lvyahui
- * Date: 2016/5/2
- * Time: 13:26
- */
-
-return array(
-    'fields' => array(
-        'id'    =>  array(
-
-        ),
-        'category_id' => array(
-            'label' => '栏目',
-            'form' => array(
-                'type'    => 'select',
-                /* options 不指定，那么options将按tranlate中字段的外键关系加载 */
-                'options' => null,
-            ),
-
-            'list'     => array(
-                'search'    =>  array(
+<?php return array(
+    'data_source'  => 'core',
+    'table'        => 'post',
+    'fields'       =>
+        array(
+            'id'          =>
+                array(
+                    'label'    => 'ID',
+                    'form'     =>
+                        array(
+                            'show'          => true,
+                            'hidden'        => true,
+                            'type'          => 'text',
+                            'rule'          => 'required',
+                            'ajax_validate' => false,
+                            'placeholder'   => '',
+                        ),
+                    'list'     =>
+                        array(
+                            'show'   => true,
+                            'sort'   => true,
+                            'search' => '=',
+                            'lookup' => false,
+                            'filter' =>
+                                array(
+                                    'operator' => '>',
+                                ),
+                        ),
+                    'relation' =>
+                        array(
+                            'type'        => '',
+                            'table'       => '',
+                            'foreign_key' => '',
+                            'show'        => '',
+                            'as'          => '',
+                        ),
                 ),
-                'sort'  =>  false,
-            ),
-            'relation' => array(
-                'table'       => 'category',
-                'foreign_key' => 'id',
-                'show'        => 'title',
-                /* 查询的sql 将使用这个as 表示 table.to*/
-                'as'          => 'category_title',
-            ),
+            'title'       =>
+                array(
+                    'label'    => '标题',
+                    'form'     =>
+                        array(
+                            'show'          => true,
+                            'hidden' => false,
+                            'type'   => 'text',
+                            'rule'   => 'required',
+                            'ajax_validate' => false,
+                            'placeholder'   => '',
+                        ),
+                    'list'     =>
+                        array(
+                            'show'   => true,
+                            'sort' => true,
+                            'search' => '=',
+                            'lookup' => false,
+                            'filter' =>
+                                array(
+                                    'operator' => '>',
+                                ),
+                        ),
+                    'relation' =>
+                        array(
+                            'type'        => '',
+                            'table' => '',
+                            'foreign_key' => '',
+                            'show'        => '',
+                            'as'          => '',
+                        ),
+                ),
+            'short'       =>
+                array(
+                    'label'    => '摘要',
+                    'form'  =>
+                        array(
+                            'show'          => true,
+                            'hidden' => false,
+                            'type'   => 'textarea',
+                            'rule'   => 'required',
+                            'ajax_validate' => false,
+                            'placeholder'   => '',
+                        ),
+                    'list'  =>
+                        array(
+                            'show'   => true,
+                            'sort' => false,
+                            'search' => 'like',
+                            'lookup' => false,
+                            'filter' =>
+                                array(
+                                    'operator' => '>',
+                                ),
+                        ),
+                    'relation' =>
+                        array(
+                            'type'        => '',
+                            'table' => '',
+                            'foreign_key' => '',
+                            'show'        => '',
+                            'as'          => '',
+                        ),
+                ),
+            'content'     =>
+                array(
+                    'label'    => '正文',
+                    'form'  =>
+                        array(
+                            'show'          => true,
+                            'hidden' => false,
+                            'type'   => 'wysiwyg',
+                            'rule'   => 'required',
+                            'ajax_validate' => false,
+                            'placeholder'   => '',
+                        ),
+                    'list'  =>
+                        array(
+                            'show'   => false,
+                            'sort' => true,
+                            'search' => '=',
+                            'lookup' => false,
+                            'filter' =>
+                                array(
+                                    'operator' => '>',
+                                ),
+                        ),
+                    'relation' =>
+                        array(
+                            'type'        => '',
+                            'table' => '',
+                            'foreign_key' => '',
+                            'show'        => '',
+                            'as'          => '',
+                        ),
+                ),
+            'view_ct'     =>
+                array(
+                    'label'    => '阅读次数',
+                    'form'  =>
+                        array(
+                            'show'          => false,
+                            'hidden' => false,
+                            'type'   => 'text',
+                            'rule'   => 'required',
+                            'ajax_validate' => false,
+                            'placeholder'   => '',
+                        ),
+                    'list'  =>
+                        array(
+                            'show'   => true,
+                            'sort' => true,
+                            'search' => '=',
+                            'lookup' => false,
+                            'filter' =>
+                                array(
+                                    'operator' => '>',
+                                ),
+                        ),
+                    'relation' =>
+                        array(
+                            'type'        => '',
+                            'table' => '',
+                            'foreign_key' => '',
+                            'show'        => '',
+                            'as'          => '',
+                        ),
+                ),
+            'created_at'  =>
+                array(
+                    'label'    => '创建时间',
+                    'form'  =>
+                        array(
+                            'show'          => false,
+                            'hidden' => false,
+                            'type'   => 'text',
+                            'rule'   => 'required',
+                            'ajax_validate' => false,
+                            'placeholder'   => '',
+                        ),
+                    'list'  =>
+                        array(
+                            'show'   => false,
+                            'sort' => true,
+                            'search' => '=',
+                            'lookup' => false,
+                            'filter' =>
+                                array(
+                                    'operator' => '>',
+                                ),
+                        ),
+                    'relation' =>
+                        array(
+                            'type'        => '',
+                            'table' => '',
+                            'foreign_key' => '',
+                            'show'        => '',
+                            'as'          => '',
+                        ),
+                ),
+            'updated_at'  =>
+                array(
+                    'label'    => '更新时间',
+                    'form'  =>
+                        array(
+                            'show'          => false,
+                            'hidden' => false,
+                            'type'   => 'text',
+                            'rule'   => 'required',
+                            'ajax_validate' => false,
+                            'placeholder'   => '',
+                        ),
+                    'list'  =>
+                        array(
+                            'show'   => true,
+                            'sort' => true,
+                            'search' => '=',
+                            'lookup' => false,
+                            'filter' =>
+                                array(
+                                    'operator' => '>',
+                                ),
+                        ),
+                    'relation' =>
+                        array(
+                            'type'        => '',
+                            'table' => 'category',
+                            'foreign_key' => 'id',
+                            'show'        => 'title',
+                            'as'          => 'category_title',
+                        ),
+                ),
+            'category_id' =>
+                array(
+                    'label'    => '栏目',
+                    'form'  =>
+                        array(
+                            'show'          => true,
+                            'hidden' => false,
+                            'type'   => 'select',
+                            'rule'   => 'required',
+                            'ajax_validate' => false,
+                            'placeholder'   => '',
+                        ),
+                    'list'  =>
+                        array(
+                            'show'   => true,
+                            'sort' => false,
+                            'search' => '=',
+                            'lookup' => false,
+                            'filter' =>
+                                array(
+                                    'operator' => '>',
+                                ),
+                        ),
+                    'relation' =>
+                        array(
+                            'type'        => 'belongsTo ',
+                            'table' => 'category',
+                            'foreign_key' => 'id',
+                            'show'        => 'title',
+                            'as'          => 'category_title',
+                        ),
+                ),
         ),
-
-        'title'       => array(
-            'label' => '标题',
-            'list'  =>  array(
-                'search'    =>  array(
-                    'operator'  =>  'like'
-                )
-            )
+    'list_options' =>
+        array(
+            'page'   => 10,
+            'create' => true,
+            'update' => true,
+            'delete' => true,
         ),
-
-        'short'       => array(
-            'label' => '摘要',
-            'form'  => array(
-                'type' => 'textarea',
-            ),
-            'list'  =>  array(
-                'search'    =>  false
-            )
+    'form_options' =>
+        array(
+            'layout' =>
+                array(
+                    'cols'       => 12,
+                    'label_cols' => 1,
+                    'input_cols' => 11,
+                ),
         ),
-
-        'content'     => array(
-            'label' => '正文',
-            'form'  => array(
-                'type' => 'wysiwyg',
-            ),
-            'list'  => array(
-                'show' => false,
-            ),
-        ),
-    ),
-
-    'form_options' => array(),
-    'list_options' => array(),
-
+    'relations'    =>
+        array(),
 );

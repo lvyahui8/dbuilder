@@ -43,7 +43,7 @@ $loadSBox = false;
                                             <option value="{{$value}}">{{$value}}</option>
                                         @endforeach
                                     @endif
-                                @else
+                                @elseif(isset($settings['relation']['type']) && $settings['relation']['type'] )
                                     <?php
                                     $fieldTranslate = $config['relations'][$field];
                                     $options = BaseModel::getTranslates($fieldTranslate);

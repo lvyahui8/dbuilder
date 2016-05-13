@@ -58,7 +58,7 @@ class ConfigUtils
 //            $form = $list = $relation = array();
             $form = self::getDefaultForm();
             $list = self::getDefaultList();
-            $relation = array();
+            $relation = self::getDefaultRelation();
             /* 主键默认隐藏在表中在*/
             if($column->Key === 'PRI'){
                 $form['hidden'] = true;
@@ -120,17 +120,21 @@ class ConfigUtils
             /* 字段是否可以排序，默认不能排序 */
             'sort'  =>  true,
             /* 是否能够按这个字段搜索 */
-            'search'    =>  true,
+            'search'    =>  '=',
             /* 字段进行翻译，比如栏目Id字段，一般要转成栏目名称显示 */
             'lookup'    =>  false,
-            /* 字段是否进行筛选 */
-            'filter'    =>  array(
-                /* 过滤方法操作符 */
-                'operator'  =>  '>',
-            ),
         );
     }
 
+    public static function getDefaultRelation(){
+        return array(
+            'type'  =>  '',
+            'table' =>  '',
+            'foreign_key'   =>  '',
+            'show'  =>  '',
+            'as'    =>  '',
+        );
+    }
 
     public static function saveGModuleConf($confKey,$config){
         $confFile = app_path('config/crud/').$confKey.'.php';

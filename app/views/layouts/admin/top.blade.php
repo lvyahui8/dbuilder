@@ -20,7 +20,7 @@
 
                     <!-- Profile sub-links -->
                     <li>
-                        <a href="extra-timeline.html">
+                        <a href="{{URL::to('admin')}}">
                             <i class="entypo-user"></i>
                             操作日志
                         </a>
@@ -29,7 +29,7 @@
                     <li>
                         <a href="{{URL::to('admin/module/list')}}">
                             <i class="entypo-mail"></i>
-                            Module管理
+                            GModule管理
                         </a>
                     </li>
 
@@ -41,9 +41,9 @@
                     </li>
 
                     <li>
-                        <a href="extra-calendar.html">
+                        <a href="{{URL::to('site/clear')}}">
                             <i class="entypo-calendar"></i>
-                            菜单管理
+                            清除缓存
                         </a>
                     </li>
                 </ul>
@@ -264,7 +264,7 @@
 
 
             <li>
-                <a href="#" data-toggle="chat" data-collapse-sidebar="1">
+                <a href="{{URL::to('admin/help')}}" data-toggle="chat" data-collapse-sidebar="1">
                     <i class="entypo-help"></i>
                     帮助
 

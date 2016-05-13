@@ -330,45 +330,7 @@ var public_vars = public_vars || {};
 
 
 		// Popovers and tooltips
-		$('[data-toggle="popover"]').each(function(i, el)
-		{
-			var $this = $(el),
-				placement = attrDefault($this, 'placement', 'right'),
-				trigger = attrDefault($this, 'trigger', 'click'),
-				popover_class = $this.hasClass('popover-secondary') ? 'popover-secondary' : ($this.hasClass('popover-primary') ? 'popover-primary' : ($this.hasClass('popover-default') ? 'popover-default' : ''));
-
-			$this.popover({
-				placement: placement,
-				trigger: trigger
-			});
-
-			$this.on('shown.bs.popover', function(ev)
-			{
-				var $popover = $this.next();
-
-				$popover.addClass(popover_class);
-			});
-		});
-
-		$('[data-toggle="tooltip"]').each(function(i, el)
-		{
-			var $this = $(el),
-				placement = attrDefault($this, 'placement', 'top'),
-				trigger = attrDefault($this, 'trigger', 'hover'),
-				popover_class = $this.hasClass('tooltip-secondary') ? 'tooltip-secondary' : ($this.hasClass('tooltip-primary') ? 'tooltip-primary' : ($this.hasClass('tooltip-default') ? 'tooltip-default' : ''));
-
-			$this.tooltip({
-				placement: placement,
-				trigger: trigger
-			});
-
-			$this.on('shown.bs.tooltip', function(ev)
-			{
-				var $tooltip = $this.next();
-
-				$tooltip.addClass(popover_class);
-			});
-		});
+		refreshPopAndTips();
 
 
 
@@ -607,22 +569,8 @@ var public_vars = public_vars || {};
 
 
 
-		// SelectBoxIt Dropdown replacement
-		if($.isFunction($.fn.selectBoxIt))
-		{
-			$("select.selectboxit").each(function(i, el)
-			{
-				var $this = $(el),
-					opts = {
-						showFirstOption: attrDefault($this, 'first-option', true),
-						'native': attrDefault($this, 'native', false),
-						defaultText: attrDefault($this, 'text', ''),
-					};
 
-				$this.addClass('visible');
-				$this.selectBoxIt(opts);
-			});
-		}
+		refreshSelectbox();
 
 
 
@@ -636,11 +584,8 @@ var public_vars = public_vars || {};
 
 
 
-		// Tagsinput
-		if($.isFunction($.fn.tagsinput))
-		{
-			$(".tagsinput").tagsinput();
-		}
+
+		refreshTagsInput();
 
 
 
@@ -1835,7 +1780,75 @@ function setCurrentProgressTab($rootwizard, $nav, $tab, $progress, index)
 	});*/
 }
 
+// Popovers and tooltips
+function refreshPopAndTips(){
+	$('[data-toggle="popover"]').each(function(i, el)
+	{
+		var $this = $(el),
+			placement = attrDefault($this, 'placement', 'right'),
+			trigger = attrDefault($this, 'trigger', 'click'),
+			popover_class = $this.hasClass('popover-secondary') ? 'popover-secondary' : ($this.hasClass('popover-primary') ? 'popover-primary' : ($this.hasClass('popover-default') ? 'popover-default' : ''));
 
+		$this.popover({
+			placement: placement,
+			trigger: trigger
+		});
+
+		$this.on('shown.bs.popover', function(ev)
+		{
+			var $popover = $this.next();
+
+			$popover.addClass(popover_class);
+		});
+	});
+
+	$('[data-toggle="tooltip"]').each(function(i, el)
+	{
+		var $this = $(el),
+			placement = attrDefault($this, 'placement', 'top'),
+			trigger = attrDefault($this, 'trigger', 'hover'),
+			popover_class = $this.hasClass('tooltip-secondary') ? 'tooltip-secondary' : ($this.hasClass('tooltip-primary') ? 'tooltip-primary' : ($this.hasClass('tooltip-default') ? 'tooltip-default' : ''));
+
+		$this.tooltip({
+			placement: placement,
+			trigger: trigger
+		});
+
+		$this.on('shown.bs.tooltip', function(ev)
+		{
+			var $tooltip = $this.next();
+
+			$tooltip.addClass(popover_class);
+		});
+	});
+}
+
+// Tagsinput
+function refreshTagsInput(){
+	// Tagsinput
+	if($.isFunction($.fn.tagsinput))
+	{
+		$(".tagsinput").tagsinput();
+	}
+}
+// SelectBoxIt Dropdown replacement
+function  refreshSelectbox(){
+	if($.isFunction($.fn.selectBoxIt))
+	{
+		$("select.selectboxit").each(function(i, el)
+		{
+			var $this = $(el),
+				opts = {
+					showFirstOption: attrDefault($this, 'first-option', true),
+					'native': attrDefault($this, 'native', false),
+					defaultText: attrDefault($this, 'text', ''),
+				};
+
+			$this.addClass('visible');
+			$this.selectBoxIt(opts);
+		});
+	}
+}
 // Replace Checkboxes
 function replaceCheckboxes()
 {

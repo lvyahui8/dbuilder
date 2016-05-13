@@ -18,6 +18,8 @@ Route::get('site/404','SiteController@error404');
 Route::controller('site','SiteController');
 Route::controller('user','UserController');
 Route::controller('develop','DevelopController');
+Route::controller('develop','DevelopController');
+
 
 Route::group(array('prefix'=>'admin'),function() use($moduleRoutes){
     Route::controller('module','admin\ModuleController');
@@ -27,3 +29,4 @@ Route::group(array('prefix'=>'admin'),function() use($moduleRoutes){
     }
 });
 
+Route::controller('admin','admin\AdminController');

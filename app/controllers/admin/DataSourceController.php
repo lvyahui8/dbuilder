@@ -32,6 +32,7 @@ class DataSourceController extends AdminController
     {
         $dataSourceName = Input::get("data_source");
         $dataSources = SiteHelpers::loadDataSources();
+
         $dataSource = $dataSources[$dataSourceName];
         $tables = BaseModel::getTableList($dataSource['database'], $dataSourceName);
         return Response::json(array(
@@ -99,4 +100,28 @@ class DataSourceController extends AdminController
         return Redirect::action(get_class($this).'@getList');
     }
 
+
+    public function getTableFields(){
+        $connection = Input::get('connection');
+        $table = Input::get('table');
+
+        $rawFields = BaseModel::getTableColumns($table,$connection);
+
+        $fields = array();
+        $pri = null;
+        foreach($rawFields as $field){
+            if($field->Key === 'PRI'){
+                $pri = $field->Field;
+            }
+            $fields [] = $field->Field;
+        }
+
+        return Response::json(array(
+            'success'   =>  true,
+            'data'  =>  array(
+                'fields'    =>  $fields,
+                'pri'       =>  $pri,
+            ),
+        ));
+    }
 }

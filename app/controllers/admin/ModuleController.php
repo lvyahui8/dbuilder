@@ -24,7 +24,7 @@ class ModuleController extends AdminController
     protected function beforeEdit(&$data)
     {
         $data ['dataSources'] = SiteHelpers::loadDataSources();
-        if($data['model']->id){
+        if ($data['model']->id) {
             $data ['moduleConf'] = ConfigUtils::get($data['model']->name);
         }
     }
@@ -35,28 +35,37 @@ class ModuleController extends AdminController
         $codes = array(
             'moduleName'      => $module->name,
             'moduleTitle'     => $module->title,
-            'tablePrimaryKey' => BaseModel::findPrimarykey($module->db_table,  $module->db_source),
+            'tablePrimaryKey' => BaseModel::findPrimarykey($module->db_table, $module->db_source),
             'moduleNote'      => $module->note,
             'date'            => date('Y-m-d'),
             'dbSource'        => $module->db_source,
             'dbTable'         => $module->db_table,
         );
         $this->removeFiles($codes['moduleName']);
+        /* 生成默认module Configuration*/
+        $moduleConfs = $this->buildConfiguration($module->db_table, $module->db_source);
+        SiteHelpers::saveArrayToFile(app_path('config/crud/') . snake_case($codes['moduleName']) . '.php', $moduleConfs);
 
         $controller = file_get_contents(app_path('template') . '/controller.tpl');
         $model = file_get_contents(app_path('template') . '/model.tpl');
+        $formView = file_get_contents(app_path('template') . '/_form.tpl');
+        $listView = file_get_contents(app_path('template') . '/_list.tpl');
+        $codes['timestamps'] = isset($moduleConfs['fields']['created_at']) && isset($moduleConfs['fields']['updated_at']);
         $buildController = SiteHelpers::blend($controller, $codes);
         $buildModel = SiteHelpers::blend($model, $codes);
+        /* 生成 MVC 文件*/
         file_put_contents(app_path() . "/controllers/admin/{$codes['moduleName']}Controller.php", $buildController);
         file_put_contents(app_path() . "/models/{$codes['moduleName']}.php", $buildModel);
+        $viewPath = app_path('/views/admin/') . snake_case($codes['moduleName']);
+        if (!file_exists($viewPath)) mkdir($viewPath);
+        file_put_contents($viewPath . "/_form.blade.php", $formView);
+        file_put_contents($viewPath . "/_list.blade.php", $listView);
 
-        /* 生成默认module Configuration*/
-        $moduleConfs = $this->buildConfiguration($module->db_table,$module->db_source);
-        SiteHelpers::saveArrayToFile(app_path('config/crud/').snake_case($codes['moduleName']).'.php',$moduleConfs);
+
         /* 更新路由 */
         $moduleRoutes = json_decode(MODULE_ROUTES, true); //require(app_path().'/module_routes.php');
         if (is_array($moduleRoutes)) {
-            $moduleRoutes[SiteHelpers::reducCase($codes['moduleName'])] = 'admin\\'."{$codes['moduleName']}Controller" ;
+            $moduleRoutes[SiteHelpers::reducCase($codes['moduleName'])] = 'admin\\' . "{$codes['moduleName']}Controller";
             SiteHelpers::saveArrayToFile(app_path() . '/module_routes.php', $moduleRoutes);
         }
     }
@@ -78,76 +87,121 @@ class ModuleController extends AdminController
         if (file_exists($model)) {
             unlink($model);
         }
-        $moduleConf = app_path('config/crud/').snake_case($moduleName).'.php';
-        if(file_exists($moduleConf)){
+        $moduleConf = app_path('config/crud/') . snake_case($moduleName) . '.php';
+        if (file_exists($moduleConf)) {
             unlink($moduleConf);
         }
+
+        $viewPath = app_path('/views/admin/') . snake_case($moduleName);
+        $formFile = $viewPath . '/_form.blade.php';
+        $listFile = $viewPath . '/_list.blade.php';
+        if (file_exists($formFile)) unlink($formFile);
+        if (file_exists($listFile)) unlink($listFile);
     }
 
-    private function buildConfiguration($table,$connection)
+    private function buildConfiguration($table, $connection)
     {
-        $rawColumns = BaseModel::getTableColumns($table,$connection);
+        $rawColumns = BaseModel::getTableColumns($table, $connection);
         $fields = ConfigUtils::build($rawColumns);
         return array(
-            'fields'    =>  $fields
+            'data_source' => $connection,
+            'table'       => $table,
+            'fields'      => $fields,
         );
     }
 
-    public function getFieldsConfig(){
+    public function getFieldsConfig()
+    {
         $filedsConfig = null;
-        if(Input::has('module_name')){
+        if (Input::has('module_name')) {
             $filedsConfig = ConfigUtils::get(Input::get('module_name'))['fields'];
-        }else{
+        } else {
             $table = Input::get('table');
             $connection = Input::get('connection');
 
-            $filedsConfig = $this->buildConfiguration($table,$connection)['fields'];
+            $filedsConfig = $this->buildConfiguration($table, $connection)['fields'];
         }
 
         $resp = $this->makeView(array(
-            'fieldsConfig'  =>  $filedsConfig,
+            'fieldsConfig' => $filedsConfig,
         ));
-        if($resp){
+        if ($resp) {
             return $resp;
         }
     }
 
 
-    public function postSaveFieldsConf(){
-        $resp = Redirect::action(get_class($this).'@getEdit',Input::get('id'));
+    public function postSaveFieldsConf()
+    {
+        $resp = Redirect::action(get_class($this) . '@getEdit', Input::get('id'));
         $postFields = Input::get('fields');
         $moduleName = Input::get('module_key');
         $confKey = SiteHelpers::reducCase($moduleName);
         $savedConfig = ConfigUtils::get($confKey);
-        foreach($savedConfig['fields'] as  $fieldName => &$savefield){
+        foreach ($savedConfig['fields'] as $fieldName => &$savefield) {
             $postField = $postFields[$fieldName];
             $savefield['label'] = $postField['label'];
-            $savefield['form']['show']  =   isset($postField['form']['show']);
-            $savefield['list']['show']  =   isset($postField['list']['show']);
+            $savefield['form']['show'] = isset($postField['form']['show']);
+            $savefield['list']['show'] = isset($postField['list']['show']);
         }
-        ConfigUtils::saveGModuleConf($confKey,$savedConfig);
+        ConfigUtils::saveGModuleConf($confKey, $savedConfig);
         return $resp;
     }
 
-    public function getFieldConfig(){
+    public function getFieldConfig()
+    {
         $moduleKey = Input::get('module_key');
         $field = Input::get('field');
 
-        $fieldConfig = Config::get('crud/'.snake_case($moduleKey).'.fields.'.$field);
+        $moduleConfig = Config::get('crud/' . snake_case($moduleKey));
+        $fieldConf = &$moduleConfig['fields'][$field];
+        $dbSource = SiteHelpers::loadDataSources()[$moduleConfig['data_source']];
+        $tables = BaseModel::getTableList($dbSource['database'],$moduleConfig['data_source']);
 
         $resp = $this->makeView(array(
-            'field' =>  $field,
-            'fieldConfig'   =>  $fieldConfig,
-            'moduleKey' =>  $moduleKey,
+            'field'       => $field,
+            'fieldConfig' => $fieldConf,
+            'moduleKey'   => $moduleKey,
+            'tables'    =>  $tables,
+            'connection'    =>  $moduleConfig['data_source'],
         ));
-        if($resp) return $resp;
+
+        if ($resp) return $resp;
     }
 
-    public function postFieldConfig(){
+    public function postFieldConfig()
+    {
         $data = array(
-            'success'   =>  true,
+            'success' => true,
         );
-        
+        $moduleKey = Input::get('module_key');
+        $field = Input::get('field');
+        $moduleConfig = Config::get('crud/' . snake_case($moduleKey));
+        $fieldConf = &$moduleConfig['fields'][$field];
+
+        $postFormConf = Input::get('form');
+        $postListConf = Input::get('list');
+        $postRelationConf = Input::get('relation');
+        $fieldConf['form']['type'] = $postFormConf['type'];
+        if($postFormConf['type'] === 'select'
+            && isset($postFormConf['options'])
+            && $postFormConf['options']
+        ){
+            $rawOptions = explode(',',$postFormConf['options']);
+            $options = array();
+            foreach($rawOptions as $option){
+                $options[$option]   = $option;
+            }
+            $fieldConf['form']['options'] = $options;
+        }
+        $fieldConf['form']['placeholder'] = $postFormConf['placeholder'];
+        $fieldConf['list']['sort'] = isset($postListConf['sort']);
+        $fieldConf['list']['search'] = $postListConf['search'];
+
+        $fieldConf['relation']  =   $postRelationConf;
+
+        SiteHelpers::saveArrayToFile(app_path('config/crud/' . snake_case($moduleKey) . '.php'), $moduleConfig);
+
         return Response::json($data);
     }
 }

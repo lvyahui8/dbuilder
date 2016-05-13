@@ -1,4 +1,6 @@
 <?php return array (
+    'data_source'   =>  'core',
+    'table'         =>  'customer',
   'fields' => 
   array (
     'id' => 
@@ -7,7 +9,7 @@
       'form' => 
       array (
         'show' => true,
-        'hidden' => false,
+        'hidden' => true,
         'type' => 'text',
         'rule' => 'required',
         'ajax_validate' => false,
@@ -18,14 +20,10 @@
       ),
       'list' => 
       array (
-        'show' => false,
+        'show' => true,
         'sort' => true,
-        'search' => true,
+        'search' => '=',
         'lookup' => false,
-        'filter' => 
-        array (
-          'operator' => '>',
-        ),
       ),
     ),
     'name' => 
@@ -38,26 +36,22 @@
         'type' => 'text',
         'rule' => 'required',
         'ajax_validate' => false,
-        'placeholder' => '',
+        'placeholder' => '填写客户名称',
       ),
       'relation' => 
       array (
       ),
       'list' => 
       array (
-        'show' => false,
+        'show' => true,
         'sort' => true,
-        'search' => true,
+        'search' => 'like',
         'lookup' => false,
-        'filter' => 
-        array (
-          'operator' => '>',
-        ),
       ),
     ),
     'email' => 
     array (
-      'label' => 'EMAIL',
+      'label' => '邮箱',
       'form' => 
       array (
         'show' => true,
@@ -67,20 +61,15 @@
         'ajax_validate' => false,
         'placeholder' => '',
       ),
-
       'relation' => 
       array (
       ),
       'list' => 
       array (
-        'show' => false,
+        'show' => true,
         'sort' => true,
-        'search' => true,
+        'search' => 'like',
         'lookup' => false,
-        'filter' => 
-        array (
-          'operator' => '>',
-        ),
       ),
     ),
     'phone' => 
@@ -95,7 +84,6 @@
         'ajax_validate' => false,
         'placeholder' => '',
       ),
-
       'relation' => 
       array (
       ),
@@ -103,12 +91,8 @@
       array (
         'show' => false,
         'sort' => true,
-        'search' => true,
+        'search' => '=',
         'lookup' => false,
-        'filter' => 
-        array (
-          'operator' => '>',
-        ),
       ),
     ),
   ),

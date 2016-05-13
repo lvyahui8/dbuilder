@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Cache;
 use SiteHelpers;
+use Module;
 
 class AdminController extends \BaseController
 {
@@ -25,6 +27,9 @@ class AdminController extends \BaseController
             $this->assignModel($this->model);
         }
         View::share('config',$this->savedConfig);
+        if(!Cache::has('modules')){
+            Cache::forever('modules',Module::all());
+        }
     }
 
     public function getList(){
@@ -75,9 +80,9 @@ class AdminController extends \BaseController
         $relations = array();
         /* 将默认参数传递给module config */
         foreach($config['fields']   as $field => &$fieldConfig){
-            if(isset($fieldConfig['value'])){
-                $this->model->$field = $fieldConfig['value'];
-            }
+//            if(isset($fieldConfig['value'])){
+//                $this->model->$field = $fieldConfig['value'];
+//            }
             $fieldConfig['form'] = array_merge(
                 $defaultConfig['fields']['field_name']['form'],
                 isset($fieldConfig['form']) ? $fieldConfig['form'] : array()
@@ -86,7 +91,8 @@ class AdminController extends \BaseController
                 $defaultConfig['fields']['field_name']['list'],
                 isset($fieldConfig['list']) ? $fieldConfig['list'] : array()
             );
-            if(isset($fieldConfig['relation']) && !empty($fieldConfig['relation'])){
+            if(isset($fieldConfig['relation']) &&
+                isset($fieldConfig['relation']['type']) && $fieldConfig['relation']['type'] !== '' ){
                 $relations[$field] = $fieldConfig['relation'];
             }
         }
@@ -146,7 +152,9 @@ class AdminController extends \BaseController
         $fields = $this->savedConfig['fields'];
         $datas = array();
         foreach($fields as $field => $fieldConfig){
-            $datas[$field] = Input::get($field);
+            if(Input::has($field)){
+                $datas[$field] = Input::get($field);
+            }
         }
 
         if($primaryKeyValue){
@@ -184,13 +192,13 @@ class AdminController extends \BaseController
         foreach($searchFields as $field=> $fieldConfig){
             if(isset($fieldConfig['list']['search'])){
                 $value = Input::get($field);
-                $option = $fieldConfig['list']['search'];
+                $operator = $fieldConfig['list']['search'];
                 if($value !== ''){
-                    if(isset($option['operator'])){
-                        if($option['operator'] === 'like'){
+                    if($operator){
+                        if($operator === 'like'){
                             $value = '%'.$value.'%';
                         }
-                        $query = $query->where($this->model->getTable().'.'.$field,$option['operator'],$value);
+                        $query = $query->where($this->model->getTable().'.'.$field,$operator,$value);
                     }else{
                         $query = $query->where($this->model->getTable().'.'.$field,$value);
                     }
@@ -213,4 +221,9 @@ class AdminController extends \BaseController
     {
 
     }
+
+    public function getHelp(){
+        $this->makeView(null,'admin.help');
+    }
+
 }

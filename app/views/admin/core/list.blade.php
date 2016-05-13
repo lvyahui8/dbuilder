@@ -23,6 +23,7 @@ $loadSBox = false;
                         <a href="{{URL::to('admin/'.$stdName.'/edit')}}" class="btn btn-primary">新建</a>
                     @endif
                     <a class="btn btn-danger">删除</a>
+                    <a class="btn btn-default">导出</a>
                 </div>
             </div>
         </div>
@@ -62,13 +63,15 @@ $loadSBox = false;
                                 <td>
                                     @if($fieldConfig['form']['type'] == 'select')
                                         <?php $loadSBox = true;?>
-                                        @if(isset($fieldConfig['relation']))
+                                        @if(isset($fieldConfig['form']['options']) && $fieldConfig['form']['options'])
+                                            <select name="{{$field}}" id="{{$field}}" class="selectboxit">
+                                                @foreach($fieldConfig['form']['options'] as $option => $text)
+                                                    <option value="{{$option}}" @if(Input::get($field) && Input::get($field) === $option) selected @endif>{{$text}}</option>
+                                                @endforeach
+                                            </select>
+                                        @elseif(isset($fieldConfig['relation']['type']) && $fieldConfig['relation']['type'] )
                                             {{View::make('components.relation_select',array(
-                                            'fieldConfig'=>$fieldConfig,
-                                            'field' =>  $field,
-                                            ))}}
-                                        @else
-
+                                            'fieldConfig'=>$fieldConfig,'field' =>  $field, ))}}
                                         @endif
                                     @else
                                         <input type="text" name="{{$field}}" id="{{$field}}"
@@ -141,14 +144,15 @@ $loadSBox = false;
     @if($loadSBox)
         {{HTML::style('assets/js/selectboxit/jquery.selectBoxIt.css')}}
     @endif
-@stop
+@append
+
 @section('scripts')
     {{HTML::script('assets/js/jquery.dataTables.min.js')}}
     {{HTML::script('assets/js/datatables/jquery.dataTables.columnFilter.js')}}
     @if($loadSBox)
         {{HTML::script('assets/js/selectboxit/jquery.selectBoxIt.min.js')}}
     @endif
-@stop
+@append
 
 @section('footScript')
     <script>
@@ -161,4 +165,4 @@ $loadSBox = false;
             });
         });
     </script>
-@stop
+@append

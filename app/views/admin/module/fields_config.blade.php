@@ -1,3 +1,6 @@
+<?php
+$controlTyps = SiteHelpers::supportFormControls();
+?>
 <table class="table table-bordered responsive">
     <thead>
     <tr>
@@ -13,16 +16,20 @@
         <tr>
             <td>{{$field}}</td>
             <td><input type="text" class="form-control input-sm" name="fields[{{$field}}][label]" value="{{$fieldConf['label']}}"/></td>
-            <td> <div class="checkbox">
+            <td>
+                <div class="checkbox">
                     <label>
                         <input type="checkbox" name="fields[{{$field}}][form][show]" @if($fieldConf['form']['show']) checked @endif >
                     </label>
-                </div> </td>
-            <td> <div class="checkbox">
+                </div>
+            </td>
+            <td>
+                <div class="checkbox">
                     <label>
                         <input type="checkbox"  @if($fieldConf['form']['hidden']) checked @endif >
                     </label>
-                </div> </td>
+                </div>
+            </td>
             <td></td>
         </tr>
     @endforeach

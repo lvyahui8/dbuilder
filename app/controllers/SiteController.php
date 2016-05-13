@@ -91,16 +91,9 @@ class SiteController extends BaseController
     }
 
     public function getClear(){
-        $viewPath = storage_path('views');
-        $views = scandir($viewPath);
-        foreach($views as $view){
-            if($view !== '.' && $view !== '..'){
-                echo 'delete view file: '.$view.' <br/>';
-                unlink($viewPath.'/'.$view);
-            }
-        }
-        echo 'clear finish! go <a href="'.URL::to('').'">home</a>';
-        exit;
+        SiteHelpers::cleanStorage('views');
+        SiteHelpers::cleanStorage('cache');
+        return Redirect::intended('admin/module/list');
     }
 
     public function getIsLogin(){

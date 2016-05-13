@@ -1,5 +1,7 @@
 @extends('admin.core.form')
-
+<?php
+$controlTyps = SiteHelpers::supportFormControls();
+?>
 @if($model->id)
 @section('form.bottom')
     <div class="row">
@@ -32,6 +34,7 @@
                                 <th>Label</th>
                                 <th>包含在表单</th>
                                 <th>包含在列表</th>
+                                <th>表单控件类型</th>
                                 <th>更多配置</th>
                             </tr>
                             </thead>
@@ -54,6 +57,7 @@
                                             </label>
                                         </div>
                                     </td>
+                                    <td>{{$controlTyps[$fieldConf['form']['type']]}}</td>
                                     <td>
                                         <a class="btn btn-primary btn-sm ajax-form-modal" data-content-url="{{URL::to('admin/module/field-config?module_key='.$model->name.'&field='.$field)}}">编辑</a>
                                     </td>
@@ -72,8 +76,10 @@
     </div>
 @stop
 @endif
+
 @section('scripts')
     {{HTML::script('assets/js/jquery.form.min.js')}}
+    {{HTML::script('assets/js/bootstrap-tagsinput.min.js')}}
 @stop
 @section('footScript')
     <script>
@@ -109,6 +115,14 @@
                     }
                 });
                 return false;
+            });
+
+            $('table a.ajax-form-modal').click(function(){
+                $.get($(this).data('content-url'),function(resp){
+                    $modal.find('div.modal-content').html(resp);
+                    refreshFormUI();
+                    $modal.modal('show', {backdrop: 'static'});
+                },'html');
             });
         })
     </script>

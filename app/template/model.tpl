@@ -13,7 +13,7 @@ class {moduleName} extends BaseModel
     protected $connection = '{dbSource}';
     protected $table = '{dbTable}';
     protected $primaryKey = '{tablePrimaryKey}';
-
+    public $timestamps = {timestamps};
     /*
     public function formatXXXAttribute(){
         $xxxs = array(

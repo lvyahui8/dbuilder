@@ -4,27 +4,13 @@
 function resetForm(obj){
     $(obj.form).find(":input").not(":button,:submit,:reset,input:hidden").val("").removeAttr("checked").find('option').removeAttr("selected");
 }
-function  refreshSelectbox(){
-    // SelectBoxIt Dropdown replacement
-    if($.isFunction($.fn.selectBoxIt))
-    {
-        $("select.selectboxit").each(function(i, el)
-        {
-            var $this = $(el),
-                opts = {
-                    showFirstOption: attrDefault($this, 'first-option', true),
-                    'native': attrDefault($this, 'native', false),
-                    defaultText: attrDefault($this, 'text', ''),
-                };
 
-            $this.addClass('visible');
-            $this.selectBoxIt(opts);
-        });
-    }
-}
+
 function refreshFormUI(){
     refreshSelectbox();
     replaceCheckboxes();
+    refreshTagsInput();
+    refreshPopAndTips();
 }
 
 function ajaxModal(url){
@@ -39,9 +25,9 @@ function ajaxModal(url){
 
 (function($){
     $(document).ready(function(){
-        $('a.ajax-form-modal').click(function(){
-            ajaxModal($(this).data('content-url'));
-
-        });
+        //$('a.ajax-form-modal').click(function(){
+        //    ajaxModal($(this).data('content-url'));
+        //
+        //});
     })
 })($ || jQuery);
