@@ -39,6 +39,7 @@ class SiteHelpers
 //            'ipaddr'   => 'IP地址（ipaddr）',
             'file'     => '文件（file）',
             'hidden'   => '隐藏（hidden）',
+            'password' =>   '密码（password）',
             'custom'   => '自定义（custom）',
         );
     }

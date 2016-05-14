@@ -25,8 +25,8 @@ $loadDatePicker = false;
                     $type = $settings['form']['type'];
                     ?>
                     <?php if($settings['form']['type'] === 'hidden'):?>
-                        <input type="hidden" name="{{$field}}" value="{{$model->$field}}">
-                        <?php continue;?>
+                    <input type="hidden" name="{{$field}}" value="{{$model->$field}}">
+                    <?php continue;?>
                     <?php endif; ?>
                     <div class="form-group">
                         <label for="{{$field}}"
@@ -74,19 +74,27 @@ $loadDatePicker = false;
                                 @foreach($settings['form']['options'] as $option => $text)
                                     <div class="{{$type}} {{$type}}-replace">
                                         <input type="{{$type}}" value="{{$option}}" name="{{$field}}"
-                                                   id="{{$field}}" @if($model->field === $option) checked @endif>
+                                               id="{{$field}}" @if($model->field === $option) checked @endif>
                                         <label>{{$text}}</label>
                                     </div>
                                 @endforeach
                             @endif
                             <?php elseif($type === 'date'):?>
-                                <?php $loadDatePicker = true;?>
-                                <div class="input-group">
-                                    <input type="text" name="{{$field}}" id="{{$field}}" class="form-control datepicker" data-format="yyyy-MM-dd">
-                                    <div class="input-group-addon">
-                                        <a href="#"><i class="entypo-calendar"></i></a>
-                                    </div>
+                            <?php $loadDatePicker = true;?>
+                            <div class="input-group">
+                                <input type="text" name="{{$field}}" id="{{$field}}" class="form-control datepicker" data-format="yyyy-MM-dd">
+                                <div class="input-group-addon">
+                                    <a href="#"><i class="entypo-calendar"></i></a>
                                 </div>
+                            </div>
+                            <?php elseif($type === 'password'):?>
+                            <input type="password" class="form-control" name="{{$field}}" id="{{$field}}"
+                                   value="{{$model->$field}}"
+                            >
+                            <?php elseif($type === 'file'):?>
+                                <input type="file"
+                                       class="form-control file2 inline btn btn-primary"
+                                       data-label="<i class='glyphicon glyphicon-file'></i> 选择文件" >
                             <?php else:?>
                             <input type="text" class="form-control" name="{{$field}}" id="{{$field}}"
                                    value="{{$model->$field}}">

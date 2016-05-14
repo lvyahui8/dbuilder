@@ -5,9 +5,7 @@ $controlTyps = SiteHelpers::supportFormControls();
 @if($model->id)
 @section('form.bottom')
     <div class="row">
-
         <div class="col-md-12">
-
             <ul class="nav nav-tabs bordered"><!-- available classes "bordered", "right-aligned" -->
                 <li class="active">
                     <a href="#fields" data-toggle="tab">

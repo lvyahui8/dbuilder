@@ -51,7 +51,8 @@ class ModuleController extends AdminController
         $model = file_get_contents(app_path('template') . '/model.tpl');
         $formView = file_get_contents(app_path('template') . '/_form.tpl');
         $listView = file_get_contents(app_path('template') . '/_list.tpl');
-        $codes['timestamps'] = isset($moduleConfs['fields']['created_at']) && isset($moduleConfs['fields']['updated_at']);
+        $codes['timestamps'] = isset($moduleConfs['fields']['created_at']) && isset($moduleConfs['fields']['updated_at'])
+                                ? 'true' : 'false';
         $buildController = SiteHelpers::blend($controller, $codes);
         $buildModel = SiteHelpers::blend($model, $codes);
         /* 生成 MVC 文件*/
@@ -204,7 +205,11 @@ class ModuleController extends AdminController
         $postListConf = Input::get('list');
         $postRelationConf = Input::get('relation');
         $fieldConf['form']['type'] = $postFormConf['type'];
-        if($postFormConf['type'] === 'select'
+        if((
+                $postFormConf['type'] === 'select'
+                || $postFormConf['type'] === 'radio'
+                || $postFormConf['type'] === 'checkbox'
+            )
             && isset($postFormConf['options'])
             && $postFormConf['options']
         ){
@@ -216,6 +221,7 @@ class ModuleController extends AdminController
             $fieldConf['form']['options'] = $options;
         }
         $fieldConf['form']['placeholder'] = $postFormConf['placeholder'];
+        $fieldConf['form']['rule']  =  $postFormConf['rule'];
         $fieldConf['list']['sort'] = isset($postListConf['sort']);
         $fieldConf['list']['search'] = $postListConf['search'];
 

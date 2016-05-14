@@ -6,11 +6,27 @@
     <input type="hidden" name="module_key" value="{{$moduleKey}}">
     <input type="hidden" name="field" value="{{$field}}">
     <div class="modal-body">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="panel-title">表单（Form）属性配置</div>
-            </div>
-            <div class="panel-body">
+        <ul class="nav nav-tabs bordered"><!-- available classes "bordered", "right-aligned" -->
+            <li class="active"><a href="#home-2" data-toggle="tab">
+                    <span class="visible-xs"><i class="entypo-home"></i></span>
+                    <span class="hidden-xs">表单（Form）属性配置</span>
+                </a>
+            </li>
+            <li>
+                <a href="#profile-2" data-toggle="tab">
+                    <span class="visible-xs"><i class="entypo-user"></i></span>
+                    <span class="hidden-xs">列表（List）属性配置</span>
+                </a>
+            </li>
+            <li>
+                <a href="#profile-3" data-toggle="tab">
+                    <span class="visible-xs"><i class="entypo-user"></i></span>
+                    <span class="hidden-xs">关系（Relation）属性配置</span>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="home-2">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -42,13 +58,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="">规则</label>
+                            <select name="form[rule]" id="form_rule" class="selectboxit">
+                                <option value="">选择规则类型</option>
+                                @foreach(Supports::rules() as $rule => $text)
+                                    <option value="{{$rule}}"
+                                        @if($fieldConfig['form']['rule'] === $rule) selected @endif
+                                    >{{$text}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="panel-title">列表（List）属性配置</div>
-            </div>
-            <div class="panel-body">
+            <div class="tab-pane" id="profile-2">
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="checkbox checkbox-replace color-primary">
@@ -70,12 +96,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <div class="panel-title">关系（Relation）属性配置</div>
-            </div>
-            <div class="panel-body">
+            <div class="tab-pane" id="profile-3">
+
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
