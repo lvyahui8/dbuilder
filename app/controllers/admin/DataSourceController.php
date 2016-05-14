@@ -2,14 +2,13 @@
 /**
  * Created by PhpStorm.
  * User: lvyahui
- * Date: 2016/5/7
+ * Date: 2016/5/12
  * Time: 15:35
  */
 
 namespace admin;
 
 use BaseModel;
-use Illuminate\Database\Connection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
 use SiteHelpers;
@@ -20,6 +19,9 @@ use PDOException;
 use PDO;
 class DataSourceController extends AdminController
 {
+    /**
+     * 呈现数据源列表
+     */
     public function getList()
     {
         $datasources = SiteHelpers::loadDataSources();
@@ -28,6 +30,10 @@ class DataSourceController extends AdminController
         ));
     }
 
+    /**
+     * 异步加载某数据源的所有数据表
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getTables()
     {
         $dataSourceName = Input::get("data_source");
@@ -44,6 +50,10 @@ class DataSourceController extends AdminController
         ));
     }
 
+    /**
+     * 呈现数据源编辑或者新建FORM
+     * @param null $slug
+     */
     public function getEdit($slug = null)
     {
         $dataSource = null;
@@ -70,6 +80,10 @@ class DataSourceController extends AdminController
         ));
     }
 
+    /**
+     * 测试数据源连接是否可靠
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function postTest(){
         $success = true;
         try{
@@ -90,6 +104,11 @@ class DataSourceController extends AdminController
         ));
     }
 
+    /**
+     * 保存编辑好的数据源信息
+     * @param null $primaryKeyValue
+     * @return mixed
+     */
     public function postEdit($primaryKeyValue = null)
     {
         $dataSources = SiteHelpers::loadDataSources();

@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * User: lvyahui
- * Date: 2016/5/7
+ * Date: 2016/5/12
  * Time: 15:28
  */
 
@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Response;
 
 class ModuleController extends AdminController
 {
+
     protected function beforeEdit(&$data)
     {
         $data ['dataSources'] = SiteHelpers::loadDataSources();
@@ -77,6 +78,10 @@ class ModuleController extends AdminController
         $this->removeFiles($moduleName);
     }
 
+    /**
+     * 删除GModule相关文件文件
+     * @param $moduleName
+     */
     public function removeFiles($moduleName)
     {
         $controller = app_path('admin/controllers') . "/{$moduleName}Controller.php";
@@ -110,6 +115,10 @@ class ModuleController extends AdminController
         );
     }
 
+    /**
+     * 获取字段配置列表
+     * @return bool
+     */
     public function getFieldsConfig()
     {
         $filedsConfig = null;
@@ -131,6 +140,10 @@ class ModuleController extends AdminController
     }
 
 
+    /**
+     * 保存字段列表配置
+     * @return mixed
+     */
     public function postSaveFieldsConf()
     {
         $resp = Redirect::action(get_class($this) . '@getEdit', Input::get('id'));
@@ -148,6 +161,10 @@ class ModuleController extends AdminController
         return $resp;
     }
 
+    /**
+     * 呈现某一字段的配置参数FORM
+     * @return bool
+     */
     public function getFieldConfig()
     {
         $moduleKey = Input::get('module_key');
@@ -169,6 +186,10 @@ class ModuleController extends AdminController
         if ($resp) return $resp;
     }
 
+    /**
+     * 保存某一字段的配置参数
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function postFieldConfig()
     {
         $data = array(
