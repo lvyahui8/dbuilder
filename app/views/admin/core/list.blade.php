@@ -9,6 +9,7 @@
 <?php
 $list_options = $config['list_options'];
 $loadSBox = false;
+$loadDatePicker = false;
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -65,6 +66,7 @@ $loadSBox = false;
                                         <?php $loadSBox = true;?>
                                         @if(isset($fieldConfig['form']['options']) && $fieldConfig['form']['options'])
                                             <select name="{{$field}}" id="{{$field}}" class="selectboxit">
+                                                <option value="" class="default-value">请选择</option>
                                                 @foreach($fieldConfig['form']['options'] as $option => $text)
                                                     <option value="{{$option}}" @if(Input::get($field) && Input::get($field) === $option) selected @endif>{{$text}}</option>
                                                 @endforeach
@@ -73,6 +75,9 @@ $loadSBox = false;
                                             {{View::make('components.relation_select',array(
                                             'fieldConfig'=>$fieldConfig,'field' =>  $field, ))}}
                                         @endif
+                                    @elseif($fieldConfig['form']['type'] === 'date')
+                                        <?php $loadDatePicker = true;?>
+                                        <input type="text" name="{{$field}}" id="{{$field}}" class="form-control datepicker" data-format="yyyy-MM-dd">
                                     @else
                                         <input type="text" name="{{$field}}" id="{{$field}}"
                                                value="{{Input::get($field)}}" class="form-control input-sm">
@@ -82,7 +87,6 @@ $loadSBox = false;
                                 <td></td>
                             @endif
                         @endif
-
                     @endforeach
                     <td>
                         <div class="btn-group btn-group-sm" role="group">
@@ -90,8 +94,7 @@ $loadSBox = false;
                             <button type="reset" onclick="resetForm(this)" class="btn btn-warning">重置</button>
                         </div>
                     </td>
-
-                </tr>
+                </tr> 
                 <?php foreach($models as  $model):?>
                 <tr>
                     <td width="18px">
@@ -151,6 +154,9 @@ $loadSBox = false;
     {{HTML::script('assets/js/datatables/jquery.dataTables.columnFilter.js')}}
     @if($loadSBox)
         {{HTML::script('assets/js/selectboxit/jquery.selectBoxIt.min.js')}}
+    @endif
+    @if($loadDatePicker)
+        {{HTML::script('assets/js/bootstrap-datepicker.js')}}
     @endif
 @append
 

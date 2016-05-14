@@ -6,8 +6,10 @@
         <li>
             <a href="{{URL::to('admin/'.$reducName.'/list')}}">模块</a>
         </li>
-        <li class="active">
-            <strong>Portlets</strong>
-        </li>
+        @if(isset($model))
+            <li class="active">
+                <strong>{{$model->id}}</strong>
+            </li>
+        @endif
     @endif
 </ol>

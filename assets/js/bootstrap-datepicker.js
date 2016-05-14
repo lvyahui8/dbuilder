@@ -59,7 +59,7 @@
 		if (this.o.rtl){
 			this.picker.addClass('datepicker-rtl');
 			this.picker.find('.prev i, .next i')
-						.toggleClass('icon-arrow-left icon-arrow-right');
+				.toggleClass('icon-arrow-left icon-arrow-right');
 		}
 
 
@@ -67,9 +67,9 @@
 
 		if (this.o.calendarWeeks)
 			this.picker.find('tfoot th.today')
-						.attr('colspan', function(i, val){
-							return parseInt(val) + 1;
-						});
+				.attr('colspan', function(i, val){
+					return parseInt(val) + 1;
+				});
 
 		this._allow_update = false;
 
@@ -262,11 +262,11 @@
 					mousedown: $.proxy(function (e) {
 						// Clicked outside the datepicker, hide it
 						if (!(
-							this.element.is(e.target) ||
-							this.element.find(e.target).length ||
-							this.picker.is(e.target) ||
-							this.picker.find(e.target).length
-						)) {
+								this.element.is(e.target) ||
+								this.element.find(e.target).length ||
+								this.picker.is(e.target) ||
+								this.picker.find(e.target).length
+							)) {
 							this.hide();
 						}
 					}, this)
@@ -410,7 +410,7 @@
 		},
 
 		place: function(){
-						if(this.isInline) return;
+			if(this.isInline) return;
 			var calendarWidth = this.picker.outerWidth(),
 				calendarHeight = this.picker.outerHeight(),
 				visualPadding = 10,
@@ -419,8 +419,8 @@
 				scrollTop = $window.scrollTop();
 
 			var zIndex = parseInt(this.element.parents().filter(function() {
-							return $(this).css('z-index') != 'auto';
-						}).first().css('z-index'))+10;
+					return $(this).css('z-index') != 'auto';
+				}).first().css('z-index'))+10;
 			var offset = this.component ? this.component.parent().offset() : this.element.offset();
 			var height = this.component ? this.component.outerHeight(true) : this.element.outerHeight(false);
 			var width = this.component ? this.component.outerWidth(true) : this.element.outerWidth(false);
@@ -518,7 +518,7 @@
 
 		fillDow: function(){
 			var dowCnt = this.o.weekStart,
-			html = '<tr>';
+				html = '<tr>';
 			if(this.o.calendarWeeks){
 				var cell = '<th class="cw">&nbsp;</th>';
 				html += cell;
@@ -533,7 +533,7 @@
 
 		fillMonths: function(){
 			var html = '',
-			i = 0;
+				i = 0;
 			while (i < 12) {
 				html += '<span class="month">'+dates[this.o.language].monthsShort[i++]+'</span>';
 			}
@@ -595,13 +595,13 @@
 				currentDate = this.date && this.date.valueOf(),
 				tooltip;
 			this.picker.find('.datepicker-days thead th.datepicker-switch')
-						.text(dates[this.o.language].months[month]+' '+year);
+				.text(dates[this.o.language].months[month]+' '+year);
 			this.picker.find('tfoot th.today')
-						.text(dates[this.o.language].today)
-						.toggle(this.o.todayBtn !== false);
+				.text(dates[this.o.language].today)
+				.toggle(this.o.todayBtn !== false);
 			this.picker.find('tfoot th.clear')
-						.text(dates[this.o.language].clear)
-						.toggle(this.o.clearBtn !== false);
+				.text(dates[this.o.language].clear)
+				.toggle(this.o.clearBtn !== false);
 			this.updateNavArrows();
 			this.fillMonths();
 			var prevMonth = UTCDate(year, month-1, 28,0,0,0,0),
@@ -620,13 +620,13 @@
 						// ISO 8601: First week contains first thursday.
 						// ISO also states week starts on Monday, but we can be more abstract here.
 						var
-							// Start of current week: based on weekstart/current date
+						// Start of current week: based on weekstart/current date
 							ws = new Date(+prevMonth + (this.o.weekStart - prevMonth.getUTCDay() - 7) % 7 * 864e5),
-							// Thursday of this week
+						// Thursday of this week
 							th = new Date(+ws + (7 + 4 - ws.getUTCDay()) % 7 * 864e5),
-							// First Thursday of year, year from thursday
+						// First Thursday of year, year from thursday
 							yth = new Date(+(yth = UTCDate(th.getUTCFullYear(), 0, 1)) + (7 + 4 - yth.getUTCDay())%7*864e5),
-							// Calendar week: ms between thursdays, div ms per day, div 7 days
+						// Calendar week: ms between thursdays, div ms per day, div 7 days
 							calWeek =  (th - yth) / 864e5 / 7 + 1;
 						html.push('<td class="cw">'+ calWeek +'</td>');
 
@@ -662,10 +662,10 @@
 			var currentYear = this.date && this.date.getUTCFullYear();
 
 			var months = this.picker.find('.datepicker-months')
-						.find('th:eq(1)')
-							.text(year)
-							.end()
-						.find('span').removeClass('active');
+				.find('th:eq(1)')
+				.text(year)
+				.end()
+				.find('span').removeClass('active');
 			if (currentYear && currentYear == year) {
 				months.eq(this.date.getUTCMonth()).addClass('active');
 			}
@@ -682,10 +682,10 @@
 			html = '';
 			year = parseInt(year/10, 10) * 10;
 			var yearCont = this.picker.find('.datepicker-years')
-								.find('th:eq(1)')
-									.text(year + '-' + (year + 9))
-									.end()
-								.find('td');
+				.find('th:eq(1)')
+				.text(year + '-' + (year + 9))
+				.end()
+				.find('td');
 			year -= 1;
 			for (var i = -1; i < 11; i++) {
 				html += '<span class="year'+(i == -1 ? ' old' : i == 10 ? ' new' : '')+(currentYear == year ? ' active' : '')+(year < startYear || year > endYear ? ' disabled' : '')+'">'+year+'</span>';
@@ -997,14 +997,14 @@
 				this.viewMode = Math.max(this.o.minViewMode, Math.min(2, this.viewMode + dir));
 			}
 			/*
-				vitalets: fixing bug of very special conditions:
-				jquery 1.7.1 + webkit + show inline datepicker in bootstrap popover.
-				Method show() does not set display css correctly and datepicker is not shown.
-				Changed to .css('display', 'block') solve the problem.
-				See https://github.com/vitalets/x-editable/issues/37
+			 vitalets: fixing bug of very special conditions:
+			 jquery 1.7.1 + webkit + show inline datepicker in bootstrap popover.
+			 Method show() does not set display css correctly and datepicker is not shown.
+			 Changed to .css('display', 'block') solve the problem.
+			 See https://github.com/vitalets/x-editable/issues/37
 
-				In jquery 1.7.2+ everything works fine.
-			*/
+			 In jquery 1.7.2+ everything works fine.
+			 */
 			//this.picker.find('>div').hide().filter('.datepicker-'+DPGlobal.modes[this.viewMode].clsName).show();
 			this.picker.find('>div').hide().filter('.datepicker-'+DPGlobal.modes[this.viewMode].clsName).css('display', 'block');
 			this.updateNavArrows();
@@ -1105,10 +1105,10 @@
 				options = typeof option == 'object' && option;
 			if (!data) {
 				var elopts = opts_from_el(this, 'date'),
-					// Preliminary otions
+				// Preliminary otions
 					xopts = $.extend({}, defaults, elopts, options),
 					locopts = opts_from_locale(xopts.language),
-					// Options priority: js args, data-attrs, locales, defaults
+				// Options priority: js args, data-attrs, locales, defaults
 					opts = $.extend({}, defaults, locopts, elopts, options);
 				if ($this.is('.input-daterange') || opts.inputs){
 					var ropts = {
@@ -1160,13 +1160,21 @@
 	$.fn.datepicker.Constructor = Datepicker;
 	var dates = $.fn.datepicker.dates = {
 		en: {
-			days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-			daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-			daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-			months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-			today: "Today",
-			clear: "Clear"
+			//days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+			//daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+			//daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+			//months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+			//monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+			//today: "Today",
+			//clear: "Clear"
+			days: ["星期日","星期一","星期二","星期三","星期四","星期五","星期六","星期日"],
+			daysShort: ["日","一","二","三","四","五","六","日"],
+			daysMin: ["日","一","二","三","四","五","六","日"],
+			monthsShort: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+			//monthsShort: ["一","二","三","四","五","六","七","八","九","十","十一","十二"],
+			months: ["01","02","03","04","05","06","07","08","09","10","11","12"],
+			today: "今天",
+			clear: "还原"
 		}
 	};
 
@@ -1186,7 +1194,7 @@
 				clsName: 'years',
 				navFnc: 'FullYear',
 				navStep: 10
-		}],
+			}],
 		isLeapYear: function (year) {
 			return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0));
 		},
@@ -1329,44 +1337,44 @@
 			return date.join('');
 		},
 		headTemplate: '<thead>'+
-							'<tr>'+
-								'<th class="prev">&laquo;</th>'+
-								'<th colspan="5" class="datepicker-switch"></th>'+
-								'<th class="next">&raquo;</th>'+
-							'</tr>'+
-						'</thead>',
+		'<tr>'+
+		'<th class="prev">&laquo;</th>'+
+		'<th colspan="5" class="datepicker-switch"></th>'+
+		'<th class="next">&raquo;</th>'+
+		'</tr>'+
+		'</thead>',
 		contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>',
 		footTemplate: '<tfoot><tr><th colspan="7" class="today"></th></tr><tr><th colspan="7" class="clear"></th></tr></tfoot>'
 	};
 	DPGlobal.template = '<div class="datepicker">'+
-							'<div class="datepicker-days">'+
-								'<table class=" table-condensed">'+
-									DPGlobal.headTemplate+
-									'<tbody></tbody>'+
-									DPGlobal.footTemplate+
-								'</table>'+
-							'</div>'+
-							'<div class="datepicker-months">'+
-								'<table class="table-condensed">'+
-									DPGlobal.headTemplate+
-									DPGlobal.contTemplate+
-									DPGlobal.footTemplate+
-								'</table>'+
-							'</div>'+
-							'<div class="datepicker-years">'+
-								'<table class="table-condensed">'+
-									DPGlobal.headTemplate+
-									DPGlobal.contTemplate+
-									DPGlobal.footTemplate+
-								'</table>'+
-							'</div>'+
-						'</div>';
+		'<div class="datepicker-days">'+
+		'<table class=" table-condensed">'+
+		DPGlobal.headTemplate+
+		'<tbody></tbody>'+
+		DPGlobal.footTemplate+
+		'</table>'+
+		'</div>'+
+		'<div class="datepicker-months">'+
+		'<table class="table-condensed">'+
+		DPGlobal.headTemplate+
+		DPGlobal.contTemplate+
+		DPGlobal.footTemplate+
+		'</table>'+
+		'</div>'+
+		'<div class="datepicker-years">'+
+		'<table class="table-condensed">'+
+		DPGlobal.headTemplate+
+		DPGlobal.contTemplate+
+		DPGlobal.footTemplate+
+		'</table>'+
+		'</div>'+
+		'</div>';
 
 	$.fn.datepicker.DPGlobal = DPGlobal;
 
 
 	/* DATEPICKER NO CONFLICT
-	* =================== */
+	 * =================== */
 
 	$.fn.datepicker.noConflict = function(){
 		$.fn.datepicker = old;
@@ -1375,7 +1383,7 @@
 
 
 	/* DATEPICKER DATA-API
-	* ================== */
+	 * ================== */
 
 	$(document).on(
 		'focus.datepicker.data-api click.datepicker.data-api',

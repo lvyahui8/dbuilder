@@ -66,11 +66,6 @@ return array(
                 'search'    =>  true,
                 /* 字段进行翻译，比如栏目Id字段，一般要转成栏目名称显示 */
                 'lookup'    =>  false,
-                /* 字段是否进行筛选 */
-                'filter'    =>  array(
-                    /* 过滤方法操作符 */
-                    'operator'  =>  '>',
-                ),
             ),
 
         ),

@@ -56,7 +56,7 @@
                     <div class="form-group">
                         <div class="col-sm-8 col-sm-offset-4">
                             <button class="btn btn-primary" type="submit">保存</button>
-                            <a href="#" class="btn btn-default connection-test">测试</a>
+                            <a class="btn btn-default connection-test">测试</a>
                         </div>
                     </div>
                 </form>

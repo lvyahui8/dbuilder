@@ -36,6 +36,7 @@ class SiteHelpers
             'select'   => '下拉框（select）',
             'radio'    => '单选框（radio）',
             'checkbox' => '复选框（checkbox）',
+//            'ipaddr'   => 'IP地址（ipaddr）',
             'file'     => '文件（file）',
             'hidden'   => '隐藏（hidden）',
             'custom'   => '自定义（custom）',
@@ -61,7 +62,7 @@ class SiteHelpers
         return array(
             'hasMany'       => '一对多（hasMany）',
             'hasOne'        => '一对一（hasOne）',
-            'belongsTo'    => '所属（belongsTo）',
+            'belongsTo'     => '所属（belongsTo）',
             'belongsToMany' => '多对多（belongsToMany）',
         );
     }
@@ -104,7 +105,8 @@ class SiteHelpers
     }
 
 
-    public static function cleanStorage($dir){
+    public static function cleanStorage($dir)
+    {
         $viewPath = storage_path($dir);
         /*
         $views = scandir($viewPath);

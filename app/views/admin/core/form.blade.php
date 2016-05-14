@@ -5,8 +5,10 @@ $labelCols = $layout['label_cols'];
 $inputCols = $layout['input_cols'];
 $labelCss = "col-sm-$labelCols";
 $inputCss = "col-sm-$inputCols";
+//  插件是否加载
 $loadUE = false;
 $loadSBox = false;
+$loadDatePicker = false;
 ?>
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -22,6 +24,10 @@ $loadSBox = false;
                     if ($field === $model->getKeyName() || !$settings['form']['show']) continue;
                     $type = $settings['form']['type'];
                     ?>
+                    <?php if($settings['form']['type'] === 'hidden'):?>
+                        <input type="hidden" name="{{$field}}" value="{{$model->$field}}">
+                        <?php continue;?>
+                    <?php endif; ?>
                     <div class="form-group">
                         <label for="{{$field}}"
                                class="{{$labelCss}} control-label">{{isset($settings['label']) ? $settings['label'] : strtoupper($field)}}</label>
@@ -62,6 +68,25 @@ $loadSBox = false;
                             ?>
                             <script type="text/plain" name="{{$field}}" id="wysiwyg-edit"
                                     style="width:100%;height:240px;">{{$model->$field}}</script>
+                            <?php elseif ($type === 'radio' || $type === 'checkbox'): ?>
+
+                            @if(isset($settings['form']['options']))
+                                @foreach($settings['form']['options'] as $option => $text)
+                                    <div class="{{$type}} {{$type}}-replace">
+                                        <input type="{{$type}}" value="{{$option}}" name="{{$field}}"
+                                                   id="{{$field}}" @if($model->field === $option) checked @endif>
+                                        <label>{{$text}}</label>
+                                    </div>
+                                @endforeach
+                            @endif
+                            <?php elseif($type === 'date'):?>
+                                <?php $loadDatePicker = true;?>
+                                <div class="input-group">
+                                    <input type="text" name="{{$field}}" id="{{$field}}" class="form-control datepicker" data-format="yyyy-MM-dd">
+                                    <div class="input-group-addon">
+                                        <a href="#"><i class="entypo-calendar"></i></a>
+                                    </div>
+                                </div>
                             <?php else:?>
                             <input type="text" class="form-control" name="{{$field}}" id="{{$field}}"
                                    value="{{$model->$field}}">
@@ -93,6 +118,9 @@ $loadSBox = false;
     <?php endif;?>
     @if($loadSBox)
         {{HTML::script('assets/js/selectboxit/jquery.selectBoxIt.min.js')}}
+    @endif
+    @if($loadDatePicker)
+        {{HTML::script('assets/js/bootstrap-datepicker.js')}}
     @endif
 @append
 
