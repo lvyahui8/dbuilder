@@ -123,4 +123,20 @@ class SiteHelpers
         */
         FileUtils::emptyPath($viewPath);
     }
+
+    public static function inputMask($rule){
+        $masks = Supports::masks();
+        if(isset($masks[$rule])){
+            return 'data-mask="'.$rule.'"';
+        }
+        return null;
+    }
+
+    public static function inputValidate($rule){
+        $rules = Supports::rules();
+        if(isset($rules[$rule])){
+            return 'data-validate="'.$rule.'"';
+        }
+        return null;
+    }
 }

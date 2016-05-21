@@ -66,9 +66,7 @@ $controlTyps = SiteHelpers::supportFormControls();
                         <button type="submit" class="btn btn-primary">保存</button>
                     </form>
                 </div>
-                <div class="tab-pane" id="perm">
-
-                </div>
+                <div class="tab-pane" id="perm"></div>
             </div>
         </div>
     </div>

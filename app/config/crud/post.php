@@ -21,10 +21,6 @@
         'sort' => true,
         'search' => '=',
         'lookup' => false,
-        'filter' => 
-        array (
-          'operator' => '>',
-        ),
       ),
       'relation' => 
       array (
@@ -53,10 +49,6 @@
         'sort' => true,
         'search' => '=',
         'lookup' => false,
-        'filter' => 
-        array (
-          'operator' => '>',
-        ),
       ),
       'relation' => 
       array (
@@ -82,26 +74,22 @@
       'list' => 
       array (
         'show' => true,
-        'sort' => false,
-        'search' => 'like',
+        'sort' => true,
+        'search' => '=',
         'lookup' => false,
-        'filter' => 
-        array (
-          'operator' => '>',
-        ),
       ),
       'relation' => 
       array (
         'type' => '',
-        'table' => '',
-        'foreign_key' => '',
-        'show' => '',
+        'table' => 'category',
+        'foreign_key' => 'id',
+        'show' => 'id',
         'as' => '',
       ),
     ),
     'content' => 
     array (
-      'label' => '正文',
+      'label' => '内容',
       'form' => 
       array (
         'show' => true,
@@ -117,23 +105,19 @@
         'sort' => true,
         'search' => '=',
         'lookup' => false,
-        'filter' => 
-        array (
-          'operator' => '>',
-        ),
       ),
       'relation' => 
       array (
         'type' => '',
-        'table' => '',
-        'foreign_key' => '',
-        'show' => '',
+        'table' => 'category',
+        'foreign_key' => 'id',
+        'show' => 'id',
         'as' => '',
       ),
     ),
     'view_ct' => 
     array (
-      'label' => '阅读次数',
+      'label' => '查看次数',
       'form' => 
       array (
         'show' => false,
@@ -149,10 +133,6 @@
         'sort' => true,
         'search' => '=',
         'lookup' => false,
-        'filter' => 
-        array (
-          'operator' => '>',
-        ),
       ),
       'relation' => 
       array (
@@ -181,10 +161,6 @@
         'sort' => true,
         'search' => '=',
         'lookup' => false,
-        'filter' => 
-        array (
-          'operator' => '>',
-        ),
       ),
       'relation' => 
       array (
@@ -202,7 +178,7 @@
       array (
         'show' => false,
         'hidden' => false,
-        'type' => 'text',
+        'type' => 'date',
         'rule' => 'required',
         'ajax_validate' => false,
         'placeholder' => '',
@@ -211,20 +187,16 @@
       array (
         'show' => true,
         'sort' => true,
-        'search' => '>=',
+        'search' => '=',
         'lookup' => false,
-        'filter' => 
-        array (
-          'operator' => '>',
-        ),
       ),
       'relation' => 
       array (
-        'type' => '',
+          'type'    =>  'belongsTo',
         'table' => 'category',
         'foreign_key' => 'id',
-        'show' => 'title',
-        'as' => 'category_title',
+        'show' => 'id',
+        'as' => '',
       ),
     ),
     'category_id' => 
@@ -242,17 +214,13 @@
       'list' => 
       array (
         'show' => true,
-        'sort' => false,
+        'sort' => true,
         'search' => '=',
         'lookup' => false,
-        'filter' => 
-        array (
-          'operator' => '>',
-        ),
       ),
       'relation' => 
       array (
-        'type' => 'belongsTo ',
+        'type' => 'belongsTo',
         'table' => 'category',
         'foreign_key' => 'id',
         'show' => 'title',
@@ -329,18 +297,18 @@
     'updated_at' => 
     array (
       'type' => '',
-      'table' => 'category',
-      'foreign_key' => 'id',
-      'show' => 'title',
-      'as' => 'category_title',
+      'table' => '',
+      'foreign_key' => '',
+      'show' => '',
+      'as' => '',
     ),
     'category_id' => 
     array (
-      'type' => 'belongsTo ',
-      'table' => 'category',
-      'foreign_key' => 'id',
-      'show' => 'title',
-      'as' => 'category_title',
+      'type' => '',
+      'table' => '',
+      'foreign_key' => '',
+      'show' => '',
+      'as' => '',
     ),
   ),
 );

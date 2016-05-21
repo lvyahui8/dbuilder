@@ -22,6 +22,17 @@ function ajaxModal(url){
     },'html');
 }
 
+function confirmModal(opts){
+    var $modal = $('div#confirm-modal');
+    $modal.find('div.modal-body').text(opts.message);
+    $modal.modal('show');
+    if(opts.hasOwnProperty('onOk')){
+        $modal.find('button.ok').click(opts.onOk);
+    }
+    if(opts.hasOwnProperty('onCancel')){
+        $modal.find('button.cancel').click(opts.onCancel);
+    }
+}
 
 (function($){
     $(document).ready(function(){

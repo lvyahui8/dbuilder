@@ -6,27 +6,11 @@
     <input type="hidden" name="module_key" value="{{$moduleKey}}">
     <input type="hidden" name="field" value="{{$field}}">
     <div class="modal-body">
-        <ul class="nav nav-tabs bordered"><!-- available classes "bordered", "right-aligned" -->
-            <li class="active"><a href="#home-2" data-toggle="tab">
-                    <span class="visible-xs"><i class="entypo-home"></i></span>
-                    <span class="hidden-xs">表单（Form）属性配置</span>
-                </a>
-            </li>
-            <li>
-                <a href="#profile-2" data-toggle="tab">
-                    <span class="visible-xs"><i class="entypo-user"></i></span>
-                    <span class="hidden-xs">列表（List）属性配置</span>
-                </a>
-            </li>
-            <li>
-                <a href="#profile-3" data-toggle="tab">
-                    <span class="visible-xs"><i class="entypo-user"></i></span>
-                    <span class="hidden-xs">关系（Relation）属性配置</span>
-                </a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" id="home-2">
+
+        <div class="panel panel-default">
+            <div class="panel-heading"> <h3 class="panel-title">表单（Form）属性配置</h3></div>
+            <div class="panel-body">
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -66,15 +50,19 @@
                                 <option value="">选择规则类型</option>
                                 @foreach(Supports::rules() as $rule => $text)
                                     <option value="{{$rule}}"
-                                        @if($fieldConfig['form']['rule'] === $rule) selected @endif
+                                            @if($fieldConfig['form']['rule'] === $rule) selected @endif
                                     >{{$text}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                 </div>
+
             </div>
-            <div class="tab-pane" id="profile-2">
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading"> <h3 class="panel-title">列表（List）属性配置</h3></div>
+            <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="checkbox checkbox-replace color-primary">
@@ -96,8 +84,12 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane" id="profile-3">
-
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">关系（Relation）属性配置</h3>
+            </div>
+            <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -120,7 +112,7 @@
                                     <label for="">关联表</label>
                                     <select name="relation[table]" id="relation_table" class="selectboxit">
                                         @foreach($tables as $table)
-                                            <option value="{{$table}}" @if($table === $fieldConfig['relation']['type']) @endif>{{$table}}</option>
+                                            <option value="{{$table}}" @if($table === $fieldConfig['relation']['table']) selected @endif>{{$table}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -150,6 +142,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

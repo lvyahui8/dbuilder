@@ -23,7 +23,7 @@ $loadDatePicker = false;
                     @if($list_options['create'])
                         <a href="{{URL::to('admin/'.$stdName.'/edit')}}" class="btn btn-primary">新建</a>
                     @endif
-                    <a class="btn btn-danger">删除</a>
+                    <a class="btn btn-danger delete-selected">删除</a>
                     <a class="btn btn-default">导出</a>
                 </div>
             </div>
@@ -37,7 +37,7 @@ $loadDatePicker = false;
                 <tr>
                     <th>
                         <div class="checkbox checkbox-replace">
-                            <input type="checkbox">
+                            <input type="checkbox" class="item-all">
                         </div>
                     </th>
                     <?php foreach($config['fields'] as $field=>$settings):?>
@@ -62,7 +62,7 @@ $loadDatePicker = false;
                         @if($fieldConfig['list']['show'])
                             @if(isset($fieldConfig['list']['search']) && $fieldConfig['list']['search'] !== false)
                                 <td>
-                                    @if($fieldConfig['form']['type'] == 'select')
+                                    @if($fieldConfig['form']['type'] == 'select' || ($fieldConfig['form']['type'] === 'radio' || $fieldConfig['form']['type'] == 'checkbox'))
                                         <?php $loadSBox = true;?>
                                         @if(isset($fieldConfig['form']['options']) && $fieldConfig['form']['options'])
                                             <select name="{{$field}}" id="{{$field}}" class="selectboxit">
@@ -77,7 +77,7 @@ $loadDatePicker = false;
                                         @endif
                                     @elseif($fieldConfig['form']['type'] === 'date')
                                         <?php $loadDatePicker = true;?>
-                                        <input type="text" name="{{$field}}" id="{{$field}}" class="form-control datepicker" data-format="yyyy-MM-dd">
+                                        <input type="text" name="{{$field}}" id="{{$field}}" class="form-control datepicker" data-format="yyyy-MM-dd" value="{{Input::get($field)}}">
                                     @else
                                         <input type="text" name="{{$field}}" id="{{$field}}"
                                                value="{{Input::get($field)}}" class="form-control input-sm">
@@ -91,15 +91,15 @@ $loadDatePicker = false;
                     <td>
                         <div class="btn-group btn-group-sm" role="group">
                             <button type="submit" class="btn btn-primary">搜索</button>
-                            <button type="reset" onclick="resetForm(this)" class="btn btn-warning">重置</button>
+                            <button type="reset" onclick="resetForm(this)" class="btn btn-warning hidden">重置</button>
                         </div>
                     </td>
-                </tr> 
+                </tr>
                 <?php foreach($models as  $model):?>
                 <tr>
                     <td width="18px">
                         <div class="checkbox checkbox-replace">
-                            <input type="checkbox">
+                            <input type="checkbox" name="d_delete_select" class="item" value="{{$model->id}}">
                         </div>
                     </td>
                     <?php foreach($config['fields'] as $filed=>$settings):?>
@@ -140,7 +140,6 @@ $loadDatePicker = false;
     </div>
 </div>
 
-
 @section('styles')
     {{HTML::style('assets/js/datatables/responsive/css/datatables.responsive.css')}}
 
@@ -169,6 +168,57 @@ $loadDatePicker = false;
                 $('input[name="list_sort_asc"]').val($th.find('i').hasClass('fa-sort-asc') ? 0 : 1);
                 $('form.list-form').submit();
             });
+
+            $('input.item-all').change(function(){
+                var $this = $(this),
+                        $items = $('input.item');
+                if($this.is(':checked')){
+                    $items.prop('checked','checked');
+                }else{
+                    $items.removeProp('checked');
+                }
+                $items.trigger('change');
+            });
+
+
+            $('a.delete-selected').click(function(){
+                var ids = [],
+                        $items = $('input.item:checked');
+                $items.each(function(i){
+                    ids.push($(this).val());
+                });
+                var idsStr = ids.join(',');
+                confirmModal({
+                    message  :   '确认删除：'+idsStr,
+                    onOk:   function(){
+                        $.post('{{URL::to('admin/'.snake_case($stdName).'/delete')}}',{"ids":idsStr},function(resp){
+                            if(resp.success){
+                                window.location.href = resp.data.redirect_url;
+                            }
+                        },'json');
+                    }
+                });
+                return false;
+            });
         });
     </script>
 @append
+
+@section('modals')
+    <div class="modal fade" id="confirm-modal" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">操作确认</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default cancel" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-info ok">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@stop

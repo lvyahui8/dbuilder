@@ -15,9 +15,9 @@
 
 <?php echo HTML::script(asset('assets/js/joinable.js')); ?>
 
-<?php echo HTML::script(asset('assets/js/neon-api.js')); ?>
+<?php echo HTML::script(asset('assets/js/api.js')); ?>
 
-<?php echo HTML::script('assets/js/neon-custom.js'); ?>
+<?php echo HTML::script('assets/js/custom.js'); ?>
 
 <?php /*本页面特殊需要的js*/ ?>
 <?php echo $__env->yieldContent('scripts',''); ?>

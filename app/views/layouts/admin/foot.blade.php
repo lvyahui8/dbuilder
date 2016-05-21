@@ -9,9 +9,9 @@
 {{HTML::script(asset('assets/js/joinable.js'))}}
 {{HTML::script(asset('assets/js/resizeable.js'))}}
 {{HTML::script(asset('assets/js/joinable.js'))}}
-{{HTML::script(asset('assets/js/neon-api.js'))}}
-{{HTML::script('assets/js/neon-custom.js')}}
+{{HTML::script(asset('assets/js/api.js'))}}
 {{--本页面特殊需要的js--}}
 @yield('scripts','')
+{{HTML::script('assets/js/custom.js')}}
 {{HTML::script('assets/js/commons.js')}}
 @yield('footScript','')

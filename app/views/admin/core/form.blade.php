@@ -17,12 +17,13 @@ $loadDatePicker = false;
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-{{$layout['cols']}} col-sm-offset-{{(12-$layout['cols'])/2}}">
-                <form class="form-horizontal" action="{{URL::to('admin/'.$stdName.'/edit')}}" method="post">
+                <form class="form-horizontal validate" action="{{URL::to('admin/'.$stdName.'/edit')}}" method="post">
                     <input type="hidden" name="{{$model->getKeyName()}}" value="{{$model->getKey()}}">
                     <?php foreach($config['fields'] as $field => $settings):?>
                     <?php
                     if ($field === $model->getKeyName() || !$settings['form']['show']) continue;
                     $type = $settings['form']['type'];
+                    $rule = $settings['form']['rule'];
                     ?>
                     <?php if($settings['form']['type'] === 'hidden'):?>
                     <input type="hidden" name="{{$field}}" value="{{$model->$field}}">
@@ -34,10 +35,11 @@ $loadDatePicker = false;
                         <div class="{{$inputCss}}">
                             <?php if($type === 'textarea'):?>
                             <textarea name="{{$field}}" id="{{$field}}" rows="10"
+                                      {{SiteHelpers::inputValidate($rule)}}
                                       class="form-control">{{$model->$field}}</textarea>
                             <?php elseif($type === 'select'):?>
                             <?php $loadSBox = true;?>
-                            <select name="{{$field}}" id="{{$field}}" class="selectboxit">
+                            <select name="{{$field}}" id="{{$field}}" class="selectboxit" {{SiteHelpers::inputValidate($rule)}}>
                                 @if (isset($settings['form']['options']))
                                     @if(is_array($settings['form']['options']))
                                         @foreach($settings['form']['options'] as $value => $text)
@@ -82,7 +84,7 @@ $loadDatePicker = false;
                             <?php elseif($type === 'date'):?>
                             <?php $loadDatePicker = true;?>
                             <div class="input-group">
-                                <input type="text" name="{{$field}}" id="{{$field}}" class="form-control datepicker" data-format="yyyy-MM-dd">
+                                <input type="text" name="{{$field}}" id="{{$field}}" class="form-control datepicker" data-format="yyyy-MM-dd" {{SiteHelpers::inputValidate($rule)}}>
                                 <div class="input-group-addon">
                                     <a href="#"><i class="entypo-calendar"></i></a>
                                 </div>
@@ -90,13 +92,16 @@ $loadDatePicker = false;
                             <?php elseif($type === 'password'):?>
                             <input type="password" class="form-control" name="{{$field}}" id="{{$field}}"
                                    value="{{$model->$field}}"
+                                    {{SiteHelpers::inputValidate($rule)}}
                             >
                             <?php elseif($type === 'file'):?>
-                                <input type="file"
-                                       class="form-control file2 inline btn btn-primary"
-                                       data-label="<i class='glyphicon glyphicon-file'></i> 选择文件" >
+                            <input type="file"
+                                   class="form-control file2 inline btn btn-primary"
+                                   data-label="<i class='glyphicon glyphicon-file'></i> 选择文件" >
                             <?php else:?>
                             <input type="text" class="form-control" name="{{$field}}" id="{{$field}}"
+                                   {{SiteHelpers::inputMask($rule)}}
+                                   {{SiteHelpers::inputValidate($rule)}}
                                    value="{{$model->$field}}">
                             <?php endif;?>
                         </div>
@@ -130,6 +135,8 @@ $loadDatePicker = false;
     @if($loadDatePicker)
         {{HTML::script('assets/js/bootstrap-datepicker.js')}}
     @endif
+    {{HTML::script('assets/js/jquery.inputmask.bundle.min.js')}}
+    {{HTML::script('assets/js/jquery.validate.min.js')}}
 @append
 
 @section('footScript')

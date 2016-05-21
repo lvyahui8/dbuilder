@@ -7,6 +7,8 @@
         <div class="row">
             <div class="col-sm-6 col-sm-offset-2">
                 <form action="{{URL::to('admin/data-source/edit')}}" class="form-horizontal" id="datasource-form" method="post">
+                    <input type="hidden" value="{{$dataSource['charset']}}" name="charset">
+                    <input type="hidden" value="{{$dataSource['collation']}}" name="collation">
                     <div class="form-group">
                         <label for="name" class="control-label col-sm-4">数据源名</label>
                         <div class="col-sm-8">

@@ -2,11 +2,13 @@
 
 namespace admin;
 
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\URL;
 use SiteHelpers;
 use Module;
 
@@ -50,7 +52,7 @@ class AdminController extends \BaseController
             $this->model = $this->model->find($id);
         }
         $data = array(
-            'id' => $id,
+            $this->model->getKeyName() => $id,
             'model'   =>  $this->model,
             $this->modelName=>$this->model,
         );
@@ -132,6 +134,8 @@ class AdminController extends \BaseController
             $orderBy = Input::get('list_order_by');
             if( $orderBy){
                 $query->orderBy($this->model->getTable().'.'.$orderBy,Input::get('list_sort_asc') ? 'asc' : 'desc');
+            }else{
+                $query->orderBy($this->model->getTable().'.'.$this->model->getKeyName(),'desc');
             }
             $page = Input::has('_page') ? Input::get('_page') : 10;
             $models = $query->paginate($page);
@@ -141,8 +145,6 @@ class AdminController extends \BaseController
 
 
     public function postEdit($primaryKeyValue = null){
-//        $resp = Redirect::action(get_class($this).'@getEdit', array('id'=>Input::get('id')))->withInput();
-//        $relations  = array();
 
         $primaryKeyName = $this->model->getKeyName();
         if($primaryKeyValue == null){
@@ -174,9 +176,25 @@ class AdminController extends \BaseController
         $this->makeView(null,'admin.index');
     }
 
+    public function postDelete(){
+        $ids = explode(',',Input::get('ids'));
+        $data = array();
+        $success   =  true;
+        $data['ids'] = $ids;
+        $ids = array_filter($ids,function($id){
+            return $id;
+        });
+        $this->model->whereIn($this->model->getKeyName(),$ids)->delete();
+        $data['redirect_url'] = URL::to(action(get_class($this).'@getList'));
+        return Response::json(array(
+            'success'   =>  $success,
+            'data'      =>  $data,
+        ));
+    }
+
     public function getDelete($id){
         $this->beforeDelete($id);
-        $this->model->where('id',$id)->delete();
+        $this->model->where($this->model->getKeyName(),$id)->delete();
         return Redirect::action(get_class($this).'@getList');
     }
 
@@ -215,6 +233,7 @@ class AdminController extends \BaseController
 
     protected function beforeEdit(&$data)
     {
+
     }
 
     protected function afterSave($model)
