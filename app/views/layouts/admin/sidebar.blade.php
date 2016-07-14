@@ -32,9 +32,9 @@
         <ul id="main-menu" class="main-menu multiple-expanded">
             <!-- add class "multiple-expanded" to allow multiple submenus to open -->
             <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
-            @foreach(Cache::get('modules') as $module)
+            @foreach(Cache::get('dmodules') as $module)
                     <li>
-                        <a href="{{URL::to('admin/'.SiteHelpers::reducCase($module->name).'/list')}}">
+                        <a href="{{URL::to('admin/'.StringUtils::reducCase($module->name).'/list')}}">
                             <i class="entypo-adjust"></i>
                             <span>{{$module->title}}</span>
                         </a>

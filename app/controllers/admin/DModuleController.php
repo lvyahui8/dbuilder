@@ -13,13 +13,14 @@ define('MODULE_ROUTES', json_encode(include(app_path() . '/module_routes.php')))
 use Illuminate\Support\Facades\Redirect;
 use SiteHelpers;
 use BaseModel;
-use Module;
+use DModule;
 use ConfigUtils;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;
+use StringUtils;
 
-class ModuleController extends AdminController
+class DModuleController extends AdminController
 {
 
     protected function beforeEdit(&$data)
@@ -43,10 +44,11 @@ class ModuleController extends AdminController
             'dbTable'         => $module->db_table,
         );
         $this->removeFiles($codes['moduleName']);
-        /* 生成默认module Configuration*/
+        /* 生成默认module Configuration */
         $moduleConfs = $this->buildConfiguration($module->db_table, $module->db_source);
         SiteHelpers::saveArrayToFile(app_path('config/crud/') . snake_case($codes['moduleName']) . '.php', $moduleConfs);
 
+        /* 生成 MVC 文件 */
         $controller = file_get_contents(app_path('template') . '/controller.tpl');
         $model = file_get_contents(app_path('template') . '/model.tpl');
         $formView = file_get_contents(app_path('template') . '/_form.tpl');
@@ -55,7 +57,7 @@ class ModuleController extends AdminController
                                 ? 'true' : 'false';
         $buildController = SiteHelpers::blend($controller, $codes);
         $buildModel = SiteHelpers::blend($model, $codes);
-        /* 生成 MVC 文件*/
+
         file_put_contents(app_path() . "/controllers/admin/{$codes['moduleName']}Controller.php", $buildController);
         file_put_contents(app_path() . "/models/{$codes['moduleName']}.php", $buildModel);
         $viewPath = app_path('/views/admin/') . snake_case($codes['moduleName']);
@@ -67,14 +69,14 @@ class ModuleController extends AdminController
         /* 更新路由 */
         $moduleRoutes = json_decode(MODULE_ROUTES, true); //require(app_path().'/module_routes.php');
         if (is_array($moduleRoutes)) {
-            $moduleRoutes[SiteHelpers::reducCase($codes['moduleName'])] = 'admin\\' . "{$codes['moduleName']}Controller";
+            $moduleRoutes[StringUtils::reducCase($codes['moduleName'])] = 'admin\\' . "{$codes['moduleName']}Controller";
             SiteHelpers::saveArrayToFile(app_path() . '/module_routes.php', $moduleRoutes);
         }
     }
 
     protected function beforeDelete($id)
     {
-        $module = Module::find($id);
+        $module = DModule::find($id);
         $moduleName = $module->name;
         $this->removeFiles($moduleName);
     }
@@ -150,7 +152,7 @@ class ModuleController extends AdminController
         $resp = Redirect::action(get_class($this) . '@getEdit', Input::get('id'));
         $postFields = Input::get('fields');
         $moduleName = Input::get('module_key');
-        $confKey = SiteHelpers::reducCase($moduleName);
+        $confKey = StringUtils::reducCase($moduleName);
         $savedConfig = ConfigUtils::get($confKey);
         foreach ($savedConfig['fields'] as $fieldName => &$savefield) {
             $postField = $postFields[$fieldName];

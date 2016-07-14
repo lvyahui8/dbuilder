@@ -45,6 +45,14 @@ class BaseController extends Controller
         }
     }
 
+    /**
+     * 获取控制器名称
+     * 例如：
+     * 类：admin/DataSourceController
+     * 将返回
+     * dataSource
+     * @return null|string
+     */
     public function getStdName()
     {
         if(!$this->stdName){
@@ -84,16 +92,34 @@ class BaseController extends Controller
         }
     }
 
+    public function getSnakeName(){
 
+    }
+
+    public function getHumpName(){
+
+    }
+
+    public function getMinuPointName(){
+
+    }
+
+    /**
+     *
+     * @return array|bool
+     */
     public function getRouteParams(){
         if(!$this->routeParams){
+
             list($class,$method) = explode('@',Route::current()->getActionName());
             $class = str_replace("\\",".",substr($class,0,strrpos($class,'Controller')));
-            $names = explode(".",$class);
-            foreach ($names as & $name) {
-                $name = snake_case($name);
-            }
-            $class = implode('.',$names);
+//            $names = explode(".",$class);
+//            foreach ($names as & $name) {
+//                $name = snake_case($name);
+//            }
+            $class = StringUtils::humpToSnake($class);
+//            $class = implode('.',$names);
+
             $this->routeParams = array(
                 'c'    =>  $class,
                 'm'        =>  $method

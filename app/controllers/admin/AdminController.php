@@ -2,6 +2,7 @@
 
 namespace admin;
 
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
@@ -10,7 +11,8 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
 use SiteHelpers;
-use Module;
+use DModule;
+use StringUtils;
 
 class AdminController extends \BaseController
 {
@@ -23,14 +25,14 @@ class AdminController extends \BaseController
     {
         parent::__construct();
         View::share('stdName',$this->getStdName());
-        View::share('reducName',SiteHelpers::reducCase($this->getStdName()));
+        View::share('reducName',StringUtils::humpToSnake($this->getStdName()),'-');
         View::share('routeParams',$this->getRouteParams());
         if($this->model){
             $this->assignModel($this->model);
         }
         View::share('config',$this->savedConfig);
-        if(!Cache::has('modules')){
-            Cache::forever('modules',Module::all());
+        if(!Cache::has('dmodules')){
+            Cache::forever('dmodules',DModule::all());
         }
     }
 
@@ -40,10 +42,19 @@ class AdminController extends \BaseController
         if(!View::exists($view)){
             $view = 'admin.core.list';
         }
-        $this->makeView(array(
-            'models'  =>  $models,
-            $this->getStdName().'s' =>  $models,
-        ),$view);
+        if(Request::ajax() || Input::has('isAjax')){
+            return Response::json(array(
+               'success'    =>  true,
+                'data'      =>  array(
+                    'models'    =>  $models->toArray()
+                )
+            ));
+        }else{
+            $this->makeView(array(
+                'models'  =>  $models,
+                $this->getStdName().'s' =>  $models,
+            ),$view);
+        }
     }
 
     public function getEdit($id = null)
@@ -66,7 +77,7 @@ class AdminController extends \BaseController
     }
 
     protected function config(){
-        $config = 'crud/'.$this->getStdName();
+        $config = 'crud/'.StringUtils::humpToSnake($this->getStdName(),'_');
         if(!file_exists(app_path('config/').$config.'.php')){
             $config = 'crud/admin';
         }
@@ -198,11 +209,11 @@ class AdminController extends \BaseController
         return Redirect::action(get_class($this).'@getList');
     }
 
-    public function missingMethod($parameters = array())
-    {
-        //
-        $this->makeView(null,'site.404');
-    }
+//    public function missingMethod($parameters = array())
+//    {
+//        //
+//        $this->makeView(null,'site.404');
+//    }
 
     protected function handleListQuery(&$query)
     {

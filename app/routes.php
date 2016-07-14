@@ -11,7 +11,7 @@
 |
 */
 
-$moduleRoutes = require'module_routes.php';
+$moduleRoutes = require_once 'module_routes.php';
 
 Route::get('site/404','SiteController@error404');
 
@@ -22,11 +22,15 @@ Route::controller('develop','DevelopController');
 
 
 Route::group(array('prefix'=>'admin'),function() use($moduleRoutes){
-    Route::controller('module','admin\ModuleController');
+
+    Route::controller('dmodule','admin\DModuleController');
     Route::controller('data-source','admin\DataSourceController');
+    Route::controller('dmenu','admin\DMenuController');
+
     foreach($moduleRoutes as $url => $class){
         Route::controller($url,$class);
     }
+
 });
 
 Route::controller('admin','admin\AdminController');

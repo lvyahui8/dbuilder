@@ -6,5 +6,5 @@
  * Time: 9:39
  */
 require_once 'SiteHelpers.php';
-$res = SiteHelpers::reducCase("OrderItEm");
-echo $res;
+//$res = StringUtils::reducCase("OrderItEm");
+//echo $res;

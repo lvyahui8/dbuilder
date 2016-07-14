@@ -52,7 +52,6 @@ class BaseModel extends Eloquent
             $i++;
         }
         return $coll;
-
     }
 
     function builColumnInfo( $statement )
@@ -68,7 +67,6 @@ class BaseModel extends Eloquent
         $mysqli = new mysqli($dbhost,$dbuser,$dbpass,$db);
         if ($result = $mysqli->query($statement)) {
 
-            /* Get field information for all columns */
             while ($finfo = $result->fetch_field()) {
                 $data[] = (object) array(
                     'Field'	=> $finfo->name,
