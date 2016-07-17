@@ -77,7 +77,7 @@ class BaseController extends Controller
             $controllerName = $routeParams['c'];
             $methodName = $routeParams['m'];
             if(preg_match('/^get(.*)$/',$methodName,$matches)){
-                $methodName = snake_case(lcfirst($matches[1]));
+                $methodName = StringUtils::humpToSnake($matches[1]);
             }
             $view = $controllerName.'.'.$methodName;
         }

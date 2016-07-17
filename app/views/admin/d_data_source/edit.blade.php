@@ -6,7 +6,7 @@
 
         <div class="row">
             <div class="col-sm-6 col-sm-offset-2">
-                <form action="{{URL::to('admin/data-source/edit')}}" class="form-horizontal" id="datasource-form" method="post">
+                <form action="{{URL::to('admin/d-data-source/edit')}}" class="form-horizontal" id="datasource-form" method="post">
                     <input type="hidden" value="{{$dataSource['charset']}}" name="charset">
                     <input type="hidden" value="{{$dataSource['collation']}}" name="collation">
                     <div class="form-group">
@@ -95,7 +95,7 @@
             };
 
             $('a.connection-test').click(function(){
-                $.post("{{URL::to('admin/data-source/test')}}",$form.serialize(),function(resp){
+                $.post("{{URL::to('admin/d-data-source/test')}}",$form.serialize(),function(resp){
                     if(resp.success){
                         toastr.success("连接成功", opts);
                     }else{

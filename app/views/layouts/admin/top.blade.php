@@ -27,14 +27,14 @@
                     </li>
 
                     <li>
-                        <a href="{{URL::to('admin/module/list')}}">
+                        <a href="{{URL::to('admin/d-module/list')}}">
                             <i class="entypo-mail"></i>
                             GModule管理
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{URL::to('admin/data-source/list')}}">
+                        <a href="{{URL::to('admin/d-data-source/list')}}">
                             <i class="entypo-calendar"></i>
                             数据源管理
                         </a>

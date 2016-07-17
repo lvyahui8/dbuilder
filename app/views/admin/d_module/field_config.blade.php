@@ -2,7 +2,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h4 class="modal-title">GModule: <code>{{$moduleKey}}</code> Field: <code>{{$field}}</code> 配置</h4>
 </div>
-<form action="{{URL::to('admin/module/field-config')}}" method="post">
+<form action="{{URL::to('admin/d-module/field-config')}}" method="post">
     <input type="hidden" name="module_key" value="{{$moduleKey}}">
     <input type="hidden" name="field" value="{{$field}}">
     <div class="modal-body">
@@ -159,7 +159,7 @@
             $asInput = $('input#relation_as');
 
     function refreshRInputs(table) {
-        $.get('{{URL::to('admin/data-source/table-fields?connection='.$connection)}}&table=' + table, function (resp) {
+        $.get('{{URL::to('admin/d-data-source/table-fields?connection='.$connection)}}&table=' + table, function (resp) {
             if (resp.success) {
                 var options = resp.data.fields.map(function (item) {
                     var selected = '{{isset($fieldConfig['relation']['table']) ? $fieldConfig['relation']['table'] : ''}}' === table

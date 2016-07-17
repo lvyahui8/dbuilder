@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="btn-group btn-group-sm" role="group">
-                    <a href="{{URL::to('admin/data-source/edit')}}" class="btn btn-primary">新建</a>
+                    <a href="{{URL::to('admin/d-data-source/edit')}}" class="btn btn-primary">新建</a>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
                     <td>{{$datasource['username']}}</td>
                     <td>
                         @if($name !== 'core')
-                            <a href="{{URL::to('admin/data-source/edit/'.$name)}}" class="btn btn-primary btn-sm">编辑</a>
+                            <a href="{{URL::to('admin/d-data-source/edit/'.$name)}}" class="btn btn-primary btn-sm">编辑</a>
                         @endif
                     </td>
                 </tr>

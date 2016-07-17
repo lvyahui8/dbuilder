@@ -35,7 +35,7 @@ class StringUtils
         {
             $replace = '$1'.$delimiter.'$2';
 
-            $str = strtolower(preg_replace('/([a-z])([A-Z])/', $replace, $str));
+            $str = strtolower(preg_replace('/([A-Za-z])([A-Z])/', $replace, $str));
         }
 
         return static::$snakeCache[$key] = $str;
@@ -66,5 +66,4 @@ class StringUtils
     }
 
 }
-
-//echo StringUtils::humpToSnake('Admin.DataSource','-');
+//echo StringUtils::humpToSnake('Admin.DDataSource','_');

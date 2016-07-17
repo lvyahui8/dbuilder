@@ -22,7 +22,7 @@ $controlTyps = SiteHelpers::supportFormControls();
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="fields">
-                    <form action="{{URL::to('admin/module/save-fields-conf/')}}" method="post">
+                    <form action="{{URL::to('admin/d-module/save-fields-conf/')}}" method="post">
                         <input type="hidden" name="id" value="{{$model->id}}">
                         <input type="hidden" name="module_key" value="{{$model->name}}">
                         <table class="table table-bordered responsive">
@@ -57,7 +57,7 @@ $controlTyps = SiteHelpers::supportFormControls();
                                     </td>
                                     <td>{{$controlTyps[$fieldConf['form']['type']]}}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm ajax-form-modal" data-content-url="{{URL::to('admin/module/field-config?module_key='.$model->name.'&field='.$field)}}">编辑</a>
+                                        <a class="btn btn-primary btn-sm ajax-form-modal" data-content-url="{{URL::to('admin/d-module/field-config?module_key='.$model->name.'&field='.$field)}}">编辑</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -85,7 +85,7 @@ $controlTyps = SiteHelpers::supportFormControls();
                     $modal = $('div.modal#ajax-modal');
 
             var loadDataSources = function (sourceName) {
-                $.get("{{URL::to('admin/data-source/tables?data_source=')}}" + sourceName + '&table={{$model->db_table}}', function (resp) {
+                $.get("{{URL::to('admin/d-data-source/tables?data_source=')}}" + sourceName + '&table={{$model->db_table}}', function (resp) {
                     if (resp.success) {
                         var $options = [];
                         for (table in resp.data.tables) {

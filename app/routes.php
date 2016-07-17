@@ -23,9 +23,9 @@ Route::controller('develop','DevelopController');
 
 Route::group(array('prefix'=>'admin'),function() use($moduleRoutes){
 
-    Route::controller('dmodule','admin\DModuleController');
-    Route::controller('data-source','admin\DataSourceController');
-    Route::controller('dmenu','admin\DMenuController');
+    Route::controller('d-module','admin\DModuleController');
+    Route::controller('d-data-source','admin\DDataSourceController');
+    Route::controller('d-menu','admin\DMenuController');
 
     foreach($moduleRoutes as $url => $class){
         Route::controller($url,$class);

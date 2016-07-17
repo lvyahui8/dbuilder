@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Input;
 
 use PDOException;
 use PDO;
-class DataSourceController extends AdminController
+class DDataSourceController extends AdminController
 {
     /**
      * 呈现数据源列表
