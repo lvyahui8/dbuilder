@@ -1,6 +1,6 @@
 # DBuilder
 
-[![GitHub release](http://movesun.com/images/svg/dbuilder_version.svg?324234)](https://github.com/lvyahui8/jutils/dbuilder)
+[![GitHub release](http://movesun.com/images/svg/dbuilder_version.svg?324234)](https://github.com/lvyahui8/dbuilder/releases)
 
 WEB应用CRUD代码生成器，主要用来生成后台管理数据库的代码
 
