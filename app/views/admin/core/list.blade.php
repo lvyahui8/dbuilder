@@ -13,7 +13,7 @@ $loadDatePicker = false;
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title"><?=isset($navMap[$stdName]['text']) ? $navMap[$stdName]['text'] : strtoupper($stdName)?>
+        <h3 class="panel-title"><?=isset($navMap[$snakeName]['text']) ? $navMap[$snakeName]['text'] : strtoupper($snakeName)?>
             列表</h3>
     </div>
     <div class="panel-body">
@@ -21,7 +21,7 @@ $loadDatePicker = false;
             <div class="col-sm-12">
                 <div class="btn-group btn-group-sm" role="group">
                     @if($list_options['create'])
-                        <a href="{{URL::to('admin/'.$stdName.'/edit')}}" class="btn btn-primary">新建</a>
+                        <a href="{{URL::to('admin/'.$reducName.'/edit')}}" class="btn btn-primary">新建</a>
                     @endif
                     <a class="btn btn-danger delete-selected">删除</a>
                     <a class="btn btn-default">导出</a>
@@ -117,15 +117,15 @@ $loadDatePicker = false;
                     <td>
                         <div class="btn-group btn-group-sm" role="group">
                             @if($list_options['update'])
-                                <a href="{{URL::to('admin/'.$stdName.'/edit/'.$model->id)}}"
+                                <a href="{{URL::to('admin/'.$reducName.'/edit/'.$model->id)}}"
                                    class="btn btn-primary">编辑</a>
                             @endif
                             @if($list_options['delete'])
-                                <a href="{{URL::to('admin/'.$stdName.'/delete/'.$model->id)}}"
+                                <a href="{{URL::to('admin/'.$reducName.'/delete/'.$model->id)}}"
                                    class="btn btn-danger">删除</a>
                             @endif
-                            @if(View::exists('admin.'.snake_case($stdName).'.list_item_links'))
-                                @include('admin.'.snake_case($stdName).'.list_item_links',array('model'=>$model))
+                            @if(View::exists('admin.'.$snakeName.'.list_item_links'))
+                                @include('admin.'.$snakeName.'.list_item_links',array('model'=>$model))
                             @endif
                         </div>
                     </td>
@@ -191,7 +191,7 @@ $loadDatePicker = false;
                 confirmModal({
                     message  :   '确认删除：'+idsStr,
                     onOk:   function(){
-                        $.post('{{URL::to('admin/'.snake_case($stdName).'/delete')}}',{"ids":idsStr},function(resp){
+                        $.post('{{URL::to('admin/'.$reducName.'/delete')}}',{"ids":idsStr},function(resp){
                             if(resp.success){
                                 window.location.href = resp.data.redirect_url;
                             }

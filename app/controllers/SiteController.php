@@ -93,7 +93,7 @@ class SiteController extends BaseController
     public function getClear(){
         SiteHelpers::cleanStorage('views');
         SiteHelpers::cleanStorage('cache');
-        return Redirect::intended('admin/module/list');
+        return Redirect::intended('admin/d-module/list');
     }
 
     public function getIsLogin(){

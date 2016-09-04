@@ -1,5 +1,5 @@
 <?php
-$stdName = $ctrl->getStdName();
+$snakeName = $ctrl->getSnakeName();
 $routeMethod = $ctrl->routeMethod();
 $subIndex = $routeMethod === 'getIndex';
 $navMap = array(
@@ -26,8 +26,6 @@ $navMap = array(
                 'text' => '关于'
         )
 );
-//$title = isset($navMap[$stdName]['text']) ? $navMap[$stdName]['text'] : strtoupper($stdName);
-//$title .= '-';
 ?>
         <!DOCTYPE html>
 <html lang="zh-CN">

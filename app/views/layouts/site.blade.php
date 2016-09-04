@@ -1,5 +1,5 @@
 <?php
-$stdName = $ctrl->getStdName();
+$snakeName = $ctrl->getSnakeName();
 $routeMethod = $ctrl->routeMethod();
 $subIndex = $routeMethod === 'getIndex';
 $navMap = array(

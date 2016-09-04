@@ -17,7 +17,7 @@ $loadDatePicker = false;
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-{{$layout['cols']}} col-sm-offset-{{(12-$layout['cols'])/2}}">
-                <form class="form-horizontal validate" action="{{URL::to('admin/'.$stdName.'/edit')}}" method="post">
+                <form class="form-horizontal validate" action="{{URL::to('admin/'.$reducName.'/edit')}}" method="post">
                     <input type="hidden" name="{{$model->getKeyName()}}" value="{{$model->getKey()}}">
                     <?php foreach($config['fields'] as $field => $settings):?>
                     <?php

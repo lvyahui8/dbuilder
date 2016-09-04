@@ -14,7 +14,7 @@ class BaseController extends Controller
 
     protected $modelName = '';
 
-    protected $stdName = null;
+    protected $humpName = null;
 
     protected $routeParams = false;
     /**
@@ -38,7 +38,7 @@ class BaseController extends Controller
     public function __construct()
     {
         if(!$this->modelName){
-            $this->modelName = $this->getStdName();
+            $this->modelName = $this->getHumpName();
         }
         if(class_exists(ucfirst($this->modelName))){
             $this->model = new $this->modelName;
@@ -53,21 +53,20 @@ class BaseController extends Controller
      * dataSource
      * @return null|string
      */
-    public function getStdName()
+    public function getHumpName()
     {
-        if(!$this->stdName){
+        if(!$this->humpName){
             $className = get_class($this);
             if (preg_match('/([\w]+)Controller$/', $className, $matches))
             {
-//                $this->stdName =  camel_case($matches[1]);
-                $this->stdName = lcfirst($matches[1]);
+                $this->humpName = lcfirst($matches[1]);
             }
             else
             {
-                $this->stdName = $className;
+                $this->humpName = $className;
             }
         }
-        return $this->stdName;
+        return $this->humpName;
     }
 
 
@@ -93,15 +92,11 @@ class BaseController extends Controller
     }
 
     public function getSnakeName(){
-
-    }
-
-    public function getHumpName(){
-
+        return StringUtils::humpToSnake($this->getHumpName());
     }
 
     public function getMinuPointName(){
-
+        return StringUtils::humpToSnake($this->getHumpName(),'-');
     }
 
     /**

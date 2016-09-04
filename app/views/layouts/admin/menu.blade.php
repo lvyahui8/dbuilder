@@ -16,7 +16,7 @@
                 <div class="collapse navbar-collapse" id="main-nav">
                     <ul class="nav navbar-nav" id="main-menu">
                         <?php foreach($navMap as $navKey=>$data):?>
-                        <li class="<?php if($stdName === $navKey) echo 'active';?>">
+                        <li class="<?php if($snakeName === $navKey) echo 'active';?>">
                             <a href="<?=isset($data['url']) ? $data['url'] : URL::to('admin/'.$navKey.'/list')?>">
                                 <?=isset($data['text']) ? $data['text'] : strtoupper($navKey)?>
                             </a>

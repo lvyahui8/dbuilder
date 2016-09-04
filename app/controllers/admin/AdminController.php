@@ -24,8 +24,8 @@ class AdminController extends \BaseController
     public function __construct()
     {
         parent::__construct();
-        View::share('stdName',$this->getStdName());
-        View::share('reducName',StringUtils::humpToSnake($this->getStdName()),'-');
+        View::share('snakeName',$this->getSnakeName());
+        View::share('reducName',$this->getMinuPointName());
         View::share('routeParams',$this->getRouteParams());
         if($this->model){
             $this->assignModel($this->model);
@@ -51,8 +51,8 @@ class AdminController extends \BaseController
             ));
         }else{
             $this->makeView(array(
-                'models'  =>  $models,
-                $this->getStdName().'s' =>  $models,
+                'models'                 =>  $models,
+                $this->getHumpName().'s' =>  $models,
             ),$view);
         }
     }
@@ -77,7 +77,7 @@ class AdminController extends \BaseController
     }
 
     protected function config(){
-        $config = 'crud/'.StringUtils::humpToSnake($this->getStdName(),'_');
+        $config = 'crud/'.StringUtils::humpToSnake($this->getHumpName(),'_');
         if(!file_exists(app_path('config/').$config.'.php')){
             $config = 'crud/admin';
         }

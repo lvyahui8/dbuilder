@@ -35,7 +35,7 @@ class DModuleController extends AdminController
     {
         /* 生成代码文件 */
         $codes = array(
-            'moduleName'      => $module->name,
+            'moduleName'      => ucfirst($module->name),
             'moduleTitle'     => $module->title,
             'tablePrimaryKey' => BaseModel::findPrimarykey($module->db_table, $module->db_source),
             'moduleNote'      => $module->note,
@@ -69,7 +69,7 @@ class DModuleController extends AdminController
         /* 更新路由 */
         $moduleRoutes = json_decode(MODULE_ROUTES, true); //require(app_path().'/module_routes.php');
         if (is_array($moduleRoutes)) {
-            $moduleRoutes[StringUtils::reducCase($codes['moduleName'])] = 'admin\\' . "{$codes['moduleName']}Controller";
+            $moduleRoutes[StringUtils::reducCase(lcfirst($codes['moduleName']))] = 'admin\\' . "{$codes['moduleName']}Controller";
             SiteHelpers::saveArrayToFile(app_path() . '/module_routes.php', $moduleRoutes);
         }
     }

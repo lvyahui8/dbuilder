@@ -3,5 +3,4 @@
   'customer' => 'admin\\CustomerController',
   'code' => 'admin\\CodeController',
   'demo' => 'admin\\DemoController',
-  'category' => 'admin\\CategoryController',
 );

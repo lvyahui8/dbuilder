@@ -11,6 +11,9 @@ class BaseModel extends Eloquent
     protected $table = '';
     protected $guarded = array('id');
     public $timestamps = false;
+
+    private static $filter = array('rc_','d_');
+
     public static function getTranslates($translate){
         $rows = DB::table($translate['table'])->select(array($translate['foreign_key'],$translate['show']))->get();
         return $rows;
@@ -22,9 +25,12 @@ class BaseModel extends Eloquent
         $t = array();
         $dbname = 'Tables_in_'.$db ;
         $tables = $connection ? DB::connection($connection)->select("SHOW TABLES FROM {$db}") : DB::select("SHOW TABLES FROM {$db}");
+        $filerPattern = '/'.implode('|',self::$filter).'/';
         foreach($tables as $table)
         {
-            $t[$table->$dbname] = $table->$dbname;
+            if(!preg_match_all($filerPattern,$table->$dbname)){
+                $t[$table->$dbname] = $table->$dbname;
+            }
         }
         return $t;
     }

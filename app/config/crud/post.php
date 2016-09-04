@@ -33,7 +33,7 @@
     ),
     'title' => 
     array (
-      'label' => '标题',
+      'label' => 'TITLE',
       'form' => 
       array (
         'show' => true,
@@ -61,12 +61,12 @@
     ),
     'short' => 
     array (
-      'label' => '摘要',
+      'label' => 'SHORT',
       'form' => 
       array (
         'show' => true,
         'hidden' => false,
-        'type' => 'textarea',
+        'type' => 'text',
         'rule' => 'required',
         'ajax_validate' => false,
         'placeholder' => '',
@@ -81,27 +81,27 @@
       'relation' => 
       array (
         'type' => '',
-        'table' => 'category',
-        'foreign_key' => 'id',
-        'show' => 'id',
+        'table' => '',
+        'foreign_key' => '',
+        'show' => '',
         'as' => '',
       ),
     ),
     'content' => 
     array (
-      'label' => '内容',
+      'label' => 'CONTENT',
       'form' => 
       array (
         'show' => true,
         'hidden' => false,
-        'type' => 'wysiwyg',
+        'type' => 'text',
         'rule' => 'required',
         'ajax_validate' => false,
         'placeholder' => '',
       ),
       'list' => 
       array (
-        'show' => false,
+        'show' => true,
         'sort' => true,
         'search' => '=',
         'lookup' => false,
@@ -109,18 +109,18 @@
       'relation' => 
       array (
         'type' => '',
-        'table' => 'category',
-        'foreign_key' => 'id',
-        'show' => 'id',
+        'table' => '',
+        'foreign_key' => '',
+        'show' => '',
         'as' => '',
       ),
     ),
     'view_ct' => 
     array (
-      'label' => '查看次数',
+      'label' => 'VIEW_CT',
       'form' => 
       array (
-        'show' => false,
+        'show' => true,
         'hidden' => false,
         'type' => 'text',
         'rule' => 'required',
@@ -145,10 +145,10 @@
     ),
     'created_at' => 
     array (
-      'label' => '创建时间',
+      'label' => 'CREATED_AT',
       'form' => 
       array (
-        'show' => false,
+        'show' => true,
         'hidden' => false,
         'type' => 'text',
         'rule' => 'required',
@@ -157,7 +157,7 @@
       ),
       'list' => 
       array (
-        'show' => false,
+        'show' => true,
         'sort' => true,
         'search' => '=',
         'lookup' => false,
@@ -173,12 +173,12 @@
     ),
     'updated_at' => 
     array (
-      'label' => '更新时间',
+      'label' => 'UPDATED_AT',
       'form' => 
       array (
-        'show' => false,
+        'show' => true,
         'hidden' => false,
-        'type' => 'date',
+        'type' => 'text',
         'rule' => 'required',
         'ajax_validate' => false,
         'placeholder' => '',
@@ -192,21 +192,21 @@
       ),
       'relation' => 
       array (
-          'type'    =>  'belongsTo',
-        'table' => 'category',
-        'foreign_key' => 'id',
-        'show' => 'id',
+        'type' => '',
+        'table' => '',
+        'foreign_key' => '',
+        'show' => '',
         'as' => '',
       ),
     ),
     'category_id' => 
     array (
-      'label' => '栏目',
+      'label' => 'CATEGORY_ID',
       'form' => 
       array (
         'show' => true,
         'hidden' => false,
-        'type' => 'select',
+        'type' => 'text',
         'rule' => 'required',
         'ajax_validate' => false,
         'placeholder' => '',
@@ -220,95 +220,68 @@
       ),
       'relation' => 
       array (
-        'type' => 'belongsTo',
-        'table' => 'category',
-        'foreign_key' => 'id',
-        'show' => 'title',
-        'as' => 'category_title',
+        'type' => '',
+        'table' => '',
+        'foreign_key' => '',
+        'show' => '',
+        'as' => '',
       ),
     ),
-  ),
-  'list_options' => 
-  array (
-    'page' => 10,
-    'create' => true,
-    'update' => true,
-    'delete' => true,
-  ),
-  'form_options' => 
-  array (
-    'layout' => 
+    'cnblogs_url' => 
     array (
-      'cols' => 12,
-      'label_cols' => 1,
-      'input_cols' => 11,
+      'label' => 'CNBLOGS_URL',
+      'form' => 
+      array (
+        'show' => true,
+        'hidden' => false,
+        'type' => 'text',
+        'rule' => 'required',
+        'ajax_validate' => false,
+        'placeholder' => '',
+      ),
+      'list' => 
+      array (
+        'show' => true,
+        'sort' => true,
+        'search' => '=',
+        'lookup' => false,
+      ),
+      'relation' => 
+      array (
+        'type' => '',
+        'table' => '',
+        'foreign_key' => '',
+        'show' => '',
+        'as' => '',
+      ),
     ),
-  ),
-  'relations' => 
-  array (
-    'id' => 
+    'cnblogs_id' => 
     array (
-      'type' => '',
-      'table' => '',
-      'foreign_key' => '',
-      'show' => '',
-      'as' => '',
-    ),
-    'title' => 
-    array (
-      'type' => '',
-      'table' => '',
-      'foreign_key' => '',
-      'show' => '',
-      'as' => '',
-    ),
-    'short' => 
-    array (
-      'type' => '',
-      'table' => '',
-      'foreign_key' => '',
-      'show' => '',
-      'as' => '',
-    ),
-    'content' => 
-    array (
-      'type' => '',
-      'table' => '',
-      'foreign_key' => '',
-      'show' => '',
-      'as' => '',
-    ),
-    'view_ct' => 
-    array (
-      'type' => '',
-      'table' => '',
-      'foreign_key' => '',
-      'show' => '',
-      'as' => '',
-    ),
-    'created_at' => 
-    array (
-      'type' => '',
-      'table' => '',
-      'foreign_key' => '',
-      'show' => '',
-      'as' => '',
-    ),
-    'updated_at' => 
-    array (
-      'type' => '',
-      'table' => '',
-      'foreign_key' => '',
-      'show' => '',
-      'as' => '',
-    ),
-    'category_id' => 
-    array (
-      'type' => '',
-      'table' => '',
-      'foreign_key' => '',
-      'show' => '',
-      'as' => '',
+      'label' => 'CNBLOGS_ID',
+      'form' => 
+      array (
+        'show' => true,
+        'hidden' => false,
+        'type' => 'text',
+        'rule' => 'required',
+        'ajax_validate' => false,
+        'placeholder' => '',
+      ),
+      'list' => 
+      array (
+        'show' => true,
+        'sort' => true,
+        'search' => '=',
+        'lookup' => false,
+      ),
+      'relation' => 
+      array (
+        'type' => '',
+        'table' => '',
+        'foreign_key' => '',
+        'show' => '',
+        'as' => '',
+      ),
     ),
   ),
 );

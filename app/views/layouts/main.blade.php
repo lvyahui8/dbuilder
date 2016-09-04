@@ -26,13 +26,13 @@ $navMap = array(
 <div class="wrap">
     @include('layouts.admin.menu')
     <div class="container">
-        <?php if($stdName !== 'site'):?>
+        <?php if($snakeName !== 'site'):?>
         <ol class="breadcrumb">
             <li><a href="<?=URL::to('')?>">首页</a></li>
             <li>
-                <a href="<?=isset($navMap[$stdName]['url']) ? $navMap[$stdName]['url'] : URL::to('admin/'.$stdName.'/list')?>"
+                <a href="<?=isset($navMap[$snakeName]['url']) ? $navMap[$snakeName]['url'] : URL::to('admin/'.str_replace('_','-',$snakeName).'/list')?>"
                    class="<?=$subIndex ? 'active' : null?>">
-                    <?=isset($navMap[$stdName]['text']) ?$navMap[$stdName]['text'] : strtoupper($stdName)?>
+                    <?=isset($navMap[$snakeName]['text']) ?$navMap[$snakeName]['text'] : strtoupper($snakeName)?>
                 </a>
             </li>
             <?php if(!$subIndex):?>
