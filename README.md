@@ -1,9 +1,13 @@
 # DBuilder
 
-[![GitHub release](http://movesun.com/images/svg/dbuilder_version.svg?324234)](https://github.com/lvyahui8/dbuilder/releases)
+[![GitHub release](http://movesun.com/images/svg/dbuilder_version.svg?8797894945)](https://github.com/lvyahui8/dbuilder/releases)
 
 WEB应用CRUD代码生成器，主要用来生成后台管理数据库的代码
 
+## 文档与示例
+
+* [博客文档](http://www.cnblogs.com/lvyahui/p/5626466.html)
+* [DEMO示例](http://movesun.com/dbuilder/admin)
 
 ## GModule
 
@@ -148,5 +152,3 @@ CRUD操作实际有Core模块执行，而Core模块会回调GModule的预处理/
 * **QQ群:** [146103720](http://shang.qq.com/wpa/qunwpa?idkey=50fce48ad9655e4a6046c6018930f2fc719278d3bc613498336882d3567a4000)
 
 -------
-
-[博客文档](http://www.cnblogs.com/lvyahui/p/5626466.html)
