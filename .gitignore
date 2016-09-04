@@ -2,3 +2,4 @@
 app/storage/*
 uploads/*
 docs
+datasource.php
