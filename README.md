@@ -9,6 +9,42 @@ WEB应用CRUD代码生成器，主要用来生成后台管理数据库的代码
 * [博客文档](http://www.cnblogs.com/lvyahui/p/5626466.html)
 * [DEMO示例](http://movesun.com/dbuilder/admin)
 
+### Docker 示例
+
+DBuilder已制作成镜像。安装好Docker环境，即可在本机运行DBuilder实例
+
+```
+docker pull acklv/dbuilder:v5
+```
+
+以host模式运行
+
+通过 http://127.0.0.1:80/admin/ 访问dbuilder实例
+
+```shell
+docker run -it -d --net=host --privileged=true --name dbuilder \
+acklv/dbuilder:v5 \
+/bin/bash
+
+# visit to http://127.0.0.1/admin
+```
+
+以bridge模式部署，可自行配置暴露端口，在容器内部，nginx占80端口，mysqld占3306端口
+
+通过 http://127.0.0.1:8087/admin/ 访问dbuilder实例
+
+```shell
+# 如果没有网桥，先创建一个网桥
+docker network create --driver bridge --subnet 172.25.0.0/16 acklv_bdg
+docker network inspect acklv_bdg
+
+docker run -it -d  --network=acklv_bdg --privileged=true \
+--ip=172.25.0.2 -p 8087:80 -p 3308:3306 \
+--name dbuilder \
+acklv/dbuilder:v5 \
+/bin/bash
+```
+
 ## GModule
 
 GModule 是DBuilder的代码生成单元，包含了以一张数据库表为主表的CRUD操作的MVC代码。一个GModule可以由DBuilder的GModule管理界面生成，也可以手工建立。
