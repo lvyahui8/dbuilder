@@ -1,6 +1,7 @@
 # DBuilder
 
 [![GitHub release](http://movesun.com/images/svg/dbuilder_version.svg?8797894945)](https://github.com/lvyahui8/dbuilder/releases)
+[![996icu](https://img.shields.io/badge/license-NPL%20(The%20996%20Prohibited%20License)-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
 WEB应用CRUD代码生成器，主要用来生成后台管理数据库的代码
 
