@@ -25,7 +25,7 @@
                 "hideMethod": "fadeOut"
             };
 
-            toastr.success("你操作的是博客数据库的一份拷贝，不会影响真实博客数据", "注意", opts);
+            toastr.success("你看到的是博客备份数据. 同时, 已关闭编辑和删除功能.", "注意", opts);
         }, 300);
     </script>
 @stop
