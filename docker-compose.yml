@@ -1,0 +1,17 @@
+version: "3"
+services:
+  proxy:
+    image: richarvey/nginx-php-fpm:latest
+    restart: always
+    volumes:
+      - ./dbuilder.nginx:/etc/nginx/conf.d/dbuilder.nginx
+  webapp:
+    build: .
+    expose:
+      - 80
+  storage:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
