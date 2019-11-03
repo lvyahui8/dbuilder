@@ -13,7 +13,9 @@ return array(
         'id'        => array(),
         'name'      => array(
             'label' => 'ModuleKey',
-            'form'  => array(),
+            'form'  => array(
+                'rule' => 'required',
+            ),
             'list'  => array(
                 'search' => array(),
                 'sort'   => false,
@@ -21,6 +23,9 @@ return array(
         ),
         'title'     => array(
             'label' => '名称',
+            'form' => array(
+                'rule' => 'required',
+            )
         ),
         'note'      => array(
             'label' => '说明',
@@ -30,6 +35,7 @@ return array(
             'form'  => array(
                 'type'    => 'select',
                 'options'   =>  'dataSources',
+                'rule' => 'required',
             ),
             'list'  =>  array(
                 'search'    =>  false,
@@ -39,7 +45,8 @@ return array(
             'label' =>  'Module 主表',
             'form'  =>  array(
                 'type'  =>  'select',
-                'options'   =>  array()
+                'options'   =>  array(),
+                'rule' => 'required',
             ),
             'list'  =>  array(
                 'search'    =>  false,
@@ -49,7 +56,8 @@ return array(
             'label' =>  'Module主表主键',
             'form'  =>  array(
                 'show'  =>  false,
-                'value' =>  'id'
+                'value' =>  'id',
+                'rule' => 'required',
             )
         )
     ),

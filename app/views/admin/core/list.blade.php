@@ -11,6 +11,14 @@ $list_options = $config['list_options'];
 $loadSBox = false;
 $loadDatePicker = false;
 ?>
+@if(isset($errors))
+<div class="panel">
+    <div class="panel-body">
+        <span class="red">emsg:{{$errors}}</span>
+    </div>
+</div>
+@endif
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title"><?=isset($navMap[$snakeName]['text']) ? $navMap[$snakeName]['text'] : strtoupper($snakeName)?>

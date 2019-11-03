@@ -156,7 +156,9 @@ class AdminController extends \BaseController
 
 
     public function postEdit($primaryKeyValue = null){
-
+        if(!$this->validateInput(Input::all())) {
+            return Redirect::action(get_class($this).'@getList')->withErrors(array('msg' => 'fky!'));
+        }
         $primaryKeyName = $this->model->getKeyName();
         if($primaryKeyValue == null){
             $primaryKeyValue = Input::get($primaryKeyName);
@@ -169,7 +171,6 @@ class AdminController extends \BaseController
                 $datas[$field] = Input::get($field);
             }
         }
-
         if($primaryKeyValue){
             $this->model->where($primaryKeyName,$primaryKeyValue)->update($datas);
         }else{
@@ -188,19 +189,24 @@ class AdminController extends \BaseController
     }
 
     public function postDelete(){
-        $ids = explode(',',Input::get('ids'));
-        $data = array();
-        $success   =  true;
-        $data['ids'] = $ids;
-        $ids = array_filter($ids,function($id){
-            return $id;
-        });
-        $this->model->whereIn($this->model->getKeyName(),$ids)->delete();
-        $data['redirect_url'] = URL::to(action(get_class($this).'@getList'));
         return Response::json(array(
-            'success'   =>  $success,
-            'data'      =>  $data,
+            'success'   =>  false,
+            'data'      =>  array(),
         ));
+
+//        $ids = explode(',',Input::get('ids'));
+//        $data = array();
+//        $success   =  true;
+//        $data['ids'] = $ids;
+//        $ids = array_filter($ids,function($id){
+//            return $id;
+//        });
+//        $this->model->whereIn($this->model->getKeyName(),$ids)->delete();
+//        $data['redirect_url'] = URL::to(action(get_class($this).'@getList'));
+//        return Response::json(array(
+//            'success'   =>  $success,
+//            'data'      =>  $data,
+//        ));
     }
 
     public function getDelete($id){
@@ -254,6 +260,11 @@ class AdminController extends \BaseController
 
     public function getHelp(){
         $this->makeView(null,'admin.help');
+    }
+
+    protected function validateInput($arr)
+    {
+
     }
 
 }

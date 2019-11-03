@@ -23,6 +23,14 @@ use StringUtils;
 class DModuleController extends AdminController
 {
 
+    protected function validateInput($arr)
+    {
+//        if(! preg_match("/^\w+$/",$arr['name'],$matches)) {
+//            return false;
+//        }
+        return false;
+    }
+
     protected function beforeEdit(&$data)
     {
         $data ['dataSources'] = SiteHelpers::loadDataSources();
