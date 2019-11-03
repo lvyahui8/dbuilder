@@ -15,6 +15,7 @@ class DevelopController extends BaseController
     }
 
     public function getTestSiteHelpers(){
+        echo 'success';
         exit;
     }
 }
