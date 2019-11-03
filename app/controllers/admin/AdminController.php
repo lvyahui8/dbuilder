@@ -210,8 +210,8 @@ class AdminController extends \BaseController
     }
 
     public function getDelete($id){
-        $this->beforeDelete($id);
-        $this->model->where($this->model->getKeyName(),$id)->delete();
+        //$this->beforeDelete($id);
+        //$this->model->where($this->model->getKeyName(),$id)->delete();
         return Redirect::action(get_class($this).'@getList');
     }
 
